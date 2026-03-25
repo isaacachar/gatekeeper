@@ -4,295 +4,594 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gatekeeper · The Predatory T&C Index</title>
+    <meta name="description" content="We read the terms & conditions so you don't have to. 30 services ranked by how predatory their fine print really is.">
+    <meta property="og:title" content="Gatekeeper · You agreed to all of this.">
+    <meta property="og:description" content="We read the terms & conditions for 30 of the world's most popular services. Here's what they're hiding.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://isaacachar.github.io/gatekeeper/">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --card: #141414;
-            --border: #262626;
-            --text-primary: #fafafa;
-            --text-secondary: #a3a3a3;
-            --text-tertiary: #737373;
-            --red: #dc2626;
-            --red-light: #991b1b;
-            --amber: #f59e0b;
-            --green: #10b981;
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Source Serif 4', 'Georgia', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
         }
-        body { background: var(--bg); color: var(--text-primary); font-family: 'Crimson Pro', serif; }
-        .mono { font-family: 'Space Mono', monospace; }
-        .grade-f { color: var(--red); }
-        .grade-d { color: #ea580c; }
-        .grade-c { color: var(--amber); }
-        .grade-b { color: #84cc16; }
-        .grade-a { color: var(--green); }
+    </script>
+    <style>
+        body { background: #050505; color: #e5e5e5; }
+        .grade-letter { font-family: 'JetBrains Mono', monospace; }
+        .grade-a { color: #10b981; }
+        .grade-b { color: #22d3ee; }
+        .grade-c { color: #f59e0b; }
+        .grade-d { color: #f97316; }
+        .grade-f { color: #ef4444; }
+        .grade-bg-a { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.2); }
+        .grade-bg-b { background: rgba(34,211,238,0.1); border-color: rgba(34,211,238,0.2); }
+        .grade-bg-c { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.2); }
+        .grade-bg-d { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.2); }
+        .grade-bg-f { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); }
+        .score-bar { height: 4px; background: #1a1a1a; border-radius: 2px; overflow: hidden; }
+        .score-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+        .clause-card { border-left: 2px solid #ef4444; }
+        .tab-active { border-bottom: 2px solid #ef4444; color: #fafafa; }
+        .tab-inactive { border-bottom: 2px solid transparent; color: #737373; }
+        .comparison-col { min-width: 280px; }
+        details summary::-webkit-details-marker { display: none; }
+        details summary::marker { display: none; }
+        .fade-in { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .exposure-check:checked + label { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); }
+        .exposure-check:not(:checked) + label { background: #0a0a0a; border-color: #262626; }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem !important; }
+        }
     </style>
 </head>
 <body class="antialiased">
-    <main class="max-w-5xl mx-auto px-6 py-16 md:py-24">
+    <main class="max-w-6xl mx-auto px-4 md:px-8">
+        <!-- Nav -->
+        <nav class="flex items-center justify-between py-6 border-b border-neutral-900">
+            <div class="flex items-center gap-2">
+                <span class="text-red-500 text-xl">&#9919;</span>
+                <span class="font-mono font-bold text-sm tracking-wide">GATEKEEPER</span>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+                <a href="#index" class="text-neutral-400 hover:text-white transition-colors">Index</a>
+                <a href="#compare" class="text-neutral-400 hover:text-white transition-colors">Compare</a>
+                <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors">Your Score</a>
+                <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Waitlist</a>
+            </div>
+        </nav>
+
         <!-- Hero -->
-        <header class="mb-20">
-            <div class="text-xs mono uppercase tracking-wider text-red-500 mb-4">Confidential · Read Only</div>
-            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+        <header class="py-16 md:py-24">
+            <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6">Classified · Public Interest Disclosure</div>
+            <h1 class="hero-title font-serif text-5xl md:text-7xl font-black leading-[1.05] mb-8 max-w-4xl">
                 You agreed to<br>all of this.
             </h1>
-            <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl mb-8">
-                We read the terms & conditions so you don't have to. Here's what 30 of the world's most popular services are hiding in the fine print.
+            <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl leading-relaxed font-serif mb-10">
+                We scraped, read, and scored the actual terms of service for 30 of the world's most popular platforms. Here's what's hiding in the fine print.
             </p>
-            <div class="mono text-sm text-neutral-500">
-                Last updated: March 24, 2026 · <span id="service-count">30</span> services analyzed
+            <div class="font-mono text-xs text-neutral-600">
+                <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
             </div>
         </header>
 
         <!-- Stats Bar -->
-        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 border-t border-b border-neutral-800 py-8">
-            <div>
-                <div class="text-4xl font-bold text-red-500 mb-1">87%</div>
-                <div class="text-sm text-neutral-400">Sell your data to third parties</div>
+        <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+            <div class="border border-neutral-900 rounded-lg p-5">
+                <div class="text-3xl md:text-4xl font-mono font-bold text-red-500 mb-1" id="stat-data"></div>
+                <div class="text-xs text-neutral-500 font-sans">Share data with third parties</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-red-500 mb-1">62%</div>
-                <div class="text-sm text-neutral-400">Can change terms without notice</div>
+            <div class="border border-neutral-900 rounded-lg p-5">
+                <div class="text-3xl md:text-4xl font-mono font-bold text-red-500 mb-1" id="stat-arb"></div>
+                <div class="text-xs text-neutral-500 font-sans">Force binding arbitration</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-amber-500 mb-1">41%</div>
-                <div class="text-sm text-neutral-400">Claim ownership of your content</div>
+            <div class="border border-neutral-900 rounded-lg p-5">
+                <div class="text-3xl md:text-4xl font-mono font-bold text-amber-500 mb-1" id="stat-ai"></div>
+                <div class="text-xs text-neutral-500 font-sans">Use your content for AI training</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-amber-500 mb-1">73%</div>
-                <div class="text-sm text-neutral-400">Force binding arbitration</div>
+            <div class="border border-neutral-900 rounded-lg p-5">
+                <div class="text-3xl md:text-4xl font-mono font-bold text-amber-500 mb-1" id="stat-retain"></div>
+                <div class="text-xs text-neutral-500 font-sans">Retain data after you delete</div>
             </div>
         </section>
 
-        <!-- Filters -->
-        <div class="flex flex-wrap gap-3 mb-8">
-            <input 
-                type="text" 
-                id="search" 
-                placeholder="Search services..." 
-                class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900 flex-1 min-w-[200px]"
-            >
-            <select id="category-filter" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900">
-                <option value="">All Categories</option>
-                <option value="social">Social Media</option>
-                <option value="messaging">Messaging</option>
-                <option value="shopping">Shopping</option>
-                <option value="streaming">Streaming</option>
-                <option value="productivity">Productivity</option>
-                <option value="ai">AI Tools</option>
-            </select>
-            <select id="grade-filter" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900">
-                <option value="">All Grades</option>
-                <option value="A">A (Best)</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="F">F (Worst)</option>
-            </select>
+        <!-- Tabs -->
+        <div class="flex gap-8 border-b border-neutral-900 mb-8">
+            <button class="tab-active pb-3 text-sm font-medium transition-all" data-tab="index" onclick="switchTab('index')">Index</button>
+            <button class="tab-inactive pb-3 text-sm font-medium transition-all" data-tab="compare" onclick="switchTab('compare')">Compare</button>
+            <button class="tab-inactive pb-3 text-sm font-medium transition-all" data-tab="exposure" onclick="switchTab('exposure')">Your Exposure</button>
         </div>
 
-        <!-- Index -->
-        <div id="index" class="space-y-4 mb-20"></div>
+        <!-- INDEX TAB -->
+        <section id="tab-index">
+            <!-- Filters -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <input type="text" id="search" placeholder="Search services..." class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 min-w-[200px] placeholder-neutral-600">
+                <select id="category-filter" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none">
+                    <option value="">All Categories</option>
+                    <option value="social">Social Media</option>
+                    <option value="messaging">Messaging</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="streaming">Streaming</option>
+                    <option value="productivity">Productivity</option>
+                    <option value="ai">AI Tools</option>
+                </select>
+                <select id="grade-filter" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none">
+                    <option value="">All Grades</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
+                </select>
+                <select id="sort-filter" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none">
+                    <option value="score-asc">Worst First</option>
+                    <option value="score-desc">Best First</option>
+                    <option value="name">A-Z</option>
+                </select>
+            </div>
+
+            <div class="font-mono text-xs text-neutral-600 mb-4"><span id="result-count">30</span> services</div>
+            <div id="index-list" class="space-y-3 mb-20"></div>
+        </section>
+
+        <!-- COMPARE TAB -->
+        <section id="tab-compare" class="hidden mb-20">
+            <a id="compare"></a>
+            <p class="text-neutral-400 mb-6 font-sans text-sm">Select two services to compare their terms side by side.</p>
+            <div class="flex flex-wrap gap-4 mb-8">
+                <select id="compare-a" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none flex-1 min-w-[200px]">
+                    <option value="">Select first service...</option>
+                </select>
+                <select id="compare-b" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none flex-1 min-w-[200px]">
+                    <option value="">Select second service...</option>
+                </select>
+            </div>
+            <div id="compare-result" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <!-- EXPOSURE TAB -->
+        <section id="tab-exposure" class="hidden mb-20">
+            <a id="exposure"></a>
+            <p class="text-neutral-400 mb-2 font-sans text-sm">Check the services you use. We'll calculate your personal exposure score.</p>
+            <p class="text-neutral-600 mb-8 font-sans text-xs">How much of your data is out there, based on what you've agreed to?</p>
+            
+            <div id="exposure-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-8"></div>
+            
+            <div id="exposure-result" class="border border-neutral-900 rounded-lg p-8 text-center hidden">
+                <div class="font-mono text-xs text-neutral-600 uppercase tracking-wider mb-2">Your Exposure Score</div>
+                <div id="exposure-score" class="text-6xl font-mono font-bold mb-2"></div>
+                <div id="exposure-label" class="text-sm text-neutral-400 mb-6"></div>
+                <div id="exposure-breakdown" class="text-left max-w-md mx-auto space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- SERVICE DETAIL MODAL -->
+        <div id="detail-modal" class="fixed inset-0 bg-black/80 z-50 hidden overflow-y-auto">
+            <div class="max-w-3xl mx-auto px-4 py-8 md:py-16">
+                <div class="bg-neutral-950 border border-neutral-800 rounded-xl p-6 md:p-10 relative fade-in">
+                    <button onclick="closeDetail()" class="absolute top-4 right-4 text-neutral-600 hover:text-white text-2xl leading-none">&times;</button>
+                    <div id="detail-content"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- Methodology -->
-        <section class="border-t border-neutral-800 pt-16">
-            <h2 class="text-3xl font-bold mb-6">What This Means</h2>
-            <div class="space-y-6 text-lg text-neutral-300">
+        <section class="border-t border-neutral-900 pt-16 mb-16" id="methodology">
+            <h2 class="font-serif text-3xl font-bold mb-8">Methodology</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-neutral-400 font-sans leading-relaxed">
                 <div>
-                    <h3 class="font-bold text-xl mb-2 grade-a">Grade A (85-100)</h3>
-                    <p>Clear terms, minimal data collection, strong user rights. Rare.</p>
+                    <h3 class="text-white font-semibold mb-3">How We Score</h3>
+                    <p class="mb-4">Each service is evaluated across 10 categories on a 0-10 scale (10 = most predatory). Categories: data selling, content ownership, forced arbitration, terms changeability, deletion difficulty, data retention, location tracking, cross-platform sharing, AI training, and liability limitations.</p>
+                    <p>The overall score is calculated as 100 minus the average category score times 10. Grades: A (85-100), B (70-84), C (50-69), D (30-49), F (below 30).</p>
                 </div>
                 <div>
-                    <h3 class="font-bold text-xl mb-2 grade-b">Grade B (70-84)</h3>
-                    <p>Mostly fair terms with some questionable clauses. Transparent about what they collect.</p>
+                    <h3 class="text-white font-semibold mb-3">Why This Matters Now</h3>
+                    <p class="mb-4">Within 12-18 months, most people will have AI agents acting on their behalf. Those agents will agree to terms of service 50 times a day — booking, buying, signing up, negotiating.</p>
+                    <p>A human might agree to 5 ToS per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem becomes catastrophic.</p>
                 </div>
-                <div>
-                    <h3 class="font-bold text-xl mb-2 grade-c">Grade C (50-69)</h3>
-                    <p>Industry standard — which means not great. Data selling, forced arbitration, content licensing.</p>
+            </div>
+
+            <!-- Grade Scale -->
+            <div class="mt-10 grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-a mb-1">A</div>
+                    <div class="text-xs text-neutral-500">85-100 · Exemplary</div>
+                    <div class="text-xs text-neutral-600 mt-1">Clear terms, minimal collection, strong user rights</div>
                 </div>
-                <div>
-                    <h3 class="font-bold text-xl mb-2 grade-d">Grade D (30-49)</h3>
-                    <p>Aggressively anti-consumer. Broad data rights, impossible opt-outs, retroactive changes.</p>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-b mb-1">B</div>
+                    <div class="text-xs text-neutral-500">70-84 · Fair</div>
+                    <div class="text-xs text-neutral-600 mt-1">Mostly fair with some questionable clauses</div>
                 </div>
-                <div>
-                    <h3 class="font-bold text-xl mb-2 grade-f">Grade F (0-29)</h3>
-                    <p>Predatory. Treats your data like theirs. Designed to extract maximum value from you.</p>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-c mb-1">C</div>
+                    <div class="text-xs text-neutral-500">50-69 · Mediocre</div>
+                    <div class="text-xs text-neutral-600 mt-1">Industry standard — which isn't great</div>
                 </div>
-                <div class="border-t border-neutral-800 pt-6 mt-8">
-                    <h3 class="font-bold text-xl mb-2">Why This Matters More Than Ever</h3>
-                    <p class="mb-3">
-                        Within 12-18 months, most people will have AI agents acting on their behalf — booking, buying, signing up, negotiating. Those agents will hand out your personal data hundreds of times a day.
-                    </p>
-                    <p>
-                        A human might agree to 5 terms of service per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem doesn't get better — it becomes catastrophic.
-                    </p>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-d mb-1">D</div>
+                    <div class="text-xs text-neutral-500">30-49 · Poor</div>
+                    <div class="text-xs text-neutral-600 mt-1">Aggressively anti-consumer</div>
+                </div>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-f mb-1">F</div>
+                    <div class="text-xs text-neutral-500">0-29 · Predatory</div>
+                    <div class="text-xs text-neutral-600 mt-1">Treats your data like theirs</div>
                 </div>
             </div>
         </section>
 
         <!-- Waitlist CTA -->
-        <section class="border border-red-900 bg-red-950/20 rounded-lg p-8 md:p-12 my-20">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">We're building a solution.</h2>
-            <p class="text-xl text-neutral-300 mb-8 max-w-2xl">
-                A browser extension that reads terms before you agree. Scores them. Flags conflicts with your personal policy. Alerts you when they change after you've agreed. And gives you a kill switch for every connection.
+        <section id="waitlist" class="border border-red-900/40 bg-red-950/10 rounded-xl p-8 md:p-12 mb-20">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">We're building the kill switch.</h2>
+            <p class="text-lg text-neutral-300 mb-8 max-w-2xl font-serif leading-relaxed">
+                A browser extension that reads terms before you agree. Scores them. Flags conflicts. Alerts you when they change. And gives you a revoke button for every connection.
             </p>
-            <form id="waitlist-form" class="flex flex-col md:flex-row gap-3">
-                <input 
-                    type="email" 
-                    id="email" 
-                    placeholder="your@email.com" 
-                    required
-                    class="px-5 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-base focus:outline-none focus:border-red-700 flex-1"
-                >
-                <button 
-                    type="submit"
-                    class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
-                >
-                    Join Waitlist
-                </button>
+            <form id="waitlist-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
+                <input type="email" id="email" placeholder="your@email.com" required class="px-5 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 placeholder-neutral-600">
+                <button type="submit" class="px-8 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors duration-200 font-sans whitespace-nowrap">Join Waitlist</button>
             </form>
-            <div id="waitlist-response" class="mt-4 text-sm"></div>
+            <div id="waitlist-response" class="mt-4 text-sm font-sans"></div>
         </section>
 
         <!-- Footer -->
-        <footer class="border-t border-neutral-800 pt-12 text-center text-sm text-neutral-500">
-            <div class="mb-6">
-                <span class="text-2xl font-bold text-red-500">⚿</span>
-                <div class="mt-2 font-bold text-neutral-300">GATEKEEPER</div>
+        <footer class="border-t border-neutral-900 py-12 text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span class="text-red-500">&#9919;</span>
+                <span class="font-mono font-bold text-xs tracking-wide text-neutral-400">GATEKEEPER</span>
             </div>
-            <div class="space-x-6 mb-4">
-                <a href="#" class="hover:text-neutral-300 transition-colors">Methodology</a>
-                <a href="#" class="hover:text-neutral-300 transition-colors">Open Data</a>
+            <div class="flex justify-center gap-6 text-xs text-neutral-600 font-sans mb-4">
+                <a href="#methodology" class="hover:text-neutral-300 transition-colors">Methodology</a>
+                <a href="https://github.com/isaacachar/gatekeeper" class="hover:text-neutral-300 transition-colors">Open Source</a>
                 <a href="mailto:hello@gatekeeper.io" class="hover:text-neutral-300 transition-colors">Contact</a>
             </div>
-            <div class="mono text-xs">
-                DNS for human identity · Not legal advice
+            <div class="font-mono text-[10px] text-neutral-700">
+                Your reachability should be a function you control, not a static value others possess.
             </div>
         </footer>
     </main>
 
     <script>
-        const services = [
-            { name: "TikTok", category: "social", score: 12, grade: "F", worstClauses: ["Claims perpetual license to all your content — even deleted videos", "Sells data to unnamed 'business partners' globally", "Can modify terms retroactively without individual notice"], tags: ["Data selling", "Content ownership", "Terms change"], lastReviewed: "2026-03-15", highlight: "Your deleted videos aren't deleted. They own them forever." },
-            { name: "Instagram", category: "social", score: 24, grade: "F", worstClauses: ["Meta can use your photos/videos for AI training without compensation", "Cross-platform data sharing with Facebook, WhatsApp", "Forced arbitration — no class action lawsuits"], tags: ["AI training", "Data selling", "Forced arbitration"], lastReviewed: "2026-03-10", highlight: "Your photos train their AI. You get nothing." },
-            { name: "Facebook", category: "social", score: 18, grade: "F", worstClauses: ["Tracks you across the web via pixel/SDK even when logged out", "Shares data with thousands of third-party advertisers", "Account deletion takes 90 days, data retained indefinitely for 'legal compliance'"], tags: ["Data selling", "Location tracking", "No deletion"], lastReviewed: "2026-03-12", highlight: "Deleting your account doesn't delete your data." },
-            { name: "X (Twitter)", category: "social", score: 31, grade: "D", worstClauses: ["Can use your tweets to train Grok AI without opt-out", "Sells access to full tweet history to third parties", "Changes terms frequently with minimal notice"], tags: ["AI training", "Data selling", "Terms change"], lastReviewed: "2026-03-18", highlight: "Your tweets are Grok's training data now." },
-            { name: "Snapchat", category: "social", score: 45, grade: "C", worstClauses: ["Collects precise location data by default", "Shares 'anonymized' data with advertisers", "Content license allows commercial use of user-submitted snaps"], tags: ["Location tracking", "Data selling", "Content ownership"], lastReviewed: "2026-03-08", highlight: "Your 'disappearing' location data doesn't disappear." },
-            { name: "LinkedIn", category: "social", score: 52, grade: "C", worstClauses: ["Uses profile data to train AI products", "Shares employment data with Microsoft services", "Difficult to fully delete — profile remains searchable"], tags: ["AI training", "Data selling", "No deletion"], lastReviewed: "2026-03-14", highlight: "Your resume trains their AI recruiter." },
-            { name: "WhatsApp", category: "messaging", score: 48, grade: "C", worstClauses: ["Shares metadata with Facebook (who you message, when, how often)", "Backup messages to cloud storage are NOT end-to-end encrypted", "Business accounts get different privacy rules"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-11", highlight: "End-to-end encryption doesn't cover who you talk to." },
-            { name: "Telegram", category: "messaging", score: 72, grade: "B", worstClauses: ["Secret chats only — default chats stored on servers", "Can share data with law enforcement without warrant in some jurisdictions", "Groups/channels metadata is not encrypted"], tags: ["Data retention"], lastReviewed: "2026-03-09", highlight: "Only 'Secret Chats' are actually secret." },
-            { name: "Discord", category: "messaging", score: 58, grade: "C", worstClauses: ["Retains deleted messages for 'legal compliance'", "Uses message content to improve services (vague AI training clause)", "Location tracking via IP"], tags: ["Data retention", "AI training", "Location tracking"], lastReviewed: "2026-03-16", highlight: "Deleted messages stick around for 'compliance'." },
-            { name: "Signal", category: "messaging", score: 94, grade: "A", worstClauses: ["Minimal metadata retention (only last connection timestamp)", "Open source — auditable", "No phone number required (username feature)"], tags: [], lastReviewed: "2026-03-20", highlight: "The gold standard. Almost nothing to complain about." },
-            { name: "Amazon", category: "shopping", score: 28, grade: "F", worstClauses: ["Alexa recordings retained indefinitely unless manually deleted", "Purchases tracked across devices, shared with third-party sellers", "Can change Prime terms (price, benefits) unilaterally"], tags: ["Data selling", "Location tracking", "Terms change"], lastReviewed: "2026-03-13", highlight: "Alexa never forgets. You have to manually delete everything." },
-            { name: "eBay", category: "shopping", score: 51, grade: "C", worstClauses: ["Sells purchase history to data brokers", "PayPal (owned by eBay) shares financial data", "Forced arbitration for disputes"], tags: ["Data selling", "Forced arbitration"], lastReviewed: "2026-03-07", highlight: "Your buying habits are a product they sell." },
-            { name: "Shopify", category: "shopping", score: 66, grade: "B", worstClauses: ["Stores get broad access to your data (name, address, purchase history)", "No control over how individual stores use your data", "Retention policies vary by store"], tags: ["Data selling"], lastReviewed: "2026-03-10", highlight: "You're trusting every store separately. Shopify can't protect you." },
-            { name: "Netflix", category: "streaming", score: 61, grade: "C", worstClauses: ["Tracks viewing habits to train recommendation algorithms (sold as 'aggregated insights')", "Can change subscription price with 30-day notice", "Shares viewing data with content partners"], tags: ["Data selling", "Terms change"], lastReviewed: "2026-03-17", highlight: "Your binge data is their product intelligence." },
-            { name: "Spotify", category: "streaming", score: 54, grade: "C", worstClauses: ["Uses listening data to train AI-generated music features", "Sells 'anonymized' listening habits to labels/advertisers", "Account deletion doesn't delete recommendation history"], tags: ["AI training", "Data selling", "No deletion"], lastReviewed: "2026-03-12", highlight: "Your taste profile outlives your account." },
-            { name: "YouTube", category: "streaming", score: 35, grade: "D", worstClauses: ["Google tracks watch history across all services (Gmail, Maps, Search)", "Can demonetize or remove content without explanation", "Uploads grant broad license — Google can sublicense to partners"], tags: ["Data selling", "Content ownership", "Cross-platform sharing"], lastReviewed: "2026-03-19", highlight: "They track what you watch everywhere, not just YouTube." },
-            { name: "Twitch", category: "streaming", score: 47, grade: "C", worstClauses: ["Amazon can use clips/highlights for marketing without compensation", "Shares viewership data with streamers and advertisers", "Bans can be retroactive based on off-platform behavior"], tags: ["Content ownership", "Data selling"], lastReviewed: "2026-03-11", highlight: "Your clips are their marketing material." },
-            { name: "Zoom", category: "productivity", score: 42, grade: "C", worstClauses: ["Can use meeting content (video, audio, chat) to train AI if host enables certain features", "Records metadata even on encrypted calls", "Free tier recordings stored on Zoom servers"], tags: ["AI training", "Data retention"], lastReviewed: "2026-03-14", highlight: "Your meetings might train their AI assistant." },
-            { name: "Slack", category: "productivity", score: 56, grade: "C", worstClauses: ["Workspace admins can export ALL messages, including DMs", "Can use message data for 'service improvement' (AI training)", "Deleted messages retained in backups for 'compliance'"], tags: ["AI training", "Data retention"], lastReviewed: "2026-03-08", highlight: "Your DMs aren't private if your boss exports the workspace." },
-            { name: "Notion", category: "productivity", score: 68, grade: "B", worstClauses: ["Workspace admins have full access to all pages", "Can analyze content to improve AI features", "No client-side encryption — Notion employees can access data"], tags: ["AI training"], lastReviewed: "2026-03-16", highlight: "Great product, but your notes are readable by Notion staff." },
-            { name: "Google Workspace", category: "productivity", score: 39, grade: "D", worstClauses: ["Scans email content for ad targeting (consumer accounts)", "Shares data across all Google services (Search, Maps, YouTube)", "Can terminate account for 'violations' with minimal appeal"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-13", highlight: "Your work email trains their ad machine." },
-            { name: "Microsoft 365", category: "productivity", score: 63, grade: "B", worstClauses: ["Can use document content to train Copilot AI", "Telemetry data shared with LinkedIn", "Complex privacy controls spread across multiple settings pages"], tags: ["AI training", "Data selling"], lastReviewed: "2026-03-15", highlight: "Copilot learns from your documents by default." },
-            { name: "ChatGPT", category: "ai", score: 50, grade: "C", worstClauses: ["Inputs used to train models unless you opt out", "Conversations retained indefinitely by default", "Can share anonymized data with research partners"], tags: ["AI training", "Data retention", "Data selling"], lastReviewed: "2026-03-21", highlight: "Your chats train future versions unless you opt out." },
-            { name: "Claude", category: "ai", score: 76, grade: "B", worstClauses: ["Analyzes conversations for 'safety and quality' (human review possible)", "30-day retention on Trust & Safety flagged content", "Enterprise tier gets different (better) privacy"], tags: ["Data retention"], lastReviewed: "2026-03-22", highlight: "Flagged conversations get human review. Everything else is ephemeral." },
-            { name: "Gemini", category: "ai", score: 44, grade: "C", worstClauses: ["Google integrates inputs across all services (Search, Maps, YouTube)", "Can use conversations to improve products", "No deletion guarantee — 'anonymized' data retained"], tags: ["AI training", "Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-20", highlight: "Your prompts feed the entire Google ecosystem." },
-            { name: "Midjourney", category: "ai", score: 58, grade: "C", worstClauses: ["Public images are public forever (can't delete from Discord)", "Paid tier grants commercial license, but Midjourney retains rights", "Uses all prompts and outputs to train future models"], tags: ["AI training", "Content ownership"], lastReviewed: "2026-03-18", highlight: "Your prompts and images are training data. Forever." },
-            { name: "Uber", category: "shopping", score: 33, grade: "D", worstClauses: ["Tracks precise location even when app is closed", "Shares ride history with third-party partners", "Drivers' ratings/behavior data retained indefinitely"], tags: ["Location tracking", "Data selling", "No deletion"], lastRevireviewed: "2026-03-09", highlight: "They know everywhere you've been. Forever." },
-            { name: "Airbnb", category: "shopping", score: 49, grade: "C", worstClauses: ["Shares guest data with hosts (including reviews from other properties)", "Uses message content to detect 'off-platform transactions'", "Forced arbitration for disputes"], tags: ["Data selling", "Forced arbitration"], lastReviewed: "2026-03-11", highlight: "Hosts see your full review history from other stays." },
-            { name: "DoorDash", category: "shopping", score: 37, grade: "D", worstClauses: ["Tracks delivery location patterns to build behavioral profiles", "Sells 'aggregated' order data to restaurants", "Can change delivery fees/pricing unilaterally"], tags: ["Location tracking", "Data selling", "Terms change"], lastReviewed: "2026-03-14", highlight: "Your food habits are a dataset they sell." },
-            { name: "Venmo", category: "productivity", score: 41, grade: "C", worstClauses: ["Transactions are public by default", "PayPal (owner) shares financial data across services", "Can freeze accounts without explanation"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-12", highlight: "Your payment history is a social feed unless you change settings." }
-        ];
+    let services = [];
 
-        const indexEl = document.getElementById('index');
-        const searchInput = document.getElementById('search');
-        const categoryFilter = document.getElementById('category-filter');
-        const gradeFilter = document.getElementById('grade-filter');
-        const waitlistForm = document.getElementById('waitlist-form');
-        const waitlistResponse = document.getElementById('waitlist-response');
+    // Load data
+    fetch('tc-data.json')
+        .then(r => r.json())
+        .then(data => { services = data; init(); })
+        .catch(() => { document.getElementById('index-list').innerHTML = '<p class="text-neutral-500">Failed to load data.</p>'; });
 
-        function renderIndex(filteredServices) {
-            if (filteredServices.length === 0) {
-                indexEl.innerHTML = '<div class="text-center text-neutral-500 py-12">No services match your filters.</div>';
-                return;
-            }
+    function gradeBase(grade) {
+        return grade.replace(/[+-]/g, '');
+    }
 
-            indexEl.innerHTML = filteredServices.map((service, idx) => `
-                <div class="border border-neutral-800 rounded-lg p-6 hover:border-neutral-700 transition-colors duration-200">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-neutral-900 rounded-lg flex items-center justify-center text-xl font-bold">
-                                ${service.name[0]}
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold">${service.name}</h3>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-xs text-neutral-500 uppercase mono">${service.category}</span>
-                                    ${service.tags.slice(0, 2).map(tag => `<span class="text-xs px-2 py-1 bg-red-950/30 text-red-400 rounded-full">${tag}</span>`).join('')}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-3xl font-bold grade-${service.grade.toLowerCase()} mono">${service.grade}</div>
-                            <div class="text-sm text-neutral-500 mono">${service.score}/100</div>
-                        </div>
-                    </div>
-                    <div class="mb-4 text-lg text-neutral-300 italic">
-                        "${service.highlight}"
-                    </div>
-                    <div class="space-y-2">
-                        ${service.worstClauses.map(clause => `
-                            <div class="flex gap-2 text-sm text-neutral-400">
-                                <span class="text-red-500 flex-shrink-0">⚠</span>
-                                <span>${clause}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-neutral-900 text-xs text-neutral-600 mono">
-                        Last reviewed: ${service.lastReviewed}
-                    </div>
-                </div>
-            `).join('');
-        }
+    function gradeClass(grade) {
+        const b = gradeBase(grade).toLowerCase();
+        return ['a','b','c','d','f'].includes(b) ? b : 'd';
+    }
 
-        function filterServices() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const category = categoryFilter.value;
-            const grade = gradeFilter.value;
+    function scoreColor(score) {
+        if (score >= 85) return '#10b981';
+        if (score >= 70) return '#22d3ee';
+        if (score >= 50) return '#f59e0b';
+        if (score >= 30) return '#f97316';
+        return '#ef4444';
+    }
 
-            const filtered = services.filter(service => {
-                const matchesSearch = service.name.toLowerCase().includes(searchTerm);
-                const matchesCategory = !category || service.category === category;
-                const matchesGrade = !grade || service.grade === grade;
-                return matchesSearch && matchesCategory && matchesGrade;
-            });
+    function categoryLabel(key) {
+        const labels = {
+            data_selling: 'Data Selling',
+            content_ownership: 'Content Ownership',
+            forced_arbitration: 'Forced Arbitration',
+            terms_change: 'Terms Changes',
+            deletion_difficulty: 'Deletion Difficulty',
+            data_retention: 'Data Retention',
+            location_tracking: 'Location Tracking',
+            cross_platform: 'Cross-Platform Sharing',
+            ai_training: 'AI Training',
+            liability: 'Liability Limits'
+        };
+        return labels[key] || key;
+    }
 
-            // Sort by score (worst first)
-            filtered.sort((a, b) => a.score - b.score);
-            renderIndex(filtered);
-        }
+    function init() {
+        computeStats();
+        renderIndex();
+        populateCompare();
+        renderExposureGrid();
+        setupListeners();
+        document.getElementById('service-count').textContent = services.length;
+    }
 
-        searchInput.addEventListener('input', filterServices);
-        categoryFilter.addEventListener('change', filterServices);
-        gradeFilter.addEventListener('change', filterServices);
+    function computeStats() {
+        const n = services.length;
+        const pct = (key, threshold) => {
+            const count = services.filter(s => s.scores[key] >= threshold).length;
+            return Math.round(count / n * 100) + '%';
+        };
+        document.getElementById('stat-data').textContent = pct('data_selling', 5);
+        document.getElementById('stat-arb').textContent = pct('forced_arbitration', 6);
+        document.getElementById('stat-ai').textContent = pct('ai_training', 5);
+        document.getElementById('stat-retain').textContent = pct('data_retention', 5);
+    }
 
-        waitlistForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            
-            // Simulate submission (replace with actual endpoint)
-            waitlistResponse.innerHTML = '<div class="text-green-500">✓ You\'re on the list. We\'ll email you when it\'s ready.</div>';
-            waitlistForm.reset();
-            
-            setTimeout(() => {
-                waitlistResponse.innerHTML = '';
-            }, 5000);
+    function renderIndex() {
+        const search = document.getElementById('search').value.toLowerCase();
+        const cat = document.getElementById('category-filter').value;
+        const grade = document.getElementById('grade-filter').value;
+        const sort = document.getElementById('sort-filter').value;
+
+        let filtered = services.filter(s => {
+            const matchSearch = s.name.toLowerCase().includes(search);
+            const matchCat = !cat || s.category === cat;
+            const matchGrade = !grade || gradeBase(s.grade) === grade;
+            return matchSearch && matchCat && matchGrade;
         });
 
-        // Initial render
-        filterServices();
-        document.getElementById('service-count').textContent = services.length;
+        if (sort === 'score-asc') filtered.sort((a, b) => a.overallScore - b.overallScore);
+        else if (sort === 'score-desc') filtered.sort((a, b) => b.overallScore - a.overallScore);
+        else filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+        document.getElementById('result-count').textContent = filtered.length;
+
+        const html = filtered.map((s, i) => `
+            <div class="border border-neutral-900 hover:border-neutral-700 rounded-lg p-5 cursor-pointer transition-all duration-200" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'> 
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <div class="w-10 h-10 rounded-lg bg-neutral-900 flex items-center justify-center text-lg font-bold font-serif flex-shrink-0">${s.name[0]}</div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 class="font-semibold font-sans text-sm">${s.name}</h3>
+                                <span class="font-mono text-[10px] text-neutral-600 uppercase">${s.category}</span>
+                            </div>
+                            <div class="text-xs text-neutral-500 mt-0.5 italic font-serif truncate">"${s.highlight}"</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 flex-shrink-0 ml-4">
+                        <div class="hidden md:flex flex-col gap-1 items-end">
+                            ${s.tags.slice(0, 2).map(t => `<span class="text-[10px] px-2 py-0.5 rounded-full border border-neutral-800 text-neutral-500">${t}</span>`).join('')}
+                        </div>
+                        <div class="text-right">
+                            <div class="grade-letter text-2xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                            <div class="font-mono text-[10px] text-neutral-600">${s.overallScore}/100</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="score-bar"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('index-list').innerHTML = html || '<div class="text-center text-neutral-600 py-12 font-sans text-sm">No services match your filters.</div>';
+    }
+
+    function openDetail(name) {
+        const s = services.find(x => x.name === name);
+        if (!s) return;
+
+        const scoreEntries = Object.entries(s.scores).sort((a, b) => b[1] - a[1]);
+
+        const html = `
+            <div class="flex items-start justify-between mb-6">
+                <div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-1">${s.category}</div>
+                    <h2 class="font-serif text-3xl font-bold">${s.name}</h2>
+                </div>
+                <div class="text-right">
+                    <div class="grade-letter text-4xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                    <div class="font-mono text-sm text-neutral-500">${s.overallScore}/100</div>
+                </div>
+            </div>
+            <div class="text-lg text-neutral-300 italic font-serif mb-8 border-l-2 border-red-800 pl-4">"${s.highlight}"</div>
+            
+            <div class="mb-8">
+                <h3 class="font-sans text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">Category Scores</h3>
+                <div class="space-y-2">
+                    ${scoreEntries.map(([key, val]) => `
+                        <div class="flex items-center gap-3">
+                            <div class="text-xs text-neutral-500 font-sans w-36 flex-shrink-0">${categoryLabel(key)}</div>
+                            <div class="flex-1 score-bar"><div class="score-fill" style="width:${val * 10}%;background:${val >= 7 ? '#ef4444' : val >= 5 ? '#f59e0b' : '#10b981'}"></div></div>
+                            <div class="font-mono text-xs w-6 text-right ${val >= 7 ? 'text-red-500' : val >= 5 ? 'text-amber-500' : 'text-green-500'}">${val}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="font-sans text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">Worst Clauses</h3>
+                <div class="space-y-4">
+                    ${s.worstClauses.map(c => `
+                        <div class="clause-card pl-4 py-2">
+                            <div class="font-mono text-[10px] text-red-700 uppercase mb-1">${c.category.replace(/_/g, ' ')}</div>
+                            <blockquote class="text-xs text-neutral-400 italic mb-2 font-serif leading-relaxed">"${c.verbatim}"</blockquote>
+                            <div class="text-sm text-neutral-200 font-sans">${c.translation}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                ${s.tags.map(t => `<span class="text-[10px] px-2.5 py-1 rounded-full border border-red-900/30 text-red-400 font-mono">${t}</span>`).join('')}
+            </div>
+
+            <div class="flex flex-wrap gap-4 text-xs font-sans text-neutral-600 border-t border-neutral-900 pt-4">
+                <span>Reviewed: ${s.lastReviewed}</span>
+                ${s.tosUrl ? `<a href="${s.tosUrl}" target="_blank" class="text-neutral-500 hover:text-white underline">Terms of Service</a>` : ''}
+                ${s.privacyUrl ? `<a href="${s.privacyUrl}" target="_blank" class="text-neutral-500 hover:text-white underline">Privacy Policy</a>` : ''}
+            </div>
+        `;
+
+        document.getElementById('detail-content').innerHTML = html;
+        document.getElementById('detail-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail() {
+        document.getElementById('detail-modal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('detail-modal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('detail-modal')) closeDetail();
+    });
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
+
+    // Compare
+    function populateCompare() {
+        const sorted = [...services].sort((a, b) => a.name.localeCompare(b.name));
+        ['compare-a', 'compare-b'].forEach(id => {
+            const sel = document.getElementById(id);
+            sorted.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.name;
+                opt.textContent = `${s.name} (${s.grade})`;
+                sel.appendChild(opt);
+            });
+        });
+    }
+
+    function renderComparison() {
+        const a = services.find(s => s.name === document.getElementById('compare-a').value);
+        const b = services.find(s => s.name === document.getElementById('compare-b').value);
+        if (!a || !b) { document.getElementById('compare-result').innerHTML = ''; return; }
+
+        const categories = Object.keys(a.scores);
+
+        function renderCol(s) {
+            return `
+                <div class="border border-neutral-900 rounded-lg p-6 comparison-col fade-in">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-serif text-xl font-bold">${s.name}</h3>
+                        <div class="grade-letter text-2xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                    </div>
+                    <div class="font-mono text-sm mb-4">${s.overallScore}/100</div>
+                    <div class="space-y-2 mb-6">
+                        ${categories.map(key => {
+                            const val = s.scores[key];
+                            const otherVal = (s === a ? b : a).scores[key];
+                            const better = val < otherVal;
+                            const worse = val > otherVal;
+                            return `
+                                <div class="flex items-center gap-2">
+                                    <div class="text-[10px] text-neutral-500 w-24 flex-shrink-0">${categoryLabel(key)}</div>
+                                    <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#ef4444':val>=5?'#f59e0b':'#10b981'}"></div></div>
+                                    <div class="font-mono text-[10px] w-4 text-right ${val>=7?'text-red-500':val>=5?'text-amber-500':'text-green-500'}">${val}</div>
+                                    ${better ? '<span class="text-green-500 text-[10px]">&#9650;</span>' : worse ? '<span class="text-red-500 text-[10px]">&#9660;</span>' : '<span class="text-neutral-700 text-[10px]">=</span>'}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="text-xs text-neutral-400 italic font-serif border-t border-neutral-900 pt-4">"${s.highlight}"</div>
+                </div>
+            `;
+        }
+
+        document.getElementById('compare-result').innerHTML = renderCol(a) + renderCol(b);
+    }
+
+    // Exposure
+    function renderExposureGrid() {
+        const sorted = [...services].sort((a, b) => a.name.localeCompare(b.name));
+        document.getElementById('exposure-grid').innerHTML = sorted.map(s => `
+            <div>
+                <input type="checkbox" class="exposure-check hidden" id="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" value="${s.name}" onchange="calcExposure()">
+                <label for="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" class="block border rounded-lg p-3 cursor-pointer transition-all duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-sans">${s.name}</span>
+                        <span class="grade-letter text-sm grade-${gradeClass(s.grade)}">${s.grade}</span>
+                    </div>
+                </label>
+            </div>
+        `).join('');
+    }
+
+    function calcExposure() {
+        const checked = Array.from(document.querySelectorAll('.exposure-check:checked')).map(el => el.value);
+        const result = document.getElementById('exposure-result');
+
+        if (checked.length === 0) { result.classList.add('hidden'); return; }
+        result.classList.remove('hidden');
+
+        const selected = services.filter(s => checked.includes(s.name));
+        const avgScore = Math.round(selected.reduce((sum, s) => sum + s.overallScore, 0) / selected.length);
+        const worstCategory = {};
+        
+        selected.forEach(s => {
+            Object.entries(s.scores).forEach(([key, val]) => {
+                if (!worstCategory[key]) worstCategory[key] = 0;
+                worstCategory[key] = Math.max(worstCategory[key], val);
+            });
+        });
+
+        const topRisks = Object.entries(worstCategory).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        
+        // Exposure score: inverse — lower avg = higher exposure
+        const exposure = 100 - avgScore;
+
+        const scoreEl = document.getElementById('exposure-score');
+        scoreEl.textContent = exposure + '/100';
+        scoreEl.className = `text-6xl font-mono font-bold mb-2 ${exposure >= 70 ? 'text-red-500' : exposure >= 50 ? 'text-amber-500' : exposure >= 30 ? 'text-cyan-400' : 'text-green-500'}`;
+
+        const labels = {
+            0: 'Low exposure. Your data is relatively safe.',
+            30: 'Moderate exposure. Some services are problematic.',
+            50: 'High exposure. You\'ve agreed to a lot.',
+            70: 'Critical exposure. Your data is everywhere.'
+        };
+        const labelKey = exposure >= 70 ? 70 : exposure >= 50 ? 50 : exposure >= 30 ? 30 : 0;
+        document.getElementById('exposure-label').textContent = `${checked.length} services selected · ${labels[labelKey]}`;
+
+        document.getElementById('exposure-breakdown').innerHTML = `
+            <div class="font-sans text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Your Biggest Risks</div>
+            ${topRisks.map(([key, val]) => `
+                <div class="flex items-center gap-3">
+                    <div class="text-xs text-neutral-500 w-36">${categoryLabel(key)}</div>
+                    <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#ef4444':val>=5?'#f59e0b':'#10b981'}"></div></div>
+                    <div class="font-mono text-xs ${val>=7?'text-red-500':val>=5?'text-amber-500':'text-green-500'}">${val}/10</div>
+                </div>
+            `).join('')}
+            <div class="border-t border-neutral-900 pt-4 mt-4">
+                <div class="text-xs text-neutral-600">Worst offender: <span class="text-neutral-300">${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].name} (${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].grade})</span></div>
+            </div>
+        `;
+    }
+
+    // Tabs
+    function switchTab(tab) {
+        ['index', 'compare', 'exposure'].forEach(t => {
+            document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+            document.querySelector(`[data-tab="${t}"]`).className = t === tab ? 'tab-active pb-3 text-sm font-medium transition-all' : 'tab-inactive pb-3 text-sm font-medium transition-all';
+        });
+    }
+
+    function setupListeners() {
+        document.getElementById('search').addEventListener('input', renderIndex);
+        document.getElementById('category-filter').addEventListener('change', renderIndex);
+        document.getElementById('grade-filter').addEventListener('change', renderIndex);
+        document.getElementById('sort-filter').addEventListener('change', renderIndex);
+        document.getElementById('compare-a').addEventListener('change', renderComparison);
+        document.getElementById('compare-b').addEventListener('change', renderComparison);
+
+        document.getElementById('waitlist-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('waitlist-response').innerHTML = '<div class="text-green-500">You\'re on the list. We\'ll email you when it ships.</div>';
+            document.getElementById('waitlist-form').reset();
+            setTimeout(() => document.getElementById('waitlist-response').innerHTML = '', 5000);
+        });
+    }
     </script>
 </body>
 </html>

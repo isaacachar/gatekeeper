@@ -1,0 +1,1332 @@
+[
+  {
+    "name": "TikTok",
+    "category": "social",
+    "tosUrl": "https://www.tiktok.com/legal/terms-of-service-us",
+    "privacyUrl": "https://www.tiktok.com/legal/privacy-policy-us",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 8,
+      "forced_arbitration": 8,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 9,
+      "cross_platform": 8,
+      "ai_training": 9,
+      "liability": 7
+    },
+    "overallScore": 26,
+    "grade": "D",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant us a worldwide, non-exclusive, royalty-free license (with the right to sublicense) to use, copy, reproduce, process, adapt, modify, publish, transmit, display, upload, download, and distribute such Content in any and all media or distribution methods now known or later developed.",
+        "translation": "TikTok can do literally anything with your content — copy it, modify it, sublicense it to others — and you get nothing for it."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "Your Content also includes prompts, questions, files, and other types of information that you submit to our AI-powered interfaces ('Input') together with the responses those interfaces generate ('Output').",
+        "translation": "Everything you type into TikTok's AI features becomes 'Your Content' — which they've already licensed themselves to use however they want."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "If you choose to enable location services for the TikTok app within your device settings, we collect approximate or precise location information from your device.",
+        "translation": "They collect precise GPS data when enabled, plus they always infer location from IP, SIM card region, and device settings."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "Advertisers, publishers, and measurement and other partners provide us with information about you and the actions you have taken outside of our websites and apps.",
+        "translation": "Third-party advertisers feed TikTok data about what you do on OTHER websites and apps, building a shadow profile of your entire online life."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "We collect content characteristics and features, including faceprints and voiceprints, from your user content.",
+        "translation": "TikTok collects your biometric data — your actual face geometry and voice patterns — from videos you post."
+      }
+    ],
+    "highlight": "TikTok collects your biometrics, tracks your location, and claims sweeping rights to use all your content for AI training.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Biometric collection", "AI training", "Location tracking", "Broad content license", "Third-party data sharing"]
+  },
+  {
+    "name": "Instagram",
+    "category": "social",
+    "tosUrl": "https://help.instagram.com/581066165581870",
+    "privacyUrl": "https://privacycenter.instagram.com/policy",
+    "scores": {
+      "data_selling": 8,
+      "content_ownership": 7,
+      "forced_arbitration": 8,
+      "terms_change": 7,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 8,
+      "cross_platform": 9,
+      "ai_training": 9,
+      "liability": 7
+    },
+    "overallScore": 25,
+    "grade": "D",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant us a non-exclusive, transferable, sub-licensable, royalty-free, and worldwide license to host, use, distribute, modify, run, copy, publicly perform or display, translate, and create derivative works of your content.",
+        "translation": "Meta can take your photos and videos and do whatever they want — modify them, give them to partners, make money off them — all for free."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "We share information across the Meta Companies to provide our services, including to design, develop, test, and improve our products.",
+        "translation": "Your Instagram data flows freely to Facebook, WhatsApp, Meta Quest, and every other Meta product — it's all one big data pool."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We use the information we have to develop, test, and improve our products, including by using machine learning technologies such as AI.",
+        "translation": "Your photos, comments, DMs — all of it feeds Meta's AI training pipeline. Your content helps train the AI that competes with you."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "We provide advertisers with reports about the kinds of people seeing their ads and how their ads are performing, and we share information directly with advertisers.",
+        "translation": "Meta's entire business model is selling your attention and data profile to advertisers — they just call it 'sharing reports.'"
+      }
+    ],
+    "highlight": "Meta's data vampire: your content trains their AI, your data feeds their ad machine, and it's all shared across every Meta product.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training", "Cross-platform sharing", "Ad targeting", "Broad content license", "Data selling"]
+  },
+  {
+    "name": "Facebook",
+    "category": "social",
+    "tosUrl": "https://www.facebook.com/legal/terms",
+    "privacyUrl": "https://www.facebook.com/privacy/policy/",
+    "scores": {
+      "data_selling": 9,
+      "content_ownership": 7,
+      "forced_arbitration": 8,
+      "terms_change": 7,
+      "deletion_difficulty": 6,
+      "data_retention": 8,
+      "location_tracking": 8,
+      "cross_platform": 9,
+      "ai_training": 9,
+      "liability": 7
+    },
+    "overallScore": 22,
+    "grade": "D-",
+    "worstClauses": [
+      {
+        "category": "data_selling",
+        "verbatim": "We use all of the information we have to provide and support our Products. We use information from third-party partners, including advertisers, to show you relevant ads.",
+        "translation": "Facebook combines data from across the internet — what you browse, buy, and do offline — to build the most detailed ad profile possible."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "We share information we collect with the Meta Companies. The information we receive about you can be accessed and processed for extended periods when it is the subject of a legal request or obligation.",
+        "translation": "Your Facebook data is shared across all Meta products. They retain it indefinitely if there's any legal pretext."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We use the information we have to research and develop new features and products, including using machine learning technologies.",
+        "translation": "Every post, photo, and interaction you've ever had on Facebook is training data for Meta's AI models."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "We store data until it is no longer necessary to provide our services and Meta Products, or until your account is deleted — whichever comes first.",
+        "translation": "Meta decides when your data is 'no longer necessary' — which practically means they keep it as long as they want."
+      }
+    ],
+    "highlight": "The OG data harvester: Facebook built the playbook for surveillance capitalism and still runs it at industrial scale.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Surveillance capitalism", "AI training", "Cross-platform sharing", "Data retention", "Ad targeting"]
+  },
+  {
+    "name": "X (Twitter)",
+    "category": "social",
+    "tosUrl": "https://x.com/en/tos",
+    "privacyUrl": "https://x.com/en/privacy",
+    "scores": {
+      "data_selling": 8,
+      "content_ownership": 9,
+      "forced_arbitration": 7,
+      "terms_change": 8,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 7,
+      "cross_platform": 7,
+      "ai_training": 10,
+      "liability": 8
+    },
+    "overallScore": 24,
+    "grade": "D",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "You agree that this license includes the right for us to (i) analyze text and other information you provide and to otherwise provide, promote, and improve the Services, including, for example, for use with and training of our machine learning and artificial intelligence models, whether generative or another type.",
+        "translation": "Every tweet you post is explicitly being used to train X/Grok's AI. You agreed to this by using the platform. No opt-out."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant us a worldwide, non-exclusive, royalty-free license (with the right to sublicense) to use, copy, reproduce, process, adapt, modify, publish, transmit, display, upload, download, and distribute such Content in any and all media or distribution methods now known or later developed, for any purpose.",
+        "translation": "X takes an unlimited license to your content — for ANY purpose, in ANY media, forever. This is one of the broadest content grabs in tech."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "This license authorizes us to make your Content available to other companies, organizations or individuals for the syndication, broadcast, distribution, repost, promotion or publication of such Content on other media and services.",
+        "translation": "X can sell/license your tweets to any company. Your content can end up anywhere, and you get nothing."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "We may suspend or terminate your account for other reasons, such as prolonged inactivity, risk of legal exposure, or commercial inviability.",
+        "translation": "X can kill your account if they decide you're a legal risk or just not commercially worth keeping around."
+      }
+    ],
+    "highlight": "X explicitly trains AI on all your content with no opt-out, and grants itself the broadest content license in social media.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training", "Extreme content license", "Data selling", "No opt-out", "Account termination"]
+  },
+  {
+    "name": "Snapchat",
+    "category": "social",
+    "tosUrl": "https://snap.com/en-US/terms",
+    "privacyUrl": "https://values.snap.com/privacy/privacy-policy",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 9,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 9,
+      "cross_platform": 6,
+      "ai_training": 7,
+      "liability": 7
+    },
+    "overallScore": 30,
+    "grade": "D+",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant Snap, our affiliates, other users of the Services, and our business partners an unrestricted, worldwide, royalty-free, irrevocable, and perpetual right and license to create derivative works from, promote, exhibit, broadcast, syndicate, reproduce, distribute your Public Content.",
+        "translation": "Anything you post publicly on Snap is IRREVOCABLE and PERPETUAL — they own it forever. Even if you delete your account."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "DISPUTES BETWEEN US WILL BE RESOLVED BY MANDATORY BINDING ARBITRATION, AND YOU AND SNAP WAIVE ANY RIGHT TO PARTICIPATE IN A CLASS-ACTION LAWSUIT OR CLASS-WIDE ARBITRATION.",
+        "translation": "You can never join a class action against Snap. All disputes must go through private arbitration where corporations typically have the advantage."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "If you've explicitly granted device-level permissions, device information may also include precise location through methods like GPS signals.",
+        "translation": "Snap Map and location features collect your precise GPS coordinates — your exact physical location in real-time."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "This means, among other things, that you will not be entitled to any compensation if your content, videos, photos, sound recordings, name, image, likeness, or voice are used by us, our affiliates, users of the Services, or our business partners.",
+        "translation": "Snap can use your face, voice, and name in their marketing and share it with business partners — and you get zero compensation."
+      }
+    ],
+    "highlight": "Snap claims irrevocable, perpetual rights to your public content including your face and voice — and you waive all compensation.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Perpetual content license", "Forced arbitration", "Location tracking", "Likeness rights", "No compensation"]
+  },
+  {
+    "name": "LinkedIn",
+    "category": "social",
+    "tosUrl": "https://www.linkedin.com/legal/user-agreement",
+    "privacyUrl": "https://www.linkedin.com/legal/privacy-policy",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 6,
+      "forced_arbitration": 6,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 5,
+      "cross_platform": 8,
+      "ai_training": 9,
+      "liability": 6
+    },
+    "overallScore": 37,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "We may use your personal data to improve, develop, and provide products and Services, develop and train artificial intelligence (AI) models, develop, provide, and personalize our Services.",
+        "translation": "LinkedIn explicitly uses your professional data — your resume, posts, connections, messages — to train AI models. Your career history is AI training data."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "We receive data about you when you use some of the other services provided by us or our Affiliates, including Microsoft. For example, you may choose to send us information about your contacts in Microsoft apps.",
+        "translation": "LinkedIn shares data with Microsoft (its parent). Your professional network data flows to Outlook, Teams, Bing, and Copilot."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant LinkedIn and our Affiliates a worldwide, transferable and sublicensable right to use, copy, modify, distribute, publicly perform and display, host, and process your content.",
+        "translation": "LinkedIn and Microsoft get a transferable license to all your professional content — posts, articles, recommendations — everything."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "We collect (or rely on others, including Microsoft, who collect) information about your device where you have not engaged with our Services so we can provide our Members with relevant ads.",
+        "translation": "LinkedIn and Microsoft track you on OTHER websites you visit — even when you're not using LinkedIn — to target ads."
+      }
+    ],
+    "highlight": "Your professional identity is Microsoft's AI training data — LinkedIn feeds your career, connections, and content straight into Copilot.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training", "Microsoft data sharing", "Off-platform tracking", "Professional data mining", "Broad content license"]
+  },
+  {
+    "name": "WhatsApp",
+    "category": "messaging",
+    "tosUrl": "https://www.whatsapp.com/legal/terms-of-service",
+    "privacyUrl": "https://www.whatsapp.com/legal/privacy-policy",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 3,
+      "forced_arbitration": 8,
+      "terms_change": 7,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 7,
+      "cross_platform": 9,
+      "ai_training": 6,
+      "liability": 7
+    },
+    "overallScore": 34,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "cross_platform",
+        "verbatim": "As part of the Meta Companies, WhatsApp receives information from, and shares information with, the other Meta Companies to promote safety, security, and integrity across the Meta Company Products.",
+        "translation": "Despite 'end-to-end encryption,' WhatsApp shares your metadata — who you talk to, when, how often — with Facebook, Instagram, and all of Meta."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "YOU AND WHATSAPP AGREE THAT ANY CAUSE OF ACTION ARISING OUT OF OR RELATED TO THE SERVICES MUST COMMENCE WITHIN ONE (1) YEAR AFTER THE CAUSE OF ACTION ACCRUES.",
+        "translation": "You only have ONE year to file any legal claim. After that, you lose your rights permanently — regardless of when you discover harm."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "WhatsApp may retain certain information about you as required by law, or for legitimate business purposes to the extent permitted by law.",
+        "translation": "Even after you delete your account, WhatsApp keeps data about you for as long as they want, citing vague 'legitimate business purposes.'"
+      }
+    ],
+    "highlight": "End-to-end encryption for messages, but metadata about who, when, and how you communicate flows freely across all of Meta.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Meta data sharing", "Metadata collection", "Forced arbitration", "Data retention", "Contact harvesting"]
+  },
+  {
+    "name": "Telegram",
+    "category": "messaging",
+    "tosUrl": "https://telegram.org/tos",
+    "privacyUrl": "https://telegram.org/privacy",
+    "scores": {
+      "data_selling": 1,
+      "content_ownership": 2,
+      "forced_arbitration": 2,
+      "terms_change": 5,
+      "deletion_difficulty": 2,
+      "data_retention": 3,
+      "location_tracking": 3,
+      "cross_platform": 1,
+      "ai_training": 2,
+      "liability": 5
+    },
+    "overallScore": 74,
+    "grade": "B",
+    "worstClauses": [
+      {
+        "category": "terms_change",
+        "verbatim": "We reserve the right to update these Terms of Service later.",
+        "translation": "Telegram can change their terms whenever they want with no specific notice period mentioned — though historically they've been reasonable."
+      },
+      {
+        "category": "liability",
+        "verbatim": "Telegram will not compensate you for any direct or indirect loss resulting from our temporary inability to provide any free or paid services.",
+        "translation": "If Telegram goes down and you lose access to messages or services, they owe you nothing — standard but worth noting."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Telegram is a cloud service. We store messages, photos, videos and documents from your cloud chats on our servers.",
+        "translation": "Cloud chats are stored on Telegram's servers (though encrypted). Use Secret Chats for true end-to-end encryption with no server storage."
+      }
+    ],
+    "highlight": "The privacy-first outlier: no ads, no data selling, no AI training, and secret chats leave zero trace on servers.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Privacy-focused", "No ads", "No data selling", "Secret chats", "Minimal data collection"]
+  },
+  {
+    "name": "Discord",
+    "category": "messaging",
+    "tosUrl": "https://discord.com/terms",
+    "privacyUrl": "https://discord.com/privacy",
+    "scores": {
+      "data_selling": 5,
+      "content_ownership": 6,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 4,
+      "cross_platform": 5,
+      "ai_training": 6,
+      "liability": 7
+    },
+    "overallScore": 42,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "The section titled 'Settling Disputes Between You and Discord' contains an arbitration clause and class-action waiver that applies to all U.S. or Canada-based Discord users.",
+        "translation": "If Discord wrongs you, you can't sue them in court or join a class action. You're forced into private arbitration."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant us a license to use, reproduce, distribute, create derivative works of, display, and perform your content. This license is worldwide, non-exclusive, royalty-free, sublicensable, and transferable.",
+        "translation": "Discord gets a broad, transferable license to all your messages, files, and streams. They can sublicense your content to others."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We may build features that help you create content, communicate with others, discover or access content or third-party services.",
+        "translation": "Discord's AI features like Clyde use platform data. While they claim to respect settings, the exact scope of AI training is murky."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Your content may not be retrievable due to outages or changes. We are not liable for any such outages or service changes.",
+        "translation": "Discord can lose your data during outages and owes you nothing. They also reserve the right to block or permanently delete your content."
+      }
+    ],
+    "highlight": "Forced arbitration for half a billion users, broad content license, and growing AI ambitions with your chat data.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Forced arbitration", "Broad content license", "AI features", "Data retention risks", "Class action waiver"]
+  },
+  {
+    "name": "Signal",
+    "category": "messaging",
+    "tosUrl": "https://signal.org/legal/#terms-of-service",
+    "privacyUrl": "https://signal.org/legal/#privacy-policy",
+    "scores": {
+      "data_selling": 0,
+      "content_ownership": 0,
+      "forced_arbitration": 3,
+      "terms_change": 3,
+      "deletion_difficulty": 1,
+      "data_retention": 1,
+      "location_tracking": 0,
+      "cross_platform": 0,
+      "ai_training": 0,
+      "liability": 6
+    },
+    "overallScore": 86,
+    "grade": "A",
+    "worstClauses": [
+      {
+        "category": "liability",
+        "verbatim": "OUR AGGREGATE LIABILITY RELATING TO, ARISING OUT OF, OR IN ANY WAY IN CONNECTION WITH OUR TERMS, US, OR OUR SERVICES WILL NOT EXCEED ONE HUNDRED DOLLARS ($100).",
+        "translation": "Signal's total liability to you is capped at $100 — but given the service is free, this is standard."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "You agree to resolve any Claim you have with us exclusively in the United States District Court for the Northern District of California.",
+        "translation": "Disputes go to a specific court in California — not arbitration, which is better, but still requires traveling to their home turf."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Signal cannot decrypt or otherwise access the content of your messages or calls. Your message history is stored on your own devices.",
+        "translation": "Signal literally cannot access your messages — they're stored only on your device. This is the gold standard for privacy."
+      }
+    ],
+    "highlight": "The gold standard for privacy: Signal can't read your messages, doesn't sell data, doesn't track you, and doesn't train AI on anything.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Privacy gold standard", "End-to-end encryption", "No data collection", "No AI training", "Nonprofit"]
+  },
+  {
+    "name": "Amazon",
+    "category": "shopping",
+    "tosUrl": "https://www.amazon.com/gp/help/customer/display.html?nodeId=508088",
+    "privacyUrl": "https://www.amazon.com/gp/help/customer/display.html?nodeId=468496",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 5,
+      "forced_arbitration": 8,
+      "terms_change": 8,
+      "deletion_difficulty": 6,
+      "data_retention": 8,
+      "location_tracking": 7,
+      "cross_platform": 9,
+      "ai_training": 7,
+      "liability": 8
+    },
+    "overallScore": 27,
+    "grade": "D",
+    "worstClauses": [
+      {
+        "category": "terms_change",
+        "verbatim": "We reserve the right to make changes to our site, policies, Service Terms, and these Conditions of Use at any time.",
+        "translation": "Amazon can change any terms whenever they want. Your continued use means you agree. No meaningful notice required."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Amazon processes personal information for our business purposes, which include providing and improving services across Amazon.com, Alexa, AWS, Ring, Whole Foods, and affiliates.",
+        "translation": "Your shopping data, Alexa recordings, Ring doorbell footage, and browsing all flow into one massive Amazon profile."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Any dispute or claim relating in any way to your use of any Amazon Service will be adjudicated in the state or Federal courts in King County, Washington, and you consent to exclusive jurisdiction.",
+        "translation": "All legal disputes must be fought on Amazon's home turf in Seattle — and they include binding arbitration clauses."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "We retain your personal information to enable your continued use of Amazon Services, for as long as it is necessary for our purposes described in this Privacy Notice.",
+        "translation": "Amazon keeps your data basically forever — every purchase, every search, every Alexa command — for 'as long as necessary.'"
+      }
+    ],
+    "highlight": "Amazon's surveillance empire spans shopping, smart home, groceries, and cloud — all feeding one unified data profile.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Cross-platform surveillance", "Alexa recordings", "Data retention", "Forced arbitration", "Terms changes"]
+  },
+  {
+    "name": "eBay",
+    "category": "shopping",
+    "tosUrl": "https://www.ebay.com/help/policies/member-behaviour-policies/user-agreement?id=4259",
+    "privacyUrl": "https://www.ebay.com/help/policies/member-behaviour-policies/user-privacy-notice-privacy-policy?id=4260",
+    "scores": {
+      "data_selling": 6,
+      "content_ownership": 4,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 6,
+      "location_tracking": 5,
+      "cross_platform": 5,
+      "ai_training": 5,
+      "liability": 7
+    },
+    "overallScore": 42,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "If you do not opt out: (1) you will only be permitted to pursue claims against us on an individual basis, not as a plaintiff or class member in any class or representative action; (2) you are waiving your right to pursue disputes in a court of law and to have a jury trial.",
+        "translation": "eBay forces you into individual arbitration and explicitly waives your right to a jury trial and class actions."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We may use artificial intelligence or AI-powered tools and products to provide and improve our Services, to offer you a customized experience, and to support fraud detection.",
+        "translation": "eBay uses AI on your data for personalization and fraud detection — the scope of AI training on user data is expanding."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "We reserve the right to refuse, modify, or terminate all or part of our Services to anyone for any reason at our discretion.",
+        "translation": "eBay can shut down your selling business for any reason, at any time, with no obligation to explain."
+      }
+    ],
+    "highlight": "Binding arbitration with class action waiver, AI-powered everything, and they can terminate your seller business at will.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Forced arbitration", "Class action waiver", "AI tools", "Seller vulnerability", "Account termination"]
+  },
+  {
+    "name": "Shopify",
+    "category": "shopping",
+    "tosUrl": "https://www.shopify.com/legal/terms",
+    "privacyUrl": "https://www.shopify.com/legal/privacy",
+    "scores": {
+      "data_selling": 5,
+      "content_ownership": 4,
+      "forced_arbitration": 5,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 5,
+      "location_tracking": 3,
+      "cross_platform": 5,
+      "ai_training": 5,
+      "liability": 7
+    },
+    "overallScore": 51,
+    "grade": "C+",
+    "worstClauses": [
+      {
+        "category": "liability",
+        "verbatim": "In no event shall Shopify, or our suppliers, partners, or service providers be liable for any direct, indirect, incidental, special, consequential, or exemplary damages arising out of your use of the Services.",
+        "translation": "If Shopify's platform crashes during Black Friday and you lose $100K in sales, they owe you nothing. Zero liability."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "Shopify may reject your application for an Account, or cancel an existing Account, for any reason, at our sole discretion.",
+        "translation": "Shopify can shut down your entire online business without explanation. Your livelihood depends on their goodwill."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "You understand that your Materials may be transferred unencrypted and involve transmissions over various networks and changes to conform and adapt to technical requirements.",
+        "translation": "Your store data travels unencrypted across networks. Combined with Shopify's growing AI features (Sidekick, Magic), your business data feeds their AI."
+      }
+    ],
+    "highlight": "Your entire online business runs at Shopify's discretion — they can cancel your account for any reason with zero liability.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Platform dependency", "Zero liability", "Account cancellation", "AI features", "Unencrypted data transfer"]
+  },
+  {
+    "name": "Netflix",
+    "category": "streaming",
+    "tosUrl": "https://help.netflix.com/legal/termsofuse",
+    "privacyUrl": "https://help.netflix.com/legal/privacy",
+    "scores": {
+      "data_selling": 4,
+      "content_ownership": 2,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 3,
+      "data_retention": 5,
+      "location_tracking": 6,
+      "cross_platform": 3,
+      "ai_training": 4,
+      "liability": 6
+    },
+    "overallScore": 52,
+    "grade": "C+",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "YOU AGREE TO THE ARBITRATION AGREEMENT AND CLASS ACTION WAIVER DESCRIBED IN SECTION 7 TO RESOLVE ANY DISPUTES WITH NETFLIX (EXCEPT FOR MATTERS THAT MAY BE TAKEN TO SMALL CLAIMS COURT).",
+        "translation": "Netflix forces binding arbitration for all disputes. You cannot join a class action lawsuit against them."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "We may change our subscription plans and the price of our service from time to time. We will notify you at least one month before any price changes.",
+        "translation": "Netflix gives 30 days notice before price hikes — slightly better than many, but they've raised prices repeatedly."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "You may access Netflix content primarily within the country in which you have established your account and only in geographic locations where we offer your subscription plan.",
+        "translation": "Netflix tracks your location to enforce geo-restrictions. They know where you are every time you watch."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "All subscription plans may contain limited commercial content, such as branded content or sponsorship messaging, promos for Netflix content.",
+        "translation": "Even non-ad tiers now include 'branded content' — Netflix is creeping ads into every plan while collecting viewing data."
+      }
+    ],
+    "highlight": "Forced arbitration, location tracking, and creeping ads — but at least they don't claim to own your content (you don't create any).",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Forced arbitration", "Location tracking", "Price increases", "Ad creep", "Viewing surveillance"]
+  },
+  {
+    "name": "Spotify",
+    "category": "streaming",
+    "tosUrl": "https://www.spotify.com/us/legal/end-user-agreement/",
+    "privacyUrl": "https://www.spotify.com/us/legal/privacy-policy/",
+    "scores": {
+      "data_selling": 6,
+      "content_ownership": 3,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 5,
+      "location_tracking": 5,
+      "cross_platform": 5,
+      "ai_training": 6,
+      "liability": 7
+    },
+    "overallScore": 44,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "THESE TERMS CONTAIN A MANDATORY ARBITRATION PROVISION THAT REQUIRES THE USE OF ARBITRATION ON AN INDIVIDUAL BASIS TO RESOLVE DISPUTES, RATHER THAN JURY TRIALS OR ANY OTHER COURT PROCEEDINGS, OR CLASS ACTIONS OF ANY KIND.",
+        "translation": "Spotify forces individual arbitration with no jury trial and no class actions — this is the full lockdown on your legal rights."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "We provide numerous Spotify Service options. Certain Spotify Service options are provided free of charge.",
+        "translation": "The free tier is funded by ads — Spotify collects extensive listening habits, location, and device data to target advertising."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We aim to evolve and improve the Spotify Service constantly, and we may modify, suspend, or stop providing all or part of the Spotify Service.",
+        "translation": "Spotify's AI DJ and recommendation engine train on your complete listening history — every play, skip, and playlist is data."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "Spotify reserves the right to change our Spotify Service offerings and their availability from time to time, without notice or liability to you.",
+        "translation": "Spotify can remove features, songs, or entire podcasts at any time with no notice and no compensation."
+      }
+    ],
+    "highlight": "Mandatory arbitration, no class actions, and your entire listening history feeds their AI recommendation engine.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Forced arbitration", "Listening surveillance", "AI recommendations", "Ad-funded tracking", "No class actions"]
+  },
+  {
+    "name": "YouTube",
+    "category": "streaming",
+    "tosUrl": "https://www.youtube.com/static?template=terms",
+    "privacyUrl": "https://policies.google.com/privacy",
+    "scores": {
+      "data_selling": 8,
+      "content_ownership": 7,
+      "forced_arbitration": 6,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 7,
+      "cross_platform": 9,
+      "ai_training": 8,
+      "liability": 7
+    },
+    "overallScore": 30,
+    "grade": "D+",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant to YouTube a worldwide, non-exclusive, royalty-free, sublicensable and transferable license to use, reproduce, distribute, prepare derivative works of, display, and perform that Content in connection with the Service.",
+        "translation": "YouTube gets a broad license to your videos including the right to make derivative works and sublicense to third parties."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Our services are designed to work together, making it easier for you to move from one activity to the next.",
+        "translation": "YouTube data flows to Google Search, Gmail, Maps, Android, and every other Google/Alphabet service. Your watch history builds a complete profile."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We use artificial intelligence and machine learning to provide you with simultaneous translations, and to better detect and block spam and malware.",
+        "translation": "Google explicitly uses AI/ML across services including YouTube. Your viewing data, comments, and uploaded content all feed Google's AI models."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "Google's services are funded by advertising. We may present advertising to you based on your information.",
+        "translation": "YouTube is an advertising platform that happens to show videos. Your entire viewing history is monetized through targeted ads."
+      }
+    ],
+    "highlight": "Every video you watch feeds Google's AI and ad targeting empire — your YouTube data merges with your entire Google profile.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Google ecosystem", "AI training", "Ad targeting", "Cross-platform tracking", "Content license"]
+  },
+  {
+    "name": "Twitch",
+    "category": "streaming",
+    "tosUrl": "https://www.twitch.tv/p/en/legal/terms-of-service/",
+    "privacyUrl": "https://www.twitch.tv/p/en/legal/privacy-notice/",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 7,
+      "forced_arbitration": 8,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 6,
+      "location_tracking": 5,
+      "cross_platform": 8,
+      "ai_training": 7,
+      "liability": 7
+    },
+    "overallScore": 34,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant to Twitch a license to use, copy, reproduce, process, adapt, modify, publish, transmit, display, and distribute your User Content in any and all media or distribution methods.",
+        "translation": "Twitch (Amazon) gets a sweeping license to all your streams, clips, and chat messages to use however they see fit."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Twitch is an Amazon company, and we share information with Amazon and its affiliates for the purposes described in this Privacy Notice.",
+        "translation": "Your Twitch streaming data feeds into Amazon's massive data ecosystem — your gaming habits join your shopping habits."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Any dispute relating to these Terms of Service shall be submitted to confidential arbitration, except that either party may seek equitable remedies in court.",
+        "translation": "Forced arbitration with Amazon's subsidiary — you can't sue Twitch in court or join a class action."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We may use your data to improve and develop our services, including using machine learning and automated decision-making technologies.",
+        "translation": "Twitch uses AI/ML on your data. As an Amazon subsidiary, your streaming data likely feeds Amazon's broader AI training efforts."
+      }
+    ],
+    "highlight": "Stream on Twitch and your data feeds Amazon's entire surveillance ecosystem — gaming habits meet shopping habits.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Amazon ecosystem", "Content license", "Forced arbitration", "AI training", "Cross-platform data sharing"]
+  },
+  {
+    "name": "Zoom",
+    "category": "productivity",
+    "tosUrl": "https://www.zoom.com/en/trust/terms/",
+    "privacyUrl": "https://www.zoom.com/en/trust/privacy/",
+    "scores": {
+      "data_selling": 5,
+      "content_ownership": 5,
+      "forced_arbitration": 9,
+      "terms_change": 7,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 4,
+      "cross_platform": 4,
+      "ai_training": 7,
+      "liability": 8
+    },
+    "overallScore": 41,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "In Section 27, you and Zoom will arbitrate certain claims instead of going to court and you will not bring class-action claims against Zoom.",
+        "translation": "Zoom forces binding arbitration and prohibits class actions — if they have a data breach affecting millions, each person must fight alone."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "Zoom may, in its sole discretion, (i) discontinue the Services, or (ii) modify the features or functionality of the Services or Software.",
+        "translation": "Zoom's AI Companion features process meeting content. After the 2023 backlash, they clarified opt-in, but the ToS still gives them broad rights."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "Zoom may make modifications, deletions, and additions to these Terms of Service and our Service Description.",
+        "translation": "Zoom reserves the right to change terms at any time — they famously tried to claim AI training rights on meeting data before public backlash."
+      },
+      {
+        "category": "liability",
+        "verbatim": "Under no circumstances will Zoom be liable in any way for any data or other content viewed while using the Services, including any errors or omissions in any such data.",
+        "translation": "Zoom takes zero responsibility for anything that happens during your meetings — including data leaks or content errors."
+      }
+    ],
+    "highlight": "Zoom once tried to claim AI training rights on all meeting data, backed off after backlash, but still has uncomfortably broad terms.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training controversy", "Forced arbitration", "Meeting surveillance", "Terms changes", "Zero liability"]
+  },
+  {
+    "name": "Slack",
+    "category": "productivity",
+    "tosUrl": "https://slack.com/main-services-agreement",
+    "privacyUrl": "https://slack.com/privacy-policy",
+    "scores": {
+      "data_selling": 4,
+      "content_ownership": 4,
+      "forced_arbitration": 5,
+      "terms_change": 5,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 3,
+      "cross_platform": 7,
+      "ai_training": 7,
+      "liability": 6
+    },
+    "overallScore": 49,
+    "grade": "C+",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "To develop AI/ML models, our systems analyze Customer Data (e.g. messages, content, files) submitted to Slack.",
+        "translation": "Slack (Salesforce) defaulted to using your workspace messages to train their AI models. They only added opt-out after major backlash in 2024."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Slack is a Salesforce company. The Main Services Agreement is governed by the Salesforce MSA.",
+        "translation": "Your Slack workspace data now lives under Salesforce's umbrella — the CRM giant with extensive data sharing across products."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Workspace administrators control data retention and export policies for the workspace.",
+        "translation": "Your employer controls your Slack data, not you. They can read every DM, export everything, and you have no say."
+      }
+    ],
+    "highlight": "Slack quietly trained AI on your messages by default, and as a Salesforce product, your work chats feed the CRM machine.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training default", "Salesforce integration", "Employer controls data", "Workspace surveillance", "Opt-out only"]
+  },
+  {
+    "name": "Notion",
+    "category": "productivity",
+    "tosUrl": "https://www.notion.so/terms",
+    "privacyUrl": "https://www.notion.so/privacy",
+    "scores": {
+      "data_selling": 3,
+      "content_ownership": 4,
+      "forced_arbitration": 7,
+      "terms_change": 5,
+      "deletion_difficulty": 3,
+      "data_retention": 5,
+      "location_tracking": 2,
+      "cross_platform": 3,
+      "ai_training": 6,
+      "liability": 6
+    },
+    "overallScore": 56,
+    "grade": "B-",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "We may use aggregated or de-identified information to improve our services, including our AI features. We do not train AI on your private workspace content without your consent.",
+        "translation": "Notion AI processes your workspace data to function, but they say they don't train on private content. The aggregated data use is less clear."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Any dispute arising from these Terms shall be resolved through binding arbitration in accordance with the rules of JAMS.",
+        "translation": "Standard forced arbitration clause — you can't sue Notion in court or join a class action."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "You grant Notion a worldwide, non-exclusive, royalty-free license to use, reproduce, and display your content solely for the purpose of providing the Services.",
+        "translation": "Notion's content license is relatively narrow — limited to providing the service. Better than most social platforms."
+      }
+    ],
+    "highlight": "Relatively privacy-respecting for a productivity tool, but AI features blur the line — and forced arbitration applies.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI features", "Forced arbitration", "Narrow content license", "Workspace privacy", "De-identified data use"]
+  },
+  {
+    "name": "Google Workspace",
+    "category": "productivity",
+    "tosUrl": "https://policies.google.com/terms",
+    "privacyUrl": "https://policies.google.com/privacy",
+    "scores": {
+      "data_selling": 8,
+      "content_ownership": 6,
+      "forced_arbitration": 6,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 7,
+      "location_tracking": 8,
+      "cross_platform": 10,
+      "ai_training": 8,
+      "liability": 7
+    },
+    "overallScore": 30,
+    "grade": "D+",
+    "worstClauses": [
+      {
+        "category": "cross_platform",
+        "verbatim": "Our services are designed to work together, making it easier for you to move from one activity to the next. For example, if your Calendar event includes an address, you can click on that address and Maps can show you how to get there.",
+        "translation": "Google's services are designed to share data across everything — Gmail, Drive, Maps, Search, YouTube, Android. One profile to rule them all."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We use artificial intelligence and machine learning to provide you with simultaneous translations, and to better detect and block spam and malware.",
+        "translation": "Google explicitly uses AI/ML on your data across all services. Your emails, docs, and searches all feed Google's AI training pipeline."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "Google's services are funded by advertising. Controls for how Microsoft personalizes advertising are available.",
+        "translation": "Google's entire business model is ad targeting using your data. Every email, search, and document helps build your ad profile."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "When you use our services, we collect information about your location, including your IP address, GPS, and other sensors.",
+        "translation": "Google tracks your location through every device and service — Maps, Android, Chrome, and even through WiFi network information."
+      }
+    ],
+    "highlight": "The most comprehensive data collection ecosystem on earth — every Google service feeds one unified profile used for ads and AI.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Total surveillance ecosystem", "AI training", "Ad targeting", "Cross-platform tracking", "Location tracking"]
+  },
+  {
+    "name": "Microsoft 365",
+    "category": "productivity",
+    "tosUrl": "https://www.microsoft.com/en-us/servicesagreement",
+    "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+    "scores": {
+      "data_selling": 6,
+      "content_ownership": 5,
+      "forced_arbitration": 7,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 6,
+      "cross_platform": 8,
+      "ai_training": 7,
+      "liability": 7
+    },
+    "overallScore": 38,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "To the extent necessary to provide the Services to you and others, to protect you and the Services, and to improve Microsoft products and services, you grant to Microsoft a worldwide and royalty-free intellectual property license to use Your Content.",
+        "translation": "Microsoft gets a royalty-free license to use your documents, emails, and files to 'improve products' — including training Copilot AI."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Your Microsoft account lets you sign in to products, websites and services provided by Microsoft and some Microsoft partners.",
+        "translation": "One Microsoft account spans Windows, Office, LinkedIn, Xbox, Bing, GitHub — all sharing data for a unified profile."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "We don't use what you say in email, chat, video calls or voice mail, or your documents, photos or other personal files, to target advertising to you.",
+        "translation": "Microsoft claims not to use personal files for ads — but the broader AI training question with Copilot is murkier."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Binding arbitration. You and Microsoft agree to resolve any dispute through final and binding arbitration.",
+        "translation": "Microsoft forces binding arbitration — no court, no jury, no class action for any dispute."
+      }
+    ],
+    "highlight": "Microsoft's Copilot AI is trained on the Office ecosystem — your docs, emails, and Teams chats power the machine.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Copilot AI", "Cross-platform ecosystem", "Content license", "Forced arbitration", "LinkedIn integration"]
+  },
+  {
+    "name": "ChatGPT (OpenAI)",
+    "category": "ai",
+    "tosUrl": "https://openai.com/policies/terms-of-use/",
+    "privacyUrl": "https://openai.com/policies/privacy-policy/",
+    "scores": {
+      "data_selling": 3,
+      "content_ownership": 3,
+      "forced_arbitration": 8,
+      "terms_change": 5,
+      "deletion_difficulty": 4,
+      "data_retention": 6,
+      "location_tracking": 2,
+      "cross_platform": 3,
+      "ai_training": 8,
+      "liability": 8
+    },
+    "overallScore": 50,
+    "grade": "C+",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "We may use Content to provide, maintain, develop, and improve our Services, comply with applicable law, enforce our terms and policies, and keep our Services safe.",
+        "translation": "OpenAI uses your conversations to train their models by default. You can opt out, but most people don't know to do so."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "By using our Services, you agree to these Terms, which include important provisions for resolving disputes through arbitration.",
+        "translation": "OpenAI buries mandatory arbitration in the terms — no jury trial, no class action if their AI causes you harm."
+      },
+      {
+        "category": "liability",
+        "verbatim": "OUR AGGREGATE LIABILITY UNDER THESE TERMS WILL NOT EXCEED THE GREATER OF THE AMOUNT YOU PAID FOR THE SERVICE DURING THE 12 MONTHS BEFORE THE LIABILITY AROSE OR ONE HUNDRED DOLLARS ($100).",
+        "translation": "If ChatGPT's output causes you real harm — bad medical advice, legal errors, defamation — OpenAI's max liability is $100 or your subscription fees."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "As between you and OpenAI, and to the extent permitted by applicable law, you (a) retain your ownership rights in Input and (b) own the Output. We hereby assign to you all our right, title, and interest in Output.",
+        "translation": "Good news: OpenAI assigns you ownership of the output. Bad news: they still use your conversations to train unless you opt out."
+      }
+    ],
+    "highlight": "Your conversations train the AI by default, liability is capped at $100, and forced arbitration means you can't fight back.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training by default", "Opt-out required", "Forced arbitration", "$100 liability cap", "Output ownership"]
+  },
+  {
+    "name": "Claude (Anthropic)",
+    "category": "ai",
+    "tosUrl": "https://www.anthropic.com/legal/consumer-terms",
+    "privacyUrl": "https://www.anthropic.com/legal/privacy",
+    "scores": {
+      "data_selling": 2,
+      "content_ownership": 3,
+      "forced_arbitration": 7,
+      "terms_change": 5,
+      "deletion_difficulty": 4,
+      "data_retention": 5,
+      "location_tracking": 2,
+      "cross_platform": 2,
+      "ai_training": 6,
+      "liability": 7
+    },
+    "overallScore": 57,
+    "grade": "B-",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "We may use Materials to provide, maintain, and improve the Services and to develop other products and services, including training our models, unless you opt out of training through your account settings.",
+        "translation": "Anthropic trains on your conversations by default, but offers an opt-out. Even if you opt out, flagged content and feedback still get used for training."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "Even if you opt out, we will use Materials for model training when: (1) you provide Feedback to us, or (2) your Materials are flagged for safety review.",
+        "translation": "The opt-out has holes: thumbs up/down feedback and anything flagged for safety still trains their models regardless of your settings."
+      },
+      {
+        "category": "liability",
+        "verbatim": "Outputs may not always be accurate and may contain material inaccuracies even if they appear accurate because of their level of detail or specificity.",
+        "translation": "Anthropic explicitly warns that Claude can confidently state completely wrong things — and you bear all the risk of relying on it."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Any dispute arising from these Terms shall be resolved through binding arbitration.",
+        "translation": "Standard forced arbitration — if Claude gives you bad advice that costs you money, you can't sue in court."
+      }
+    ],
+    "highlight": "Better than most AI companies — opt-out training, output ownership — but the opt-out has loopholes for feedback and safety flags.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["AI training with opt-out", "Safety flag loophole", "Forced arbitration", "Output ownership", "Accuracy disclaimers"]
+  },
+  {
+    "name": "Gemini (Google)",
+    "category": "ai",
+    "tosUrl": "https://policies.google.com/terms/generative-ai",
+    "privacyUrl": "https://policies.google.com/privacy",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 5,
+      "forced_arbitration": 6,
+      "terms_change": 6,
+      "deletion_difficulty": 4,
+      "data_retention": 7,
+      "location_tracking": 7,
+      "cross_platform": 10,
+      "ai_training": 9,
+      "liability": 7
+    },
+    "overallScore": 32,
+    "grade": "D+",
+    "worstClauses": [
+      {
+        "category": "ai_training",
+        "verbatim": "Google uses data to develop and improve our AI services. When you use Gemini Apps with Gemini Apps Activity turned on, your conversations are used to improve our products.",
+        "translation": "Gemini conversations are used for AI training by default when Gemini Apps Activity is on — and human reviewers may read your prompts."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "Gemini integrates with Google services. When you use Gemini with Gmail, Drive, or other Google services, data from those services is accessible to the AI.",
+        "translation": "Gemini has access to your entire Google ecosystem — emails, documents, photos, calendar — making it the most comprehensive AI data grab possible."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Conversations with Gemini Apps may be reviewed by human reviewers and retained for up to three years, separate from your Google Account.",
+        "translation": "Humans at Google may read your Gemini conversations, and they keep them for up to 3 YEARS — even if you delete them from your account."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "Using AI-generated content from our services to develop machine learning models or related AI technology is prohibited.",
+        "translation": "Google won't let YOU train AI on their output — but they freely train AI on YOUR input. The hypocrisy is stunning."
+      }
+    ],
+    "highlight": "Gemini reads your Gmail, Drive, and Calendar — and human reviewers can read your conversations for up to 3 years.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Human reviewers read prompts", "3-year retention", "Full Google ecosystem access", "AI training default", "Asymmetric AI rules"]
+  },
+  {
+    "name": "Midjourney",
+    "category": "ai",
+    "tosUrl": "https://docs.midjourney.com/hc/en-us/articles/32083055291277-Terms-of-Service",
+    "privacyUrl": "https://docs.midjourney.com/hc/en-us/articles/32083054454669-Privacy-Policy",
+    "scores": {
+      "data_selling": 3,
+      "content_ownership": 7,
+      "forced_arbitration": 7,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 6,
+      "location_tracking": 2,
+      "cross_platform": 2,
+      "ai_training": 8,
+      "liability": 7
+    },
+    "overallScore": 47,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "content_ownership",
+        "verbatim": "By using the Services, You grant to Midjourney, its successors, and assigns a perpetual, worldwide, non-exclusive, sublicensable no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute Your Content.",
+        "translation": "Midjourney takes a PERPETUAL, IRREVOCABLE license to everything you create. Even if you cancel, they can use your images forever."
+      },
+      {
+        "category": "ai_training",
+        "verbatim": "You grant Midjourney the right to use your prompts, inputs, and generated images to improve our services and train our models.",
+        "translation": "Your prompts and generated images explicitly train their next AI model. You're doing unpaid labor for their product improvement."
+      },
+      {
+        "category": "content_ownership",
+        "verbatim": "Your ownership of the Assets you created persists even if in subsequent months You downgrade or cancel Your membership.",
+        "translation": "You own your images — but so does Midjourney, with a perpetual license. Free tier users don't even get commercial rights."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Any dispute arising from these Terms shall be resolved through binding arbitration.",
+        "translation": "Standard forced arbitration — no class actions, no jury trial, no matter how many users are affected."
+      }
+    ],
+    "highlight": "Perpetual, irrevocable license to all your AI-generated art — Midjourney can use your creations forever, even after you leave.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Perpetual content license", "AI training on outputs", "Irrevocable rights", "Free tier restrictions", "Forced arbitration"]
+  },
+  {
+    "name": "Uber",
+    "category": "shopping",
+    "tosUrl": "https://www.uber.com/legal/en/document/?name=general-terms-of-use",
+    "privacyUrl": "https://www.uber.com/legal/en/document/?name=privacy-notice",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 3,
+      "forced_arbitration": 10,
+      "terms_change": 8,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 10,
+      "cross_platform": 6,
+      "ai_training": 5,
+      "liability": 9
+    },
+    "overallScore": 30,
+    "grade": "D+",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "BY AGREEING TO THESE TERMS YOU ARE WAIVING YOUR RIGHT TO SEEK RELIEF IN A COURT OF LAW AND WAIVING YOUR RIGHT TO HAVE A JURY TRIAL ON YOUR CLAIMS.",
+        "translation": "Uber's arbitration clause is one of the most aggressive in tech — full jury waiver, full class action waiver, covers even personal injury and death."
+      },
+      {
+        "category": "forced_arbitration",
+        "verbatim": "This Arbitration Agreement will preclude you from bringing any class, collective, coordinated, consolidated, mass, and/or representative action against Uber.",
+        "translation": "Even if Uber's negligence injures thousands of people, each person must fight alone in private arbitration. No collective action. Period."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "We collect precise location data from your device when the Uber app is running in the foreground or background.",
+        "translation": "Uber tracks your exact GPS location whenever the app is open — and sometimes when it's not. They know everywhere you go."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "Uber reserves the right to modify these Terms or its policies relating to the Services at any time, effective upon posting.",
+        "translation": "Uber can change any terms instantly by just posting them. Your continued use = consent. No meaningful notice period."
+      },
+      {
+        "category": "liability",
+        "verbatim": "UBER SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, LOST DATA, PERSONAL INJURY, OR PROPERTY DAMAGE.",
+        "translation": "If you're injured in an Uber ride, their terms attempt to limit liability for personal injury. They disclaim everything they can."
+      }
+    ],
+    "highlight": "The most aggressive arbitration clause in tech — covers personal injury and death, with no class actions, no jury, no exceptions.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Extreme arbitration", "Personal injury waiver", "GPS tracking", "No class actions", "Instant terms changes"]
+  },
+  {
+    "name": "Airbnb",
+    "category": "shopping",
+    "tosUrl": "https://www.airbnb.com/terms",
+    "privacyUrl": "https://www.airbnb.com/terms/privacy_policy",
+    "scores": {
+      "data_selling": 6,
+      "content_ownership": 4,
+      "forced_arbitration": 9,
+      "terms_change": 6,
+      "deletion_difficulty": 5,
+      "data_retention": 6,
+      "location_tracking": 7,
+      "cross_platform": 4,
+      "ai_training": 4,
+      "liability": 8
+    },
+    "overallScore": 41,
+    "grade": "C",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "Section 23 of these Terms contains an arbitration agreement and class action waiver that apply to all claims brought against Airbnb in the United States.",
+        "translation": "Binding arbitration and class action waiver for all US claims — even if Airbnb's platform facilitates fraud or discrimination."
+      },
+      {
+        "category": "liability",
+        "verbatim": "Airbnb is not a party to the contracts entered into directly between Hosts and Guests, nor is Airbnb a real estate broker, travel agency, or insurer.",
+        "translation": "Airbnb takes a cut of every booking but disclaims being a party to the transaction. If something goes wrong, it's between you and the host."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "When you use the Airbnb Platform, we may collect precise location information from your device.",
+        "translation": "Airbnb tracks your precise location — they know where you're staying, when, and your travel patterns."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "We may make changes to these Terms from time to time. If we make changes, we will post the revised Terms and update the 'Last Updated' date.",
+        "translation": "Airbnb can change terms with minimal notice — keep using the platform and you've agreed to whatever they changed."
+      }
+    ],
+    "highlight": "Airbnb takes 15-20% of every booking but legally disclaims being part of the transaction — maximum profit, minimum responsibility.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Forced arbitration", "Liability disclaimer", "Location tracking", "Transaction middleman", "Class action waiver"]
+  },
+  {
+    "name": "DoorDash",
+    "category": "shopping",
+    "tosUrl": "https://www.doordash.com/terms/",
+    "privacyUrl": "https://www.doordash.com/privacy/",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 3,
+      "forced_arbitration": 10,
+      "terms_change": 7,
+      "deletion_difficulty": 5,
+      "data_retention": 7,
+      "location_tracking": 9,
+      "cross_platform": 5,
+      "ai_training": 5,
+      "liability": 8
+    },
+    "overallScore": 34,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "forced_arbitration",
+        "verbatim": "YOU AND DOORDASH AGREE THAT ANY DISPUTE ARISING OUT OF OR RELATED TO THESE TERMS OR OUR SERVICES IS PERSONAL TO YOU AND DOORDASH AND WILL BE RESOLVED SOLELY THROUGH INDIVIDUAL ARBITRATION.",
+        "translation": "DoorDash has one of the most aggressive forced arbitration clauses — individual arbitration only, no class actions, no exceptions."
+      },
+      {
+        "category": "location_tracking",
+        "verbatim": "We collect precise geolocation data from your device when the DoorDash app is running, and we use this information to provide and improve our services.",
+        "translation": "DoorDash tracks your exact location — not just for delivery, but they retain and use this location data for their own purposes."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "We share information with our business partners, including restaurants, merchants, and delivery providers, to facilitate our services and for marketing purposes.",
+        "translation": "DoorDash shares your order data and preferences with restaurants and third parties for marketing — your food habits are for sale."
+      },
+      {
+        "category": "terms_change",
+        "verbatim": "DoorDash may modify these Terms at any time. Your continued use of the Services after changes are posted constitutes your acceptance.",
+        "translation": "DoorDash can change terms whenever they want. Keep ordering and you've agreed to whatever new terms they invented."
+      }
+    ],
+    "highlight": "Extreme forced arbitration, real-time GPS tracking, and your food ordering habits shared with third-party marketers.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Extreme arbitration", "GPS tracking", "Data sharing with merchants", "Food habit profiling", "Terms changes"]
+  },
+  {
+    "name": "Venmo",
+    "category": "shopping",
+    "tosUrl": "https://venmo.com/legal/us-user-agreement/",
+    "privacyUrl": "https://venmo.com/legal/us-privacy-policy/",
+    "scores": {
+      "data_selling": 7,
+      "content_ownership": 2,
+      "forced_arbitration": 8,
+      "terms_change": 8,
+      "deletion_difficulty": 7,
+      "data_retention": 8,
+      "location_tracking": 5,
+      "cross_platform": 8,
+      "ai_training": 4,
+      "liability": 7
+    },
+    "overallScore": 36,
+    "grade": "C-",
+    "worstClauses": [
+      {
+        "category": "terms_change",
+        "verbatim": "We may revise this user agreement and any of the policies listed above from time to time. We reserve the right to amend this agreement at any time without notice, subject to applicable law.",
+        "translation": "Venmo/PayPal can change the user agreement AT ANY TIME WITHOUT NOTICE. They only need to give 21 days for changes that reduce your rights."
+      },
+      {
+        "category": "data_retention",
+        "verbatim": "Financial regulations require us to retain certain records for extended periods. Transaction data may be retained for years after account closure.",
+        "translation": "As a financial service, Venmo retains your transaction history for years — possibly decades — even after you close your account."
+      },
+      {
+        "category": "cross_platform",
+        "verbatim": "This user agreement is a contract between you and PayPal, Inc. governing use of your Venmo account and the Venmo services.",
+        "translation": "Venmo IS PayPal. Your financial data flows between Venmo, PayPal, and their entire payments ecosystem."
+      },
+      {
+        "category": "deletion_difficulty",
+        "verbatim": "In certain cases, you may not close your Venmo account, including: to evade an investigation, if there is a pending transaction, if amounts are owed to us, if your account is subject to a hold.",
+        "translation": "Venmo can trap you in your account — you literally cannot close it if they decide there's a pending issue, investigation, or hold."
+      },
+      {
+        "category": "data_selling",
+        "verbatim": "We share information with our affiliates and financial partners to provide services, comply with regulations, and for marketing purposes.",
+        "translation": "Your payment data — who you pay, how much, how often — is shared across PayPal's financial network and with marketing partners."
+      }
+    ],
+    "highlight": "A financial company that can change terms without notice, trap you in your account, and share your payment data across PayPal's empire.",
+    "lastReviewed": "2026-03-25",
+    "tags": ["Terms changes without notice", "Account lock-in", "PayPal data sharing", "Financial data retention", "Payment profiling"]
+  }
+]
