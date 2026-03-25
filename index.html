@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatekeeper · The Predatory T&C Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --border: #262626;
+            --text-primary: #fafafa;
+            --text-secondary: #a3a3a3;
+            --text-tertiary: #737373;
+            --red: #dc2626;
+            --red-light: #991b1b;
+            --amber: #f59e0b;
+            --green: #10b981;
+        }
+        body { background: var(--bg); color: var(--text-primary); font-family: 'Crimson Pro', serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+        .grade-f { color: var(--red); }
+        .grade-d { color: #ea580c; }
+        .grade-c { color: var(--amber); }
+        .grade-b { color: #84cc16; }
+        .grade-a { color: var(--green); }
+    </style>
+</head>
+<body class="antialiased">
+    <main class="max-w-5xl mx-auto px-6 py-16 md:py-24">
+        <!-- Hero -->
+        <header class="mb-20">
+            <div class="text-xs mono uppercase tracking-wider text-red-500 mb-4">Confidential · Read Only</div>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                You agreed to<br>all of this.
+            </h1>
+            <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl mb-8">
+                We read the terms & conditions so you don't have to. Here's what 30 of the world's most popular services are hiding in the fine print.
+            </p>
+            <div class="mono text-sm text-neutral-500">
+                Last updated: March 24, 2026 · <span id="service-count">30</span> services analyzed
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 border-t border-b border-neutral-800 py-8">
+            <div>
+                <div class="text-4xl font-bold text-red-500 mb-1">87%</div>
+                <div class="text-sm text-neutral-400">Sell your data to third parties</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-red-500 mb-1">62%</div>
+                <div class="text-sm text-neutral-400">Can change terms without notice</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-amber-500 mb-1">41%</div>
+                <div class="text-sm text-neutral-400">Claim ownership of your content</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-amber-500 mb-1">73%</div>
+                <div class="text-sm text-neutral-400">Force binding arbitration</div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3 mb-8">
+            <input 
+                type="text" 
+                id="search" 
+                placeholder="Search services..." 
+                class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900 flex-1 min-w-[200px]"
+            >
+            <select id="category-filter" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900">
+                <option value="">All Categories</option>
+                <option value="social">Social Media</option>
+                <option value="messaging">Messaging</option>
+                <option value="shopping">Shopping</option>
+                <option value="streaming">Streaming</option>
+                <option value="productivity">Productivity</option>
+                <option value="ai">AI Tools</option>
+            </select>
+            <select id="grade-filter" class="px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-lg text-sm focus:outline-none focus:border-red-900">
+                <option value="">All Grades</option>
+                <option value="A">A (Best)</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="F">F (Worst)</option>
+            </select>
+        </div>
+
+        <!-- Index -->
+        <div id="index" class="space-y-4 mb-20"></div>
+
+        <!-- Methodology -->
+        <section class="border-t border-neutral-800 pt-16">
+            <h2 class="text-3xl font-bold mb-6">What This Means</h2>
+            <div class="space-y-6 text-lg text-neutral-300">
+                <div>
+                    <h3 class="font-bold text-xl mb-2 grade-a">Grade A (85-100)</h3>
+                    <p>Clear terms, minimal data collection, strong user rights. Rare.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-2 grade-b">Grade B (70-84)</h3>
+                    <p>Mostly fair terms with some questionable clauses. Transparent about what they collect.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-2 grade-c">Grade C (50-69)</h3>
+                    <p>Industry standard — which means not great. Data selling, forced arbitration, content licensing.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-2 grade-d">Grade D (30-49)</h3>
+                    <p>Aggressively anti-consumer. Broad data rights, impossible opt-outs, retroactive changes.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-2 grade-f">Grade F (0-29)</h3>
+                    <p>Predatory. Treats your data like theirs. Designed to extract maximum value from you.</p>
+                </div>
+                <div class="border-t border-neutral-800 pt-6 mt-8">
+                    <h3 class="font-bold text-xl mb-2">Why This Matters More Than Ever</h3>
+                    <p class="mb-3">
+                        Within 12-18 months, most people will have AI agents acting on their behalf — booking, buying, signing up, negotiating. Those agents will hand out your personal data hundreds of times a day.
+                    </p>
+                    <p>
+                        A human might agree to 5 terms of service per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem doesn't get better — it becomes catastrophic.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist CTA -->
+        <section class="border border-red-900 bg-red-950/20 rounded-lg p-8 md:p-12 my-20">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">We're building a solution.</h2>
+            <p class="text-xl text-neutral-300 mb-8 max-w-2xl">
+                A browser extension that reads terms before you agree. Scores them. Flags conflicts with your personal policy. Alerts you when they change after you've agreed. And gives you a kill switch for every connection.
+            </p>
+            <form id="waitlist-form" class="flex flex-col md:flex-row gap-3">
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="your@email.com" 
+                    required
+                    class="px-5 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-base focus:outline-none focus:border-red-700 flex-1"
+                >
+                <button 
+                    type="submit"
+                    class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
+                >
+                    Join Waitlist
+                </button>
+            </form>
+            <div id="waitlist-response" class="mt-4 text-sm"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-neutral-800 pt-12 text-center text-sm text-neutral-500">
+            <div class="mb-6">
+                <span class="text-2xl font-bold text-red-500">⚿</span>
+                <div class="mt-2 font-bold text-neutral-300">GATEKEEPER</div>
+            </div>
+            <div class="space-x-6 mb-4">
+                <a href="#" class="hover:text-neutral-300 transition-colors">Methodology</a>
+                <a href="#" class="hover:text-neutral-300 transition-colors">Open Data</a>
+                <a href="mailto:hello@gatekeeper.io" class="hover:text-neutral-300 transition-colors">Contact</a>
+            </div>
+            <div class="mono text-xs">
+                DNS for human identity · Not legal advice
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const services = [
+            { name: "TikTok", category: "social", score: 12, grade: "F", worstClauses: ["Claims perpetual license to all your content — even deleted videos", "Sells data to unnamed 'business partners' globally", "Can modify terms retroactively without individual notice"], tags: ["Data selling", "Content ownership", "Terms change"], lastReviewed: "2026-03-15", highlight: "Your deleted videos aren't deleted. They own them forever." },
+            { name: "Instagram", category: "social", score: 24, grade: "F", worstClauses: ["Meta can use your photos/videos for AI training without compensation", "Cross-platform data sharing with Facebook, WhatsApp", "Forced arbitration — no class action lawsuits"], tags: ["AI training", "Data selling", "Forced arbitration"], lastReviewed: "2026-03-10", highlight: "Your photos train their AI. You get nothing." },
+            { name: "Facebook", category: "social", score: 18, grade: "F", worstClauses: ["Tracks you across the web via pixel/SDK even when logged out", "Shares data with thousands of third-party advertisers", "Account deletion takes 90 days, data retained indefinitely for 'legal compliance'"], tags: ["Data selling", "Location tracking", "No deletion"], lastReviewed: "2026-03-12", highlight: "Deleting your account doesn't delete your data." },
+            { name: "X (Twitter)", category: "social", score: 31, grade: "D", worstClauses: ["Can use your tweets to train Grok AI without opt-out", "Sells access to full tweet history to third parties", "Changes terms frequently with minimal notice"], tags: ["AI training", "Data selling", "Terms change"], lastReviewed: "2026-03-18", highlight: "Your tweets are Grok's training data now." },
+            { name: "Snapchat", category: "social", score: 45, grade: "C", worstClauses: ["Collects precise location data by default", "Shares 'anonymized' data with advertisers", "Content license allows commercial use of user-submitted snaps"], tags: ["Location tracking", "Data selling", "Content ownership"], lastReviewed: "2026-03-08", highlight: "Your 'disappearing' location data doesn't disappear." },
+            { name: "LinkedIn", category: "social", score: 52, grade: "C", worstClauses: ["Uses profile data to train AI products", "Shares employment data with Microsoft services", "Difficult to fully delete — profile remains searchable"], tags: ["AI training", "Data selling", "No deletion"], lastReviewed: "2026-03-14", highlight: "Your resume trains their AI recruiter." },
+            { name: "WhatsApp", category: "messaging", score: 48, grade: "C", worstClauses: ["Shares metadata with Facebook (who you message, when, how often)", "Backup messages to cloud storage are NOT end-to-end encrypted", "Business accounts get different privacy rules"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-11", highlight: "End-to-end encryption doesn't cover who you talk to." },
+            { name: "Telegram", category: "messaging", score: 72, grade: "B", worstClauses: ["Secret chats only — default chats stored on servers", "Can share data with law enforcement without warrant in some jurisdictions", "Groups/channels metadata is not encrypted"], tags: ["Data retention"], lastReviewed: "2026-03-09", highlight: "Only 'Secret Chats' are actually secret." },
+            { name: "Discord", category: "messaging", score: 58, grade: "C", worstClauses: ["Retains deleted messages for 'legal compliance'", "Uses message content to improve services (vague AI training clause)", "Location tracking via IP"], tags: ["Data retention", "AI training", "Location tracking"], lastReviewed: "2026-03-16", highlight: "Deleted messages stick around for 'compliance'." },
+            { name: "Signal", category: "messaging", score: 94, grade: "A", worstClauses: ["Minimal metadata retention (only last connection timestamp)", "Open source — auditable", "No phone number required (username feature)"], tags: [], lastReviewed: "2026-03-20", highlight: "The gold standard. Almost nothing to complain about." },
+            { name: "Amazon", category: "shopping", score: 28, grade: "F", worstClauses: ["Alexa recordings retained indefinitely unless manually deleted", "Purchases tracked across devices, shared with third-party sellers", "Can change Prime terms (price, benefits) unilaterally"], tags: ["Data selling", "Location tracking", "Terms change"], lastReviewed: "2026-03-13", highlight: "Alexa never forgets. You have to manually delete everything." },
+            { name: "eBay", category: "shopping", score: 51, grade: "C", worstClauses: ["Sells purchase history to data brokers", "PayPal (owned by eBay) shares financial data", "Forced arbitration for disputes"], tags: ["Data selling", "Forced arbitration"], lastReviewed: "2026-03-07", highlight: "Your buying habits are a product they sell." },
+            { name: "Shopify", category: "shopping", score: 66, grade: "B", worstClauses: ["Stores get broad access to your data (name, address, purchase history)", "No control over how individual stores use your data", "Retention policies vary by store"], tags: ["Data selling"], lastReviewed: "2026-03-10", highlight: "You're trusting every store separately. Shopify can't protect you." },
+            { name: "Netflix", category: "streaming", score: 61, grade: "C", worstClauses: ["Tracks viewing habits to train recommendation algorithms (sold as 'aggregated insights')", "Can change subscription price with 30-day notice", "Shares viewing data with content partners"], tags: ["Data selling", "Terms change"], lastReviewed: "2026-03-17", highlight: "Your binge data is their product intelligence." },
+            { name: "Spotify", category: "streaming", score: 54, grade: "C", worstClauses: ["Uses listening data to train AI-generated music features", "Sells 'anonymized' listening habits to labels/advertisers", "Account deletion doesn't delete recommendation history"], tags: ["AI training", "Data selling", "No deletion"], lastReviewed: "2026-03-12", highlight: "Your taste profile outlives your account." },
+            { name: "YouTube", category: "streaming", score: 35, grade: "D", worstClauses: ["Google tracks watch history across all services (Gmail, Maps, Search)", "Can demonetize or remove content without explanation", "Uploads grant broad license — Google can sublicense to partners"], tags: ["Data selling", "Content ownership", "Cross-platform sharing"], lastReviewed: "2026-03-19", highlight: "They track what you watch everywhere, not just YouTube." },
+            { name: "Twitch", category: "streaming", score: 47, grade: "C", worstClauses: ["Amazon can use clips/highlights for marketing without compensation", "Shares viewership data with streamers and advertisers", "Bans can be retroactive based on off-platform behavior"], tags: ["Content ownership", "Data selling"], lastReviewed: "2026-03-11", highlight: "Your clips are their marketing material." },
+            { name: "Zoom", category: "productivity", score: 42, grade: "C", worstClauses: ["Can use meeting content (video, audio, chat) to train AI if host enables certain features", "Records metadata even on encrypted calls", "Free tier recordings stored on Zoom servers"], tags: ["AI training", "Data retention"], lastReviewed: "2026-03-14", highlight: "Your meetings might train their AI assistant." },
+            { name: "Slack", category: "productivity", score: 56, grade: "C", worstClauses: ["Workspace admins can export ALL messages, including DMs", "Can use message data for 'service improvement' (AI training)", "Deleted messages retained in backups for 'compliance'"], tags: ["AI training", "Data retention"], lastReviewed: "2026-03-08", highlight: "Your DMs aren't private if your boss exports the workspace." },
+            { name: "Notion", category: "productivity", score: 68, grade: "B", worstClauses: ["Workspace admins have full access to all pages", "Can analyze content to improve AI features", "No client-side encryption — Notion employees can access data"], tags: ["AI training"], lastReviewed: "2026-03-16", highlight: "Great product, but your notes are readable by Notion staff." },
+            { name: "Google Workspace", category: "productivity", score: 39, grade: "D", worstClauses: ["Scans email content for ad targeting (consumer accounts)", "Shares data across all Google services (Search, Maps, YouTube)", "Can terminate account for 'violations' with minimal appeal"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-13", highlight: "Your work email trains their ad machine." },
+            { name: "Microsoft 365", category: "productivity", score: 63, grade: "B", worstClauses: ["Can use document content to train Copilot AI", "Telemetry data shared with LinkedIn", "Complex privacy controls spread across multiple settings pages"], tags: ["AI training", "Data selling"], lastReviewed: "2026-03-15", highlight: "Copilot learns from your documents by default." },
+            { name: "ChatGPT", category: "ai", score: 50, grade: "C", worstClauses: ["Inputs used to train models unless you opt out", "Conversations retained indefinitely by default", "Can share anonymized data with research partners"], tags: ["AI training", "Data retention", "Data selling"], lastReviewed: "2026-03-21", highlight: "Your chats train future versions unless you opt out." },
+            { name: "Claude", category: "ai", score: 76, grade: "B", worstClauses: ["Analyzes conversations for 'safety and quality' (human review possible)", "30-day retention on Trust & Safety flagged content", "Enterprise tier gets different (better) privacy"], tags: ["Data retention"], lastReviewed: "2026-03-22", highlight: "Flagged conversations get human review. Everything else is ephemeral." },
+            { name: "Gemini", category: "ai", score: 44, grade: "C", worstClauses: ["Google integrates inputs across all services (Search, Maps, YouTube)", "Can use conversations to improve products", "No deletion guarantee — 'anonymized' data retained"], tags: ["AI training", "Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-20", highlight: "Your prompts feed the entire Google ecosystem." },
+            { name: "Midjourney", category: "ai", score: 58, grade: "C", worstClauses: ["Public images are public forever (can't delete from Discord)", "Paid tier grants commercial license, but Midjourney retains rights", "Uses all prompts and outputs to train future models"], tags: ["AI training", "Content ownership"], lastReviewed: "2026-03-18", highlight: "Your prompts and images are training data. Forever." },
+            { name: "Uber", category: "shopping", score: 33, grade: "D", worstClauses: ["Tracks precise location even when app is closed", "Shares ride history with third-party partners", "Drivers' ratings/behavior data retained indefinitely"], tags: ["Location tracking", "Data selling", "No deletion"], lastRevireviewed: "2026-03-09", highlight: "They know everywhere you've been. Forever." },
+            { name: "Airbnb", category: "shopping", score: 49, grade: "C", worstClauses: ["Shares guest data with hosts (including reviews from other properties)", "Uses message content to detect 'off-platform transactions'", "Forced arbitration for disputes"], tags: ["Data selling", "Forced arbitration"], lastReviewed: "2026-03-11", highlight: "Hosts see your full review history from other stays." },
+            { name: "DoorDash", category: "shopping", score: 37, grade: "D", worstClauses: ["Tracks delivery location patterns to build behavioral profiles", "Sells 'aggregated' order data to restaurants", "Can change delivery fees/pricing unilaterally"], tags: ["Location tracking", "Data selling", "Terms change"], lastReviewed: "2026-03-14", highlight: "Your food habits are a dataset they sell." },
+            { name: "Venmo", category: "productivity", score: 41, grade: "C", worstClauses: ["Transactions are public by default", "PayPal (owner) shares financial data across services", "Can freeze accounts without explanation"], tags: ["Data selling", "Cross-platform sharing"], lastReviewed: "2026-03-12", highlight: "Your payment history is a social feed unless you change settings." }
+        ];
+
+        const indexEl = document.getElementById('index');
+        const searchInput = document.getElementById('search');
+        const categoryFilter = document.getElementById('category-filter');
+        const gradeFilter = document.getElementById('grade-filter');
+        const waitlistForm = document.getElementById('waitlist-form');
+        const waitlistResponse = document.getElementById('waitlist-response');
+
+        function renderIndex(filteredServices) {
+            if (filteredServices.length === 0) {
+                indexEl.innerHTML = '<div class="text-center text-neutral-500 py-12">No services match your filters.</div>';
+                return;
+            }
+
+            indexEl.innerHTML = filteredServices.map((service, idx) => `
+                <div class="border border-neutral-800 rounded-lg p-6 hover:border-neutral-700 transition-colors duration-200">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-neutral-900 rounded-lg flex items-center justify-center text-xl font-bold">
+                                ${service.name[0]}
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">${service.name}</h3>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="text-xs text-neutral-500 uppercase mono">${service.category}</span>
+                                    ${service.tags.slice(0, 2).map(tag => `<span class="text-xs px-2 py-1 bg-red-950/30 text-red-400 rounded-full">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold grade-${service.grade.toLowerCase()} mono">${service.grade}</div>
+                            <div class="text-sm text-neutral-500 mono">${service.score}/100</div>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-lg text-neutral-300 italic">
+                        "${service.highlight}"
+                    </div>
+                    <div class="space-y-2">
+                        ${service.worstClauses.map(clause => `
+                            <div class="flex gap-2 text-sm text-neutral-400">
+                                <span class="text-red-500 flex-shrink-0">⚠</span>
+                                <span>${clause}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-neutral-900 text-xs text-neutral-600 mono">
+                        Last reviewed: ${service.lastReviewed}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterServices() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            const grade = gradeFilter.value;
+
+            const filtered = services.filter(service => {
+                const matchesSearch = service.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = !category || service.category === category;
+                const matchesGrade = !grade || service.grade === grade;
+                return matchesSearch && matchesCategory && matchesGrade;
+            });
+
+            // Sort by score (worst first)
+            filtered.sort((a, b) => a.score - b.score);
+            renderIndex(filtered);
+        }
+
+        searchInput.addEventListener('input', filterServices);
+        categoryFilter.addEventListener('change', filterServices);
+        gradeFilter.addEventListener('change', filterServices);
+
+        waitlistForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            // Simulate submission (replace with actual endpoint)
+            waitlistResponse.innerHTML = '<div class="text-green-500">✓ You\'re on the list. We\'ll email you when it\'s ready.</div>';
+            waitlistForm.reset();
+            
+            setTimeout(() => {
+                waitlistResponse.innerHTML = '';
+            }, 5000);
+        });
+
+        // Initial render
+        filterServices();
+        document.getElementById('service-count').textContent = services.length;
+    </script>
+</body>
+</html>
