@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatekeeper · The Data Broker Map</title>
+    <meta name="description" content="An interactive map of who buys, sells, and trades your personal data. 36 companies, 54 connections, one web you're caught in.">
+    <meta property="og:title" content="The Data Broker Map — Who has your data?">
+    <meta property="og:description" content="36 companies. 54 data flows. An interactive map of the hidden ecosystem trading your personal information.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Source Serif 4', serif; }
+
+        #graph-container { width: 100vw; height: 100vh; position: relative; }
+        
+        .node circle { cursor: pointer; transition: r 0.2s ease; }
+        .node text { pointer-events: none; fill: #a3a3a3; font-family: 'Inter', sans-serif; font-size: 10px; }
+        .node.highlighted circle { filter: drop-shadow(0 0 8px currentColor); }
+        .node.dimmed circle { opacity: 0.15; }
+        .node.dimmed text { opacity: 0.1; }
+        
+        .link { stroke-opacity: 0.15; fill: none; }
+        .link.highlighted { stroke-opacity: 0.7; }
+        .link.dimmed { stroke-opacity: 0.03; }
+        
+        .link-arrow { fill-opacity: 0.15; }
+        .link-arrow.highlighted { fill-opacity: 0.7; }
+        .link-arrow.dimmed { fill-opacity: 0.03; }
+        
+        #sidebar { 
+            position: fixed; right: -400px; top: 0; width: 400px; height: 100vh;
+            background: #0a0a0a; border-left: 1px solid #1a1a1a;
+            transition: right 0.3s ease; overflow-y: auto; z-index: 20;
+            padding: 24px;
+        }
+        #sidebar.open { right: 0; }
+        
+        #header-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+            background: rgba(5,5,5,0.9); backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1a1a1a;
+            padding: 12px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        #legend {
+            position: fixed; bottom: 24px; left: 24px; z-index: 10;
+            background: rgba(10,10,10,0.9); border: 1px solid #1a1a1a;
+            border-radius: 8px; padding: 16px;
+        }
+
+        #stats-overlay {
+            position: fixed; bottom: 24px; right: 24px; z-index: 10;
+            background: rgba(10,10,10,0.9); border: 1px solid #1a1a1a;
+            border-radius: 8px; padding: 16px; text-align: right;
+        }
+
+        .data-type-pill {
+            display: inline-block; padding: 2px 8px; border-radius: 9999px;
+            font-size: 10px; border: 1px solid; margin: 2px;
+        }
+
+        .cat-broker { color: #ef4444; }
+        .cat-adtech { color: #f59e0b; }
+        .cat-analytics { color: #3b82f6; }
+        .cat-government { color: #a855f7; }
+        .cat-insurance { color: #06b6d4; }
+        .cat-consumer { color: #10b981; }
+
+        @media (max-width: 768px) {
+            #sidebar { width: 100%; right: -100%; }
+            #legend { display: none; }
+            #stats-overlay { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-bar">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors">
+                <span class="text-red-500">&#9919;</span>
+                <span class="mono font-bold text-xs tracking-wide">GATEKEEPER</span>
+            </a>
+            <span class="text-neutral-800">|</span>
+            <span class="mono text-xs text-neutral-500">THE DATA BROKER MAP</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <select id="filter-category" class="px-3 py-1.5 bg-neutral-900 border border-neutral-800 rounded text-xs focus:outline-none">
+                <option value="">All Categories</option>
+                <option value="broker">Data Brokers</option>
+                <option value="adtech">Ad Tech</option>
+                <option value="analytics">Analytics</option>
+                <option value="government">Government</option>
+                <option value="insurance">Insurance</option>
+                <option value="consumer">Consumer Services</option>
+            </select>
+            <select id="filter-datatype" class="px-3 py-1.5 bg-neutral-900 border border-neutral-800 rounded text-xs focus:outline-none">
+                <option value="">All Data Types</option>
+                <option value="location">Location</option>
+                <option value="biometric">Biometric</option>
+                <option value="financial">Financial</option>
+                <option value="demographics">Demographics</option>
+                <option value="browsing">Browsing</option>
+                <option value="purchase_history">Purchase History</option>
+                <option value="email">Email</option>
+                <option value="social_graph">Social Graph</option>
+                <option value="device_ids">Device IDs</option>
+                <option value="health">Health</option>
+            </select>
+            <button id="reset-btn" class="px-3 py-1.5 border border-neutral-800 rounded text-xs text-neutral-400 hover:text-white hover:border-neutral-600 transition-colors">Reset</button>
+        </div>
+    </div>
+
+    <!-- Graph -->
+    <div id="graph-container">
+        <svg id="graph"></svg>
+    </div>
+
+    <!-- Legend -->
+    <div id="legend">
+        <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mb-3">Node Types</div>
+        <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-500"></div><span class="text-neutral-400">Data Broker</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-neutral-400">Ad Tech</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-blue-500"></div><span class="text-neutral-400">Analytics</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-purple-500"></div><span class="text-neutral-400">Government</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-cyan-500"></div><span class="text-neutral-400">Insurance</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-neutral-400">Consumer Service</span></div>
+        </div>
+        <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mt-4 mb-2">Interaction</div>
+        <div class="text-[10px] text-neutral-500">Click node to inspect · Drag to rearrange · Scroll to zoom</div>
+    </div>
+
+    <!-- Stats -->
+    <div id="stats-overlay">
+        <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Market</div>
+        <div class="text-2xl font-bold text-red-500 mono" id="market-size">$270B</div>
+        <div class="text-[10px] text-neutral-500 mb-3">annual data broker market</div>
+        <div class="text-lg font-bold text-amber-500 mono" id="data-points">1,500+</div>
+        <div class="text-[10px] text-neutral-500 mb-3">data points per American</div>
+        <div class="text-lg font-bold text-neutral-300 mono"><span id="node-count">0</span> entities</div>
+        <div class="text-[10px] text-neutral-500"><span id="edge-count">0</span> data flows</div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <button onclick="closeSidebar()" class="absolute top-4 right-4 text-neutral-600 hover:text-white text-xl">&times;</button>
+        <div id="sidebar-content"></div>
+    </div>
+
+    <script>
+    let brokerData = null;
+    let simulation = null;
+    let selectedNode = null;
+
+    const categoryColors = {
+        broker: '#ef4444',
+        adtech: '#f59e0b',
+        analytics: '#3b82f6',
+        government: '#a855f7',
+        insurance: '#06b6d4',
+        consumer: '#10b981'
+    };
+
+    const dataTypeColors = {
+        location: '#ef4444',
+        biometric: '#dc2626',
+        financial: '#f59e0b',
+        demographics: '#a3a3a3',
+        browsing: '#3b82f6',
+        purchase_history: '#f97316',
+        email: '#8b5cf6',
+        phone: '#a78bfa',
+        social_graph: '#10b981',
+        device_ids: '#06b6d4',
+        health: '#ec4899'
+    };
+
+    // Consumer services that appear in connections but aren't in brokers list
+    const consumerServices = [
+        'Facebook', 'Instagram', 'Google', 'Amazon', 'Meta', 'Mobile Apps',
+        'Social Media', 'Mobile Ad Exchanges', 'Retailers', 'Banks',
+        'Insurance Companies', 'TV Networks', 'Sales Teams', 'Enterprise Buyers',
+        'Political Campaigns', 'US Law Enforcement', 'FBI', 'DHS', 'ICE/CBP',
+        'IRS-CI', 'CIA', 'ICE', 'US Military (SOCOM)', 'US Military Contractors',
+        'Local Police', 'Defense Agencies', 'Mortgage Lenders',
+        'Advertisers (via DV360)', 'Advertisers (via Publicis)',
+        'Advertisers (via DSP)', 'Facebook Ads', 'Google Ads', 'DSPs',
+        'Muslim Pro App', 'Ad Networks', 'Google DV360', 'Amazon DSP',
+        'Commercial Data Brokers', 'Snowflake Marketplace',
+        'Agency holding companies', 'Retail brands'
+    ];
+
+    fetch('data-brokers.json')
+        .then(r => r.json())
+        .then(data => { brokerData = data; buildGraph(); })
+        .catch(e => console.error('Failed to load data:', e));
+
+    function buildGraph() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Build nodes
+        const brokerNodes = brokerData.brokers.map(b => ({
+            id: b.name,
+            category: b.category,
+            data: b,
+            isBroker: true
+        }));
+
+        // Extract unique entities from connections that aren't in brokers
+        const brokerNames = new Set(brokerNodes.map(n => n.id));
+        const connectionEntities = new Set();
+        brokerData.connections.forEach(c => {
+            if (!brokerNames.has(c.from)) connectionEntities.add(c.from);
+            if (!brokerNames.has(c.to)) connectionEntities.add(c.to);
+        });
+
+        const consumerNodes = Array.from(connectionEntities).map(name => {
+            let cat = 'consumer';
+            if (name.includes('Law Enforcement') || name.includes('FBI') || name.includes('DHS') || 
+                name.includes('ICE') || name.includes('IRS') || name.includes('CIA') || 
+                name.includes('Military') || name.includes('Police') || name.includes('Defense')) cat = 'government';
+            if (name.includes('Insurance')) cat = 'insurance';
+            if (name.includes('Advertiser') || name.includes('DSP') || name.includes('Ad ')) cat = 'adtech';
+            if (name.includes('Bank') || name.includes('Mortgage') || name.includes('Lender')) cat = 'insurance';
+            return { id: name, category: cat, data: null, isBroker: false };
+        });
+
+        const nodes = [...brokerNodes, ...consumerNodes];
+        
+        // Build links
+        const links = brokerData.connections.map(c => ({
+            source: c.from,
+            target: c.to,
+            dataType: c.dataType,
+            note: c.note
+        }));
+
+        document.getElementById('node-count').textContent = nodes.length;
+        document.getElementById('edge-count').textContent = links.length;
+
+        // SVG setup
+        const svg = d3.select('#graph')
+            .attr('width', width)
+            .attr('height', height);
+
+        const g = svg.append('g');
+
+        // Zoom
+        const zoom = d3.zoom()
+            .scaleExtent([0.3, 4])
+            .on('zoom', (e) => g.attr('transform', e.transform));
+        svg.call(zoom);
+
+        // Arrow markers
+        const defs = svg.append('defs');
+        Object.entries(dataTypeColors).forEach(([type, color]) => {
+            defs.append('marker')
+                .attr('id', `arrow-${type}`)
+                .attr('viewBox', '0 -5 10 10')
+                .attr('refX', 20)
+                .attr('refY', 0)
+                .attr('markerWidth', 6)
+                .attr('markerHeight', 6)
+                .attr('orient', 'auto')
+                .append('path')
+                .attr('d', 'M0,-4L8,0L0,4')
+                .attr('fill', color)
+                .attr('class', 'link-arrow');
+        });
+
+        // Links
+        const link = g.append('g')
+            .selectAll('line')
+            .data(links)
+            .join('line')
+            .attr('class', 'link')
+            .attr('stroke', d => dataTypeColors[d.dataType] || '#555')
+            .attr('stroke-width', 1.5)
+            .attr('marker-end', d => `url(#arrow-${d.dataType})`);
+
+        // Nodes
+        const node = g.append('g')
+            .selectAll('g')
+            .data(nodes)
+            .join('g')
+            .attr('class', 'node')
+            .call(d3.drag()
+                .on('start', dragStarted)
+                .on('drag', dragged)
+                .on('end', dragEnded));
+
+        node.append('circle')
+            .attr('r', d => d.isBroker ? Math.max(8, Math.sqrt((d.data?.revenue?.match(/\$([\d.]+)/)?.[1] || 1) * 1000) / 8) : 6)
+            .attr('fill', d => categoryColors[d.category] || '#555')
+            .attr('stroke', d => categoryColors[d.category] || '#555')
+            .attr('stroke-width', 1.5)
+            .attr('fill-opacity', d => d.isBroker ? 0.3 : 0.15);
+
+        node.append('text')
+            .text(d => {
+                let name = d.id;
+                if (name.includes('(')) name = name.split('(')[0].trim();
+                if (name.length > 20) name = name.substring(0, 18) + '...';
+                return name;
+            })
+            .attr('dx', d => (d.isBroker ? 14 : 10))
+            .attr('dy', 4)
+            .attr('font-size', d => d.isBroker ? '11px' : '9px')
+            .attr('fill', d => d.isBroker ? '#d4d4d4' : '#737373');
+
+        // Click handler
+        node.on('click', (event, d) => {
+            event.stopPropagation();
+            selectNode(d, nodes, links, node, link);
+        });
+
+        svg.on('click', () => {
+            clearSelection(nodes, node, link);
+            closeSidebar();
+        });
+
+        // Simulation
+        simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(120))
+            .force('charge', d3.forceManyBody().strength(-300))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(30))
+            .on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                node.attr('transform', d => `translate(${d.x},${d.y})`);
+            });
+
+        // Filters
+        document.getElementById('filter-category').addEventListener('change', () => applyFilters(nodes, links, node, link));
+        document.getElementById('filter-datatype').addEventListener('change', () => applyFilters(nodes, links, node, link));
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            document.getElementById('filter-category').value = '';
+            document.getElementById('filter-datatype').value = '';
+            clearSelection(nodes, node, link);
+            closeSidebar();
+        });
+
+        // Initial zoom to fit
+        setTimeout(() => {
+            svg.transition().duration(1000).call(
+                zoom.transform,
+                d3.zoomIdentity.translate(width/2, height/2).scale(0.7).translate(-width/2, -height/2)
+            );
+        }, 2000);
+
+        function dragStarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x; d.fy = d.y;
+        }
+        function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+        function dragEnded(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null; d.fy = null;
+        }
+    }
+
+    function selectNode(d, nodes, links, nodeSelection, linkSelection) {
+        selectedNode = d;
+        const connected = new Set();
+        connected.add(d.id);
+
+        const relevantLinks = links.filter(l => {
+            const src = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+            if (src === d.id || tgt === d.id) {
+                connected.add(src); connected.add(tgt);
+                return true;
+            }
+            return false;
+        });
+
+        nodeSelection.classed('highlighted', n => n.id === d.id)
+            .classed('dimmed', n => !connected.has(n.id));
+        linkSelection.classed('highlighted', l => {
+            const src = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+            return src === d.id || tgt === d.id;
+        }).classed('dimmed', l => {
+            const src = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+            return src !== d.id && tgt !== d.id;
+        });
+
+        showSidebar(d, relevantLinks);
+    }
+
+    function clearSelection(nodes, nodeSelection, linkSelection) {
+        selectedNode = null;
+        nodeSelection.classed('highlighted', false).classed('dimmed', false);
+        linkSelection.classed('highlighted', false).classed('dimmed', false);
+    }
+
+    function applyFilters(nodes, links, nodeSelection, linkSelection) {
+        const cat = document.getElementById('filter-category').value;
+        const dt = document.getElementById('filter-datatype').value;
+
+        if (!cat && !dt) {
+            clearSelection(nodes, nodeSelection, linkSelection);
+            return;
+        }
+
+        const matchingNodes = new Set();
+        
+        if (cat) {
+            nodes.forEach(n => { if (n.category === cat) matchingNodes.add(n.id); });
+        }
+
+        if (dt) {
+            links.forEach(l => {
+                if (l.dataType === dt) {
+                    const src = typeof l.source === 'object' ? l.source.id : l.source;
+                    const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+                    matchingNodes.add(src);
+                    matchingNodes.add(tgt);
+                }
+            });
+        }
+
+        nodeSelection.classed('dimmed', n => !matchingNodes.has(n.id)).classed('highlighted', false);
+        linkSelection.classed('dimmed', l => {
+            const src = typeof l.source === 'object' ? l.source.id : l.source;
+            const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+            if (dt && l.dataType !== dt) return true;
+            return !matchingNodes.has(src) && !matchingNodes.has(tgt);
+        }).classed('highlighted', false);
+    }
+
+    function showSidebar(d, relevantLinks) {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('sidebar-content');
+        const color = categoryColors[d.category] || '#555';
+
+        const inbound = relevantLinks.filter(l => (typeof l.target === 'object' ? l.target.id : l.target) === d.id);
+        const outbound = relevantLinks.filter(l => (typeof l.source === 'object' ? l.source.id : l.source) === d.id);
+
+        let html = `
+            <div class="mb-6">
+                <div class="mono text-[10px] uppercase tracking-wider mb-1" style="color:${color}">${d.category}</div>
+                <h2 class="serif text-2xl font-bold">${d.id}</h2>
+            </div>
+        `;
+
+        if (d.data) {
+            html += `
+                <p class="text-sm text-neutral-400 mb-4">${d.data.description}</p>
+                ${d.data.revenue ? `<div class="mono text-xs text-neutral-500 mb-4">${d.data.revenue}</div>` : ''}
+                
+                <div class="mb-4">
+                    <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Data Types</div>
+                    <div class="flex flex-wrap gap-1">
+                        ${d.data.dataTypes.map(dt => `<span class="data-type-pill" style="color:${dataTypeColors[dt]||'#555'};border-color:${dataTypeColors[dt]||'#333'}30">${dt.replace('_', ' ')}</span>`).join('')}
+                    </div>
+                </div>
+
+                ${d.data.controversy ? `
+                    <div class="mb-4 border-l-2 border-red-800 pl-3">
+                        <div class="mono text-[10px] text-red-700 uppercase tracking-wider mb-1">Controversy</div>
+                        <div class="text-xs text-neutral-400">${d.data.controversy}</div>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        if (inbound.length > 0) {
+            html += `
+                <div class="mb-4">
+                    <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Receives Data From (${inbound.length})</div>
+                    <div class="space-y-2">
+                        ${inbound.map(l => {
+                            const src = typeof l.source === 'object' ? l.source.id : l.source;
+                            return `<div class="text-xs border border-neutral-900 rounded p-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-neutral-300">${src}</span>
+                                    <span class="data-type-pill" style="color:${dataTypeColors[l.dataType]||'#555'};border-color:${dataTypeColors[l.dataType]||'#333'}30">${l.dataType.replace('_',' ')}</span>
+                                </div>
+                                <div class="text-neutral-600 mt-1">${l.note}</div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (outbound.length > 0) {
+            html += `
+                <div class="mb-4">
+                    <div class="mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Sends Data To (${outbound.length})</div>
+                    <div class="space-y-2">
+                        ${outbound.map(l => {
+                            const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+                            return `<div class="text-xs border border-neutral-900 rounded p-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-neutral-300">${tgt}</span>
+                                    <span class="data-type-pill" style="color:${dataTypeColors[l.dataType]||'#555'};border-color:${dataTypeColors[l.dataType]||'#333'}30">${l.dataType.replace('_',' ')}</span>
+                                </div>
+                                <div class="text-neutral-600 mt-1">${l.note}</div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (d.data?.url) {
+            html += `<a href="${d.data.url}" target="_blank" class="mono text-[10px] text-neutral-600 hover:text-neutral-300">${d.data.url}</a>`;
+        }
+
+        content.innerHTML = html;
+        sidebar.classList.add('open');
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+    }
+
+    // Resize
+    window.addEventListener('resize', () => {
+        d3.select('#graph').attr('width', window.innerWidth).attr('height', window.innerHeight);
+    });
+    </script>
+</body>
+</html>
