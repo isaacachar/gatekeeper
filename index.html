@@ -68,7 +68,8 @@
                 <a href="#index" class="text-neutral-400 hover:text-white transition-colors">Index</a>
                 <a href="#compare" class="text-neutral-400 hover:text-white transition-colors">Compare</a>
                 <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors">Your Score</a>
-                <a href="map.html" class="text-red-500 hover:text-red-400 transition-colors">Data Broker Map</a>
+                <a href="map.html" class="text-red-500 hover:text-red-400 transition-colors">Broker Map</a>
+                <a href="#vision" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Vision</a>
                 <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Waitlist</a>
             </div>
         </nav>
@@ -258,6 +259,86 @@
                     <div class="grade-letter text-2xl font-bold grade-f mb-1">F</div>
                     <div class="text-xs text-neutral-500">0-29 · Predatory</div>
                     <div class="text-xs text-neutral-600 mt-1">Treats your data like theirs</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Roadmap -->
+        <section id="vision" class="mb-20">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-neutral-600 mb-4">Vision</div>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
+                DNS for human identity.
+            </h2>
+            <p class="text-lg text-neutral-400 font-serif leading-relaxed max-w-3xl mb-12">
+                Your reachability should be a function you control — not a static value others possess. Gatekeeper is the sovereignty layer between you and every service that wants your data. Today it's a scorecard. Tomorrow it's the infrastructure.
+            </p>
+
+            <div class="grid md:grid-cols-4 gap-6 mb-12">
+                <!-- Phase 1 -->
+                <div class="border border-red-900/40 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-red-500 px-2 py-0.5 border border-red-900/40 rounded-full">LIVE</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 1</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Index</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Real T&C analysis for 30 services. Verbatim clauses. Grades. Comparison tools. The data broker map. You're looking at it.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">scoring engine</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">broker map</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">exposure calc</span>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-amber-600 px-2 py-0.5 border border-amber-900/30 rounded-full">APRIL</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 2</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The API</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">T&C intelligence as a service. REST API, MCP server, CLI. Your AI agent checks terms before agreeing — programmatically, in milliseconds.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">REST API</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">MCP server</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">CLI</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-neutral-600 px-2 py-0.5 border border-neutral-800 rounded-full">SUMMER</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 3</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Extension</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Chrome extension. Intercepts signups, generates aliases, scans terms in real-time, alerts you when services change their policies against you.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">form intercept</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">aliases</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">change alerts</span>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-neutral-600 px-2 py-0.5 border border-neutral-800 rounded-full">2026+</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 4</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Protocol</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Open permission language. Identity vault. Tamper-evident ledger. A full data graph of where your identity lives. Gatekeeper becomes a standard.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">protocol spec</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">identity vault</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">data graph</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCP Callout -->
+            <div class="border border-neutral-900 rounded-xl p-8 bg-neutral-950/50 max-w-3xl">
+                <div class="font-mono text-[10px] text-amber-600 uppercase tracking-wider mb-3">Coming in Phase 2</div>
+                <h3 class="font-serif text-xl font-bold mb-3">The MCP server is the killer move.</h3>
+                <p class="text-sm text-neutral-400 font-sans leading-relaxed mb-4">Any AI agent using the Model Context Protocol can query Gatekeeper before agreeing to anything on your behalf. Check terms. Enforce your policy. Log what happened. All programmatic.</p>
+                <div class="font-mono text-xs text-neutral-500 bg-neutral-900/50 rounded-lg p-4 space-y-1">
+                    <div><span class="text-amber-500">gatekeeper.check</span>(<span class="text-neutral-300">"spotify.com"</span>)</div>
+                    <div class="text-neutral-600">→ Grade C · Uses listening data for AI training · Recommend opt-out</div>
+                    <div class="mt-2"><span class="text-amber-500">gatekeeper.policy</span>(<span class="text-neutral-300">userRules, "tiktok"</span>)</div>
+                    <div class="text-neutral-600">→ CONFLICT: Service requires arbitration, user policy rejects it</div>
+                    <div class="mt-2"><span class="text-amber-500">gatekeeper.audit</span>()</div>
+                    <div class="text-neutral-600">→ Last 7 days: agent agreed to 23 terms. 3 violated your policy.</div>
                 </div>
             </div>
         </section>
