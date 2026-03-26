@@ -54,12 +54,213 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem !important; }
         }
+
+        /* === SCROLL REVEAL ANIMATIONS === */
+        html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-stagger { transition-delay: var(--stagger, 0ms); }
+
+        /* === MICRO-INTERACTIONS === */
+        #index-list > div,
+        #exposure-grid > div label,
+        .comparison-col {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+            will-change: transform;
+        }
+        #index-list > div:hover {
+            transform: scale(1.008);
+            box-shadow: 0 0 20px rgba(239,68,68,0.06);
+        }
+        .grade-letter {
+            transition: transform 0.2s ease, filter 0.2s ease;
+            display: inline-block;
+        }
+        .grade-letter:hover {
+            transform: scale(1.12);
+            filter: brightness(1.3);
+            animation: gradePulse 0.6s ease-in-out;
+        }
+        @keyframes gradePulse {
+            0%, 100% { transform: scale(1.12); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Buttons */
+        button, a[class*="border"] {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        button:hover, a[class*="inline-flex"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Nav underline */
+        nav a {
+            position: relative;
+            overflow: hidden;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #ef4444;
+            transform: translateX(-101%);
+            transition: transform 0.3s ease;
+        }
+        nav a:hover::after {
+            transform: translateX(0);
+        }
+
+        /* Tab indicator */
+        .tab-active {
+            position: relative;
+        }
+        [data-tab] {
+            position: relative;
+            border-bottom: 2px solid transparent !important;
+        }
+        [data-tab]::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .tab-active::after {
+            transform: scaleX(1) !important;
+        }
+
+        /* Score bar animation */
+        .score-fill {
+            transition: width 0.8s ease-out;
+        }
+        .score-fill.animate-in {
+            width: 0 !important;
+        }
+
+        /* === MODAL SLIDE-IN === */
+        #detail-modal > div > div {
+            animation: modalSlideIn 0.35s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #detail-modal {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* === TYPEWRITER === */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #991b1b;
+            width: 0;
+            animation: typewriter 2s steps(38) 0.5s forwards, blinkCaret 0.7s step-end infinite;
+        }
+        @keyframes typewriter {
+            to { width: 100%; }
+        }
+        @keyframes blinkCaret {
+            50% { border-color: transparent; }
+        }
+
+        /* === SCROLL-TO-TOP === */
+        #scroll-top-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 8px;
+            color: #ef4444;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #scroll-top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #scroll-top-btn:hover {
+            background: rgba(239,68,68,0.25);
+            transform: translateY(-2px);
+        }
+
+        /* === HERO PARALLAX === */
+        .hero-parallax {
+            will-change: transform;
+        }
+
+        /* === NETWORK CANVAS === */
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* === PAGE LOAD STAGGER === */
+        .load-stagger {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: loadIn 0.5s ease-out forwards;
+            animation-delay: var(--load-delay, 0ms);
+        }
+        @keyframes loadIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === TAB CROSSFADE === */
+        .tab-panel {
+            transition: opacity 0.25s ease;
+        }
+        .tab-panel.fading {
+            opacity: 0;
+        }
+
+        /* Radar chart container */
+        .radar-chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
     </style>
 </head>
 <body class="antialiased">
+    <button id="scroll-top-btn" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
     <main class="max-w-6xl mx-auto px-4 md:px-8">
         <!-- Nav -->
-        <nav class="flex items-center justify-between py-6 border-b border-neutral-900">
+        <nav class="flex items-center justify-between py-6 border-b border-neutral-900 load-stagger" style="--load-delay:0ms">
             <div class="flex items-center gap-2">
                 <span class="text-red-500 text-xl">&#9919;</span>
                 <span class="font-mono font-bold text-sm tracking-wide">GATEKEEPER</span>
@@ -75,21 +276,22 @@
         </nav>
 
         <!-- Hero -->
-        <header class="py-16 md:py-24">
-            <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6">Classified · Public Interest Disclosure</div>
-            <h1 class="hero-title font-serif text-5xl md:text-7xl font-black leading-[1.05] mb-8 max-w-4xl">
+        <header class="py-16 md:py-24 hero-parallax">
+            <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6 typewriter load-stagger" style="--load-delay:200ms">Classified · Public Interest Disclosure</div>
+            <h1 class="hero-title font-serif text-5xl md:text-7xl font-black leading-[1.05] mb-8 max-w-4xl load-stagger" style="--load-delay:500ms">
                 You agreed to<br>all of this.
             </h1>
-            <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl leading-relaxed font-serif mb-10">
+            <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl leading-relaxed font-serif mb-10 load-stagger" style="--load-delay:700ms">
                 We scraped, read, and scored the actual terms of service for 30 of the world's most popular platforms. Here's what's hiding in the fine print.
             </p>
-            <div class="font-mono text-xs text-neutral-600">
+            <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:900ms">
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
             </div>
         </header>
 
         <!-- The Agentic Reality -->
-        <section class="border border-red-900/20 rounded-xl p-8 md:p-10 mb-20 bg-gradient-to-b from-red-950/10 to-transparent relative overflow-hidden">
+        <section class="border border-red-900/20 rounded-xl p-8 md:p-10 mb-20 bg-gradient-to-b from-red-950/10 to-transparent relative overflow-hidden reveal">
+            <canvas id="network-canvas"></canvas>
             <div class="absolute top-0 right-0 w-64 h-64 bg-red-500/3 blur-[100px] pointer-events-none"></div>
             <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The new threat model · 2026</div>
             <h2 class="font-serif text-2xl md:text-3xl font-bold leading-tight mb-6 max-w-3xl">
@@ -113,7 +315,7 @@
         </section>
 
         <!-- Stats Bar -->
-        <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+        <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 reveal">
             <div class="border border-neutral-900 rounded-lg p-5">
                 <div class="text-3xl md:text-4xl font-mono font-bold text-red-500 mb-1" id="stat-data"></div>
                 <div class="text-xs text-neutral-500 font-sans">Share data with third parties</div>
@@ -140,7 +342,7 @@
         </div>
 
         <!-- INDEX TAB -->
-        <section id="tab-index">
+        <section id="tab-index" class="tab-panel">
             <!-- Filters -->
             <div class="flex flex-wrap gap-3 mb-6">
                 <input type="text" id="search" placeholder="Search services..." class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 min-w-[200px] placeholder-neutral-600">
@@ -173,7 +375,7 @@
         </section>
 
         <!-- COMPARE TAB -->
-        <section id="tab-compare" class="hidden mb-20">
+        <section id="tab-compare" class="hidden mb-20 tab-panel">
             <a id="compare"></a>
             <p class="text-neutral-400 mb-6 font-sans text-sm">Select two services to compare their terms side by side.</p>
             <div class="flex flex-wrap gap-4 mb-8">
@@ -188,7 +390,7 @@
         </section>
 
         <!-- EXPOSURE TAB -->
-        <section id="tab-exposure" class="hidden mb-20">
+        <section id="tab-exposure" class="hidden mb-20 tab-panel">
             <a id="exposure"></a>
             <p class="text-neutral-400 mb-2 font-sans text-sm">Check the services you use. We'll calculate your personal exposure score.</p>
             <p class="text-neutral-600 mb-8 font-sans text-xs">How much of your data is out there, based on what you've agreed to?</p>
@@ -218,7 +420,7 @@
         </div>
 
         <!-- Methodology -->
-        <section class="border-t border-neutral-900 pt-16 mb-16" id="methodology">
+        <section class="border-t border-neutral-900 pt-16 mb-16 reveal" id="methodology">
             <h2 class="font-serif text-3xl font-bold mb-8">Methodology</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-neutral-400 font-sans leading-relaxed">
                 <div>
@@ -264,7 +466,7 @@
         </section>
 
         <!-- Vision & Roadmap -->
-        <section id="vision" class="mb-20">
+        <section id="vision" class="mb-20 reveal">
             <div class="font-mono text-[10px] uppercase tracking-widest text-neutral-600 mb-4">Vision</div>
             <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
                 DNS for human identity.
@@ -344,7 +546,7 @@
         </section>
 
         <!-- Request a Service -->
-        <section class="border border-neutral-900 rounded-xl p-8 mb-12">
+        <section class="border border-neutral-900 rounded-xl p-8 mb-12 reveal">
             <h2 class="font-serif text-2xl font-bold mb-2">Missing a service?</h2>
             <p class="text-sm text-neutral-400 mb-6 font-sans">Tell us what to analyze next. Most-requested services get prioritized.</p>
             <form id="request-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
@@ -356,7 +558,7 @@
         </section>
 
         <!-- Waitlist CTA -->
-        <section id="waitlist" class="border border-red-900/40 bg-red-950/10 rounded-xl p-8 md:p-12 mb-20">
+        <section id="waitlist" class="border border-red-900/40 bg-red-950/10 rounded-xl p-8 md:p-12 mb-20 reveal">
             <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">We're building the kill switch.</h2>
             <p class="text-lg text-neutral-300 mb-8 max-w-2xl font-serif leading-relaxed">
                 A browser extension that reads terms before you agree. Scores them. Flags conflicts. Alerts you when they change. And gives you a revoke button for every connection.
@@ -808,6 +1010,330 @@
             setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('text-emerald-400'); }, 2000);
         });
     }
+
+    // =============================================
+    // VISUAL EFFECTS & ANIMATIONS
+    // =============================================
+
+    // --- 1. Scroll-Triggered Reveal ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Staggered reveals for grid children (roadmap phases, grade scale, etc.)
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const children = entry.target.querySelectorAll(':scope > div, :scope > a');
+                children.forEach((child, i) => {
+                    child.style.setProperty('--stagger', `${i * 80}ms`);
+                    child.classList.add('reveal', 'reveal-stagger');
+                    requestAnimationFrame(() => {
+                        setTimeout(() => child.classList.add('visible'), 10);
+                    });
+                });
+                staggerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Observe grids for stagger
+    document.querySelectorAll('#vision .grid, #methodology .grid').forEach(el => staggerObserver.observe(el));
+
+    // --- 2. Animated Stat Counters ---
+    let statsAnimated = false;
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !statsAnimated) {
+                statsAnimated = true;
+                animateStats();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    document.getElementById('stats-bar') && statsObserver.observe(document.getElementById('stats-bar'));
+
+    function animateStats() {
+        document.querySelectorAll('#stats-bar [id^="stat-"]').forEach(el => {
+            const target = parseInt(el.textContent);
+            if (isNaN(target)) return;
+            el.textContent = '0%';
+            const start = performance.now();
+            const duration = 1200;
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+                el.textContent = Math.round(target * eased) + '%';
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        });
+    }
+
+    // --- 3. Score Bar Animation on Scroll ---
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const fills = entry.target.querySelectorAll('.score-fill');
+                fills.forEach(fill => {
+                    const targetWidth = fill.style.width;
+                    fill.style.width = '0%';
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            fill.style.width = targetWidth;
+                        });
+                    });
+                });
+                barObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    // Re-observe after renderIndex runs
+    const origRenderIndex = renderIndex;
+    renderIndex = function() {
+        origRenderIndex();
+        document.querySelectorAll('#index-list > div').forEach((card, i) => {
+            card.style.setProperty('--stagger', `${i * 40}ms`);
+            card.classList.add('reveal', 'reveal-stagger');
+            requestAnimationFrame(() => card.classList.add('visible'));
+            barObserver.observe(card);
+        });
+    };
+
+    // --- 4. Parallax Hero ---
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const hero = document.querySelector('.hero-parallax');
+                if (hero && scrollY < 800) {
+                    hero.style.transform = `translateY(${scrollY * 0.12}px)`;
+                }
+
+                // Scroll-to-top button
+                const btn = document.getElementById('scroll-top-btn');
+                if (btn) btn.classList.toggle('visible', scrollY > 500);
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // --- 5. Network Canvas Visualization ---
+    (function initNetworkViz() {
+        const canvas = document.getElementById('network-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const nodes = [];
+        const NODE_COUNT = 30;
+        const MAX_DIST = 120;
+        let w, h, animId;
+        let isVisible = false;
+
+        function resize() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            w = canvas.width = rect.width;
+            h = canvas.height = rect.height;
+        }
+
+        function initNodes() {
+            nodes.length = 0;
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    r: 1.5 + Math.random() * 1.5
+                });
+            }
+        }
+
+        function draw() {
+            if (!isVisible) { animId = requestAnimationFrame(draw); return; }
+            ctx.clearRect(0, 0, w, h);
+
+            // Move nodes
+            nodes.forEach(n => {
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < 0 || n.x > w) n.vx *= -1;
+                if (n.y < 0 || n.y > h) n.vy *= -1;
+            });
+
+            // Draw connections
+            ctx.strokeStyle = 'rgba(153, 27, 27, 0.2)';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MAX_DIST) {
+                        ctx.globalAlpha = 1 - dist / MAX_DIST;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw nodes
+            ctx.globalAlpha = 1;
+            nodes.forEach(n => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(220, 38, 38, 0.5)';
+                ctx.fill();
+            });
+
+            animId = requestAnimationFrame(draw);
+        }
+
+        const vizObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { isVisible = entry.isIntersecting; });
+        }, { threshold: 0 });
+
+        resize();
+        initNodes();
+        draw();
+        vizObserver.observe(canvas.parentElement);
+
+        window.addEventListener('resize', () => { resize(); initNodes(); });
+    })();
+
+    // --- 6. Radar Chart in Detail Modal ---
+    const origOpenDetail = openDetail;
+    openDetail = function(name) {
+        origOpenDetail(name);
+        const s = services.find(x => x.name === name);
+        if (!s) return;
+
+        // Insert radar chart after category scores heading
+        const detailContent = document.getElementById('detail-content');
+        const categorySection = detailContent.querySelector('.space-y-2');
+        if (!categorySection) return;
+
+        const container = document.createElement('div');
+        container.className = 'radar-chart-container';
+        const cvs = document.createElement('canvas');
+        cvs.width = 240;
+        cvs.height = 240;
+        container.appendChild(cvs);
+        categorySection.parentElement.insertBefore(container, categorySection);
+
+        drawRadar(cvs, s.scores);
+    };
+
+    function drawRadar(canvas, scores) {
+        const ctx = canvas.getContext('2d');
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const R = 90;
+        const keys = Object.keys(scores);
+        const n = keys.length;
+        const angleStep = (Math.PI * 2) / n;
+
+        // Draw rings
+        [0.25, 0.5, 0.75, 1].forEach(frac => {
+            ctx.beginPath();
+            for (let i = 0; i <= n; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = cx + Math.cos(angle) * R * frac;
+                const y = cy + Math.sin(angle) * R * frac;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+        });
+
+        // Draw axes
+        keys.forEach((_, i) => {
+            const angle = i * angleStep - Math.PI / 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * R, cy + Math.sin(angle) * R);
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+        });
+
+        // Draw data polygon
+        ctx.beginPath();
+        keys.forEach((key, i) => {
+            const val = scores[key] / 10;
+            const angle = i * angleStep - Math.PI / 2;
+            const x = cx + Math.cos(angle) * R * val;
+            const y = cy + Math.sin(angle) * R * val;
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Draw dots and labels
+        ctx.font = '8px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(163,163,163,0.7)';
+        ctx.textAlign = 'center';
+        keys.forEach((key, i) => {
+            const val = scores[key] / 10;
+            const angle = i * angleStep - Math.PI / 2;
+            const x = cx + Math.cos(angle) * R * val;
+            const y = cy + Math.sin(angle) * R * val;
+
+            // Dot
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.8)';
+            ctx.fill();
+
+            // Label
+            const lx = cx + Math.cos(angle) * (R + 14);
+            const ly = cy + Math.sin(angle) * (R + 14);
+            ctx.fillStyle = 'rgba(163,163,163,0.6)';
+            ctx.textAlign = Math.cos(angle) < -0.1 ? 'right' : Math.cos(angle) > 0.1 ? 'left' : 'center';
+            const short = categoryLabel(key).replace('Cross-Platform Sharing','Cross-Plat.').replace('Forced Arbitration','Arbitration').replace('Content Ownership','Content Own.').replace('Terms Changes','Terms Chg.').replace('Deletion Difficulty','Deletion').replace('Data Retention','Retention').replace('Location Tracking','Location').replace('Liability Limits','Liability').replace('Data Selling','Data Sell.').replace('AI Training','AI Train.');
+            ctx.fillText(short, lx, ly + 3);
+        });
+    }
+
+    // --- 7. Tab Crossfade ---
+    const origSwitchTab = switchTab;
+    switchTab = function(tab) {
+        const current = ['index','compare','exposure'].find(t => !document.getElementById('tab-'+t).classList.contains('hidden'));
+        if (current && current !== tab) {
+            const currentEl = document.getElementById('tab-'+current);
+            currentEl.classList.add('fading');
+            setTimeout(() => {
+                origSwitchTab(tab);
+                currentEl.classList.remove('fading');
+                const newEl = document.getElementById('tab-'+tab);
+                newEl.classList.add('fading');
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => newEl.classList.remove('fading'));
+                });
+            }, 200);
+        } else {
+            origSwitchTab(tab);
+        }
+    };
+
     </script>
 </body>
 </html>

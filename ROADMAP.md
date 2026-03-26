@@ -1,187 +1,233 @@
-# Gatekeeper — Product Roadmap
+# Gatekeeper — Roadmap
 
-## Vision
-DNS for human identity. Your reachability is a function you control, not a static value others possess.
-
-## The Core Thesis
-AI agents will scatter your real identity data at machine speed — 50 agreements/day vs a human's 5/week. Without a sovereignty layer, the privacy problem becomes catastrophic. Gatekeeper is that layer.
+**Last updated:** 2026-03-25
+**Status:** Phase 1 in progress
 
 ---
 
-## Phase 1: Predatory T&C Index (NOW — March 2026)
-**Goal:** Domain authority, waitlist, SEO, build the scoring engine
+## Current Status
 
-- [x] Landing page with 30 scored services
-- [x] Real T&C analysis with verbatim clauses
-- [x] Comparison tool
-- [x] Personal exposure calculator
-- [ ] Shareable report cards (OG images, social share)
-- [ ] Interactive data broker network map
-- [ ] Action items per service (opt-out links, alternatives)
-- [ ] Hash routing for direct service links
-- [ ] "Request a service" form
-- [ ] T&C change monitoring (automated scraping + diffing)
-- [ ] Category pages for SEO ("/best-messaging-app-for-privacy")
-- [ ] Blog/changelog: "This Week in Predatory Terms"
+**Phase 1 is ~60% done.**
 
-**Success metric:** 10K unique visitors, 1K waitlist signups, 3+ press mentions
+What's shipped:
+- ✅ Landing page with 30+ scored services and real T&C analysis
+- ✅ Comparison tool
+- ✅ Personal exposure calculator
+- ✅ Data broker network map (map.html)
+- ✅ T&C data JSON (tc-data.json, 90KB+ of scored services)
+- ✅ Data broker dataset (data-brokers.json)
+- ✅ GitHub repo + CI setup
+
+What's remaining (Phase 1):
+- ❌ Shareable report cards (OG images, social share)
+- ❌ Action items per service (opt-out links, alternatives)
+- ❌ Hash routing for direct service links
+- ❌ "Request a service" form
+- ❌ T&C change monitoring pipeline
+- ❌ Category pages for SEO
+- ❌ Blog/changelog
+- ❌ HN launch
+
+**Blocking question:** When to launch on HN — before or after all Phase 1 items? Recommend launching with what we have + share/direct-link features. The rest can ship in the week after launch.
 
 ---
 
-## Phase 2: API + MCP + CLI (April 2026)
-**Goal:** Make T&C intelligence programmable — agents and developers can query it
+## Phase 1: T&C Index Website (March 2026)
 
-### 2a. REST API
-```
-GET /api/v1/score/tiktok
-GET /api/v1/scores?category=social&grade=F
-GET /api/v1/compare?a=whatsapp&b=signal
-GET /api/v1/check-url?url=https://example.com/signup
-POST /api/v1/evaluate  (body: raw ToS text → returns score)
-```
+**Objective:** Establish domain authority, build waitlist, prove the data is valuable.
 
-Response:
-```json
-{
-  "service": "TikTok",
-  "grade": "D",
-  "score": 26,
-  "risks": ["biometric_collection", "ai_training", "location_tracking"],
-  "recommendation": "avoid",
-  "alternatives": [{"name": "YouTube Shorts", "grade": "D"}, {"name": "Instagram Reels", "grade": "D"}],
-  "optOutUrl": "https://...",
-  "lastUpdated": "2026-03-25"
-}
-```
+### Deliverables
 
-### 2b. MCP Server (Model Context Protocol)
-The killer feature. Any AI agent using MCP can:
-- **Before signing up:** `gatekeeper.check("spotify.com")` → "Grade C. Uses your listening data for AI training. Recommend opt-out at [url]."
-- **Before agreeing to ToS:** `gatekeeper.evaluate(tosText)` → Real-time scoring of arbitrary terms
-- **Policy enforcement:** `gatekeeper.policy(userPolicy, service)` → "Conflicts: service requires arbitration, user policy rejects it"
-- **Audit trail:** `gatekeeper.log(action, service)` → Log what the agent agreed to on behalf of the user
+| Item | Status | Est. Effort | Notes |
+|---|---|---|---|
+| Landing page with scored services | ✅ Done | — | 30+ services scored |
+| Real T&C analysis with verbatim clauses | ✅ Done | — | |
+| Comparison tool | ✅ Done | — | |
+| Personal exposure calculator | ✅ Done | — | |
+| Data broker network map | ✅ Done | — | map.html |
+| Shareable report cards | ❌ TODO | 1 day | OG meta tags + share buttons + per-service URL |
+| Hash routing for direct links | ❌ TODO | 0.5 day | #service=spotify → scroll to + highlight |
+| Action items per service | ❌ TODO | 1 day | Opt-out links, deletion guides, alternatives |
+| "Request a service" form | ❌ TODO | 0.5 day | Simple form → GitHub issue or email |
+| T&C change monitoring | ❌ TODO | 2-3 days | Cron worker: scrape ToS pages, diff, alert |
+| Category/SEO pages | ❌ TODO | 2 days | /best-messaging-for-privacy, etc. |
+| Blog: "This Week in Predatory Terms" | ❌ TODO | Ongoing | Weekly post on T&C changes |
+| HN launch | ❌ TODO | 1 day | Post + be available to respond for 24h |
 
-MCP Tools:
-```
-gatekeeper_check_service    — Look up a known service by name/domain
-gatekeeper_evaluate_terms   — Score arbitrary ToS text
-gatekeeper_check_policy     — Compare service terms against user's personal policy
-gatekeeper_get_alternatives — Get privacy-respecting alternatives
-gatekeeper_log_agreement    — Record that an agent agreed to terms on user's behalf
-gatekeeper_audit            — Show all agreements made by agents
-```
+### Success Metrics
+- 10K unique visitors in first month
+- 1K waitlist signups
+- 3+ press/blog mentions
+- Top 5 on HN for at least 2 hours
 
-### 2c. CLI
-```bash
-$ gatekeeper check tiktok
-TikTok — Grade D (26/100)
-Worst: Biometric collection, AI training, location tracking
-"TikTok collects your biometrics and claims sweeping rights to all content."
-Opt out: https://www.tiktok.com/setting/privacy
+### Dependencies
+- None — self-contained static site
 
-$ gatekeeper compare whatsapp signal
-WhatsApp: C (52/100) vs Signal: A (86/100)
-Signal wins on: data_selling, ai_training, cross_platform, data_retention
-WhatsApp wins on: (nothing)
+### Estimated Total Remaining Effort
+~7-8 days of work to complete Phase 1 and launch.
 
-$ gatekeeper scan --browser
-Scanned 47 services from your browser history.
-Exposure score: 73/100 (HIGH)
-Worst: Facebook (F), TikTok (D), Google (D)
-3 services changed terms since you last agreed.
+---
 
-$ gatekeeper policy set --no-arbitration --no-ai-training --delete-on-request
-Policy saved. 18 of your 47 services violate this policy.
+## Phase 2: API + MCP Server + CLI (April 2026)
 
-$ gatekeeper audit
-Last 7 days: Your agent agreed to 23 terms of service.
-3 flagged: Violated your --no-ai-training policy.
-```
+**Objective:** Make T&C intelligence programmatic. Developers and AI agents can query scores, evaluate terms, enforce policies.
 
-**Success metric:** 500+ MCP installs, 1K+ npm installs, integrated into 3+ agent frameworks
+### Deliverables
+
+| Item | Est. Effort | Dependencies | Notes |
+|---|---|---|---|
+| **REST API on Cloudflare Workers** | 3-4 days | D1 database setup | See PRODUCT-SPEC.md for endpoints |
+| → GET /scores/{service} | Included | | Public, rate-limited |
+| → GET /scores (search/filter) | Included | | |
+| → GET /compare | Included | | |
+| → POST /evaluate | Included | | Authenticated, scores raw ToS text |
+| → GET /alternatives/{service} | Included | | |
+| → GET /changes | Included | | T&C change feed |
+| **Database migration** | 1 day | | Move tc-data.json → D1 tables |
+| **API key system** | 1-2 days | | Key generation, tier enforcement, usage tracking |
+| **MCP Server (npm package)** | 3-4 days | API must be live | See PRODUCT-SPEC.md for tool specs |
+| → gatekeeper_check_service | Included | | |
+| → gatekeeper_evaluate_terms | Included | | |
+| → gatekeeper_check_policy | Included | | |
+| → gatekeeper_get_alternatives | Included | | |
+| → gatekeeper_log_agreement | Included | | Local audit log |
+| → gatekeeper_audit | Included | | |
+| **CLI (npm package)** | 2-3 days | API must be live | `gatekeeper check`, `compare`, `scan`, `policy` |
+| **T&C scoring engine v2** | 3-4 days | | Hybrid rules + LLM for new services |
+| **API documentation** | 1 day | | OpenAPI spec + examples page |
+| **Stripe integration** | 1-2 days | | Developer tier billing ($29/mo) |
+| **Launch: MCP ecosystem** | 1 day | | Submit to MCP directories, post on HN |
+
+### Success Metrics
+- 500+ MCP server installs (npm)
+- 1K+ CLI installs
+- 50+ paying developer tier users ($1,450/mo)
+- Integration into 3+ agent frameworks/tutorials
+
+### Dependencies
+- Phase 1 must be launched (credibility, waitlist, data)
+- D1 database provisioned
+- Stripe account set up
+- npm org claimed (`@gatekeeper`)
+
+### Estimated Total Effort
+~15-18 days of focused work. Can be compressed with a contractor on the CLI while we build the API.
 
 ---
 
 ## Phase 3: Chrome Extension (May-June 2026)
-**Goal:** Consumer product — passive protection for normal humans
 
-Features:
-- **Form interception** — Detects signup forms, generates scoped email/phone aliases
-- **T&C scanner** — Reads terms before you click "I agree", shows score overlay
-- **Conflict detection** — "This service requires arbitration. Your policy rejects arbitration."
-- **Change alerts** — "Spotify updated their terms. New: they can now use your data for AI training."
-- **Identity dashboard** — See every service, revoke access, track what's shared where
-- **Kill switches** — One-click revoke for any connection
+**Objective:** Consumer product. Passive privacy protection for people who don't use CLIs.
 
-**Revenue model:** Free tier (5 services) → Pro $9/mo (unlimited + alerts + aliases)
+### Deliverables
 
-**Success metric:** 10K installs, $5K MRR
+| Item | Est. Effort | Dependencies | Notes |
+|---|---|---|---|
+| **Extension scaffold (MV3)** | 1 day | | Manifest, service worker, content script, popup |
+| **Form interception** | 3-4 days | | Detect signup forms, offer alias substitution |
+| **Email alias generation** | 2-3 days | Relay decision | SimpleLogin API integration or custom relay |
+| **T&C score overlay** | 2-3 days | API live | Badge on ToS pages + "I agree" checkboxes |
+| **Popup UI** | 2 days | | Current site score, quick actions, policy status |
+| **Dashboard page** | 3-4 days | | Full service list, graph, audit log, kill switches |
+| **Policy engine (client-side)** | 2-3 days | | Evaluate requests against user-defined policy |
+| **Identity vault** | 2-3 days | | Encrypted local storage with passphrase |
+| **Audit log** | 1-2 days | | Append-only log with hash chain |
+| **Change alerts** | 1-2 days | T&C monitoring | "Spotify changed their terms" notifications |
+| **Settings + onboarding** | 1-2 days | | First-run flow, import from website scan |
+| **Chrome Web Store submission** | 1 day | | Review process takes 1-3 days |
+| **Free/Pro tier enforcement** | 1-2 days | Stripe | Server validates Pro status for premium features |
+
+### Success Metrics
+- 10K installs in first 3 months
+- $5K MRR from Pro subscriptions ($9/mo × 556 users)
+- 4.5+ star rating on Chrome Web Store
+- < 2% uninstall rate in first week
+
+### Dependencies
+- API must be stable and documented (Phase 2)
+- Email relay decision made (build vs. SimpleLogin vs. skip)
+- Chrome Web Store developer account ($5 one-time)
+- Privacy policy and terms of service (yes, we need our own — the irony)
+
+### Estimated Total Effort
+~22-28 days. This is the biggest phase. Consider hiring a contractor for the dashboard UI.
+
+### Risks
+- Chrome Web Store review can be unpredictable with MV3
+- Form detection heuristics will need constant tuning (sites change their markup)
+- Email deliverability if we build own relay (recommend against for v1)
 
 ---
 
-## Phase 4: Protocol (Q3-Q4 2026)
-**Goal:** Gatekeeper becomes a standard, not just a product
+## Phase 4: Protocol Standardization (Q3-Q4 2026)
 
-- **Permission Language spec** — Machine-readable format for identity sharing policies
-- **Gate middleware** — Open-source proxy that evaluates requests against personal policy
-- **Identity Vault** — Encrypted on-device identity store (name, email, phone, addresses)
-- **Ledger** — Tamper-evident log of all identity sharing events
-- **Graph** — Full map of where your data lives, updated in real-time
+**Objective:** Gatekeeper becomes a standard, not just a product. Open protocol that anyone can implement.
 
-The protocol emerges from usage. Extension proves what people need → protocol formalizes it → regulation + AI agent adoption drives standardization.
+### Deliverables
+
+| Item | Est. Effort | Dependencies | Notes |
+|---|---|---|---|
+| **Permission Language spec** | 2-3 weeks | Extension battle-tested | JSON schema for identity policies and grants |
+| **Gate middleware (open source)** | 2-3 weeks | Spec finalized | Reference implementation of policy evaluation |
+| **Identity Vault spec** | 1-2 weeks | | Encryption, storage, sync protocol |
+| **Ledger spec** | 1-2 weeks | | Hash chain format, sync protocol |
+| **Graph data model** | 1-2 weeks | | Service-to-broker-to-buyer relationships |
+| **Reference implementations** | 2-3 weeks | Specs done | TypeScript + Python libraries |
+| **Standards body engagement** | Ongoing | | W3C, IETF, or independent spec org |
+| **B2B licensing program** | 1-2 weeks | | Agent platforms pay to integrate |
+| **Enterprise dashboard** | 3-4 weeks | | Multi-user, compliance reporting, SSO |
+
+### Success Metrics
+- Protocol adopted by 2+ agent platforms
+- 3+ independent implementations
+- $20K+/mo enterprise revenue
+- W3C or IETF interest/working group
+
+### Dependencies
+- Extension must be live with real users generating real data
+- Legal counsel for licensing terms
+- Community building (contributors, implementers)
+
+### Estimated Total Effort
+This is a quarter-long effort minimum. Not solo work — needs community and possibly a small team.
+
+### Risks
+- Protocol design by one person tends to miss edge cases — need external feedback early
+- Standards process is slow (years, not months) — focus on de facto adoption first
+- Enterprise sales cycle is long — don't count on this revenue early
 
 ---
 
-## Architecture
+## Timeline Summary
 
 ```
-User / Agent
-    ↓
-[Permission Language] — "I allow email sharing with Grade B+ services only"
-    ↓
-[Gate Middleware] — Evaluates request against policy
-    ↓
-[Identity Vault] — Encrypted store (on-device)
-    ↓
-[Ledger] — Tamper-evident log of all sharing events
-    ↓
-[Graph] — Full data map over time
+2026
+Mar         Apr              May         Jun         Jul-Sep     Oct-Dec
+|-----------|----------------|-----------|-----------|-----------|----------|
+ Phase 1     Phase 2          Phase 3                 Phase 4
+ T&C Index   API+MCP+CLI      Extension               Protocol
+ HN Launch   MCP Launch       CWS Launch              Enterprise
+             $29/mo dev tier  $9/mo Pro               $20K+/mo B2B
 ```
 
 ---
 
-## Competitive Landscape
-| Competitor | What they do | What they miss |
+## Resource Assumptions
+
+- **Phase 1-2:** Solo (Isaac) + AI assistance. Contractor possible for CLI/docs.
+- **Phase 3:** Solo + contractor for dashboard UI. Extension core done by Isaac.
+- **Phase 4:** Needs community. Can't standardize alone. Budget for 1-2 part-time contributors.
+
+---
+
+## Decision Log
+
+| Date | Decision | Rationale |
 |---|---|---|
-| SimpleLogin (Proton) | Email aliases | No T&C intelligence, no policy engine, no audit |
-| Firefox Relay | Email/phone masking | No scoring, no graph, no agent integration |
-| Apple Hide My Email | iCloud email aliases | Apple-only, no cross-platform, no terms analysis |
-| ToS;DR | Crowdsourced ToS ratings | No API, no MCP, no agent integration, stale data |
-| Privacy.com | Virtual credit cards | Financial only, no identity layer |
+| 2026-03-25 | Created structured roadmap | Replacing freeform doc with trackable phases |
+| | Database: D1 (pending) | Cloudflare-native, cheap, edge SQLite |
+| | Email relay: SimpleLogin API for v1 (pending) | Don't build email infra from scratch |
+| | Phone aliases: skip in v1 (pending) | Focus on email first, phone is expensive |
+| | T&C scoring: hybrid rules+LLM (pending) | Rules for known patterns, LLM for novel |
 
-**Our moat:** Only solution that combines T&C intelligence + programmatic API + agent integration + identity graph + revocation. Everyone else does one piece.
-
----
-
-## Revenue Projections
-- Phase 2 API: Free tier + $29/mo developer tier → $2K/mo by month 3
-- Phase 3 Extension: $9/mo Pro → $5K/mo by month 3
-- Phase 4 Enterprise: B2B licensing to agent platforms → $20K+/mo
-- Total target: $30K/mo within 12 months
-
----
-
-## Tech Stack
-- **Website:** Static HTML/JS (GitHub Pages) → migrate to Cloudflare Pages when needed
-- **API:** Cloudflare Workers (edge, cheap, fast)
-- **MCP Server:** TypeScript, npm package
-- **CLI:** Node.js, npm package
-- **Extension:** Chrome Manifest V3, vanilla JS
-- **T&C Monitoring:** Cron worker that scrapes + diffs ToS pages weekly
-- **Database:** Cloudflare D1 (SQLite at the edge) or Supabase
-
-## Next Actions
-1. Finish Phase 1 (data broker map, share buttons, actions)
-2. Build MCP server + CLI as npm packages
-3. Set up T&C change monitoring pipeline
-4. Launch on HN: "We scored the terms of service for 30 services"
+*Update this log when decisions are made. "Pending" means proposed but not committed.*
