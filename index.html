@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,150 +11,174 @@
     <meta property="og:url" content="https://isaacachar.github.io/gatekeeper/">
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        serif: ['Instrument Serif', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                        sans: ['IBM Plex Sans', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        teal: {
+                            50: '#ccfbf1',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* === BASE === */
         html { scroll-behavior: smooth; }
-        body { background: #0a0a0a; color: #d4d4d4; font-family: 'IBM Plex Sans', sans-serif; font-weight: 300; }
+        body { background: #ffffff; color: #374151; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; }
 
-        /* === GRAIN OVERLAY === */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 256px 256px;
-        }
-
-        /* === TYPOGRAPHY === */
-        .font-display { font-family: 'Instrument Serif', Georgia, serif; }
         .mono-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #525252;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            color: #9ca3af;
         }
 
-        /* === GRADE COLORS === */
+        /* Grade colors */
         .grade-a { color: #059669; }
         .grade-b { color: #0891b2; }
         .grade-c { color: #d97706; }
         .grade-d { color: #ea580c; }
         .grade-f { color: #dc2626; }
 
-        /* === SCORE BARS === */
-        .score-bar { height: 2px; background: #1a1a1a; overflow: hidden; }
-        .score-fill { height: 100%; transition: width 0.8s ease-out; }
+        /* Score bars */
+        .score-bar { height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; }
+        .score-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease-out; }
 
-        /* === CLAUSE HIGHLIGHT === */
-        .clause-card { border-left: 2px solid #dc2626; }
+        /* Clause highlight */
+        .clause-card { background: #fef2f2; border-radius: 8px; padding: 16px; }
 
-        /* === TABS === */
-        .tab-active { color: #fafafa; }
-        .tab-active::after { transform: scaleX(1) !important; }
-        .tab-inactive { color: #525252; }
-        [data-tab] { position: relative; }
-        [data-tab]::after {
+        /* Action card */
+        .action-card { background: #f0fdf4; border-radius: 8px; padding: 16px; }
+
+        /* Tabs */
+        .tab-btn { position: relative; color: #9ca3af; font-weight: 500; transition: color 0.2s; }
+        .tab-btn.active { color: #111827; }
+        .tab-btn::after {
             content: '';
             position: absolute;
             bottom: -1px; left: 0;
-            width: 100%; height: 1px;
-            background: #dc2626;
+            width: 100%; height: 2px;
+            background: #0d9488;
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
         }
-        [data-tab]:hover::after { transform: scaleX(1); }
+        .tab-btn.active::after { transform: scaleX(1); }
+        .tab-btn:hover::after { transform: scaleX(1); }
 
-        /* === TABLE === */
+        /* Table rows */
         .index-row { transition: background 0.15s ease; }
-        .index-row:hover { background: #151515 !important; }
+        .index-row:hover { background: #f9fafb !important; }
 
-        /* === SCROLL REVEAL === */
-        .reveal { opacity: 0; transition: opacity 0.4s ease; }
+        /* Scroll reveal */
+        .reveal { opacity: 0; transition: opacity 0.5s ease; }
         .reveal.visible { opacity: 1; }
 
-        /* === TAB CROSSFADE === */
+        /* Tab crossfade */
         .tab-panel { transition: opacity 0.2s ease; }
         .tab-panel.fading { opacity: 0; }
 
-        /* === MODAL === */
-        #detail-modal { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        #detail-modal > div > div {
-            animation: modalSlideIn 0.3s ease-out;
-        }
+        /* Modal */
+        #detail-modal { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+        #detail-modal > div > div { animation: modalSlideIn 0.3s ease-out; }
         @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* === NAV === */
-        nav.scrolled { background: rgba(10,10,10,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        /* Nav scroll */
+        nav.scrolled { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
 
-        /* === EXPOSURE CHECKBOX === */
-        .exposure-check:checked + label { color: #fafafa; }
-        .exposure-check:checked + label .exp-dot { background: #dc2626; }
-        .exposure-check:not(:checked) + label .exp-dot { background: #262626; }
+        /* Exposure checkbox */
+        .exposure-check { display: none; }
+        .exposure-check + label { cursor: pointer; }
+        .exposure-check + label .exp-box {
+            width: 16px; height: 16px; border-radius: 4px; border: 2px solid #e5e7eb;
+            display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .exposure-check:checked + label .exp-box {
+            background: #0d9488; border-color: #0d9488;
+        }
+        .exposure-check:checked + label .exp-box svg { display: block; }
+        .exposure-check:not(:checked) + label .exp-box svg { display: none; }
+        .exposure-check:checked + label span:last-child { color: #111827; }
 
-        /* === SCROLL TOP === */
+        /* Scroll top */
         #scroll-top-btn {
             position: fixed; bottom: 2rem; right: 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px; color: #525252;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #ffffff; border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease, color 0.2s ease;
-            z-index: 40; background: none; border: none;
+            transition: opacity 0.3s ease, box-shadow 0.2s;
+            z-index: 40; color: #6b7280; font-size: 16px;
         }
         #scroll-top-btn.visible { opacity: 1; pointer-events: auto; }
-        #scroll-top-btn:hover { color: #fafafa; }
+        #scroll-top-btn:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.08); color: #111827; }
 
-        /* === NETWORK CANVAS === */
-        #network-canvas {
-            position: absolute; top: 0; right: 0;
-            width: 100%; height: 100%;
-            opacity: 0.15; pointer-events: none;
-        }
-
-        /* === RADAR CHART === */
+        /* Radar chart */
         .radar-chart-container { display: flex; justify-content: center; margin: 1rem 0; }
 
-        /* === FILTER PILLS === */
-        .grade-pill { transition: all 0.15s ease; }
-        .grade-pill.active { background: #1a1a1a; color: #fafafa; }
+        /* Grade filter pills */
+        .grade-pill {
+            transition: all 0.15s ease;
+            border: 1px solid #e5e7eb;
+            color: #9ca3af;
+        }
+        .grade-pill.active {
+            background: #0d9488;
+            border-color: #0d9488;
+            color: #ffffff;
+        }
+        .grade-pill:hover:not(.active) { border-color: #d1d5db; color: #6b7280; }
 
-        /* === RESPONSIVE === */
+        /* Sort buttons */
+        .sort-btn { color: #9ca3af; }
+        .sort-btn.active-sort { color: #111827; }
+
+        /* Focus states */
+        input:focus, select:focus, button:focus-visible {
+            outline: 2px solid #0d9488;
+            outline-offset: 2px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-title { font-size: 3rem !important; }
-            .section-gap { padding-top: 96px; padding-bottom: 96px; }
+            .hero-title { font-size: 2.5rem !important; }
+            .section-gap { padding-top: 80px; padding-bottom: 80px; }
         }
         @media (min-width: 769px) {
-            .section-gap { padding-top: 160px; padding-bottom: 160px; }
+            .section-gap { padding-top: 120px; padding-bottom: 120px; }
         }
 
-        /* === TIMELINE === */
-        .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #262626; flex-shrink: 0; }
-        .timeline-dot.active { background: #dc2626; }
+        /* Timeline dot */
+        .timeline-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #e5e7eb; flex-shrink: 0;
+            border: 2px solid #ffffff;
+        }
+        .timeline-dot.active { background: #0d9488; }
+
+        /* Category pills in table */
+        .category-pill {
+            font-size: 11px; padding: 2px 10px; border-radius: 9999px;
+            background: #f3f4f6; color: #6b7280; font-weight: 500;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -163,53 +187,57 @@
     <button id="scroll-top-btn" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">↑</button>
 
     <!-- Nav -->
-    <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-200">
-        <div class="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-14">
-            <div class="flex items-center gap-3">
-                <div style="width:12px;height:12px;background:#dc2626;"></div>
-                <span class="font-mono text-xs tracking-widest text-neutral-400">GATEKEEPER</span>
-            </div>
-            <div class="flex items-center gap-8 text-xs font-sans font-normal">
-                <a href="#index" class="text-neutral-500 hover:text-neutral-200 transition-colors">Index</a>
-                <a href="#compare" class="text-neutral-500 hover:text-neutral-200 transition-colors">Compare</a>
-                <a href="#exposure" class="text-neutral-500 hover:text-neutral-200 transition-colors">Exposure</a>
-                <a href="map.html" class="text-neutral-500 hover:text-neutral-200 transition-colors hidden md:inline">Broker Map</a>
+    <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-200 border-b border-gray-100">
+        <div class="max-w-[1200px] mx-auto px-6 md:px-8 flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-2.5">
+                <div class="w-3 h-3 rounded-sm bg-teal-600"></div>
+                <span class="font-mono text-xs font-semibold tracking-widest text-gray-900">GATEKEEPER</span>
+            </a>
+            <div class="flex items-center gap-8">
+                <a href="#index" class="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:inline font-medium">Index</a>
+                <a href="#compare" class="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:inline font-medium">Compare</a>
+                <a href="#exposure" class="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:inline font-medium">Exposure</a>
+                <a href="#methodology" class="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden md:inline font-medium">Methodology</a>
+                <a href="#waitlist" class="bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors">Join Waitlist</a>
             </div>
         </div>
     </nav>
 
     <main>
         <!-- Hero -->
-        <header class="max-w-[1200px] mx-auto px-6 pt-32 pb-0 md:pt-44">
-            <h1 class="font-display hero-title text-[3rem] md:text-[6.5rem] leading-[1.0] tracking-[-0.03em] text-[#fafafa] mb-8 max-w-[900px]">
-                You agreed to<br><em>all of this.</em>
+        <header class="max-w-[1200px] mx-auto px-6 md:px-8 pt-36 md:pt-48 pb-0 text-center">
+            <div class="inline-flex items-center gap-2 bg-teal-50 text-teal-600 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
+                <span id="service-count">30</span> services analyzed · Live data
+            </div>
+            <h1 class="hero-title text-[2.5rem] md:text-[4.5rem] font-extrabold leading-[1.1] tracking-[-0.02em] text-gray-900 mb-6 max-w-[700px] mx-auto">
+                You agreed to all of this.
             </h1>
-            <p class="text-[15px] leading-[1.7] font-light text-[#d4d4d4] max-w-[50ch] mb-8">
+            <p class="text-base leading-[1.65] text-gray-500 max-w-[560px] mx-auto mb-12">
                 We scraped, read, and scored the actual terms of service for 30 of the world's most popular platforms. Here's what's hiding in the fine print.
             </p>
-            <div class="font-mono text-[11px] text-[#525252]">
-                <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
-            </div>
+            <a href="#index" class="inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 transition-colors">
+                Explore the Index <span class="text-lg">↓</span>
+            </a>
         </header>
 
-        <!-- Stats Bar -->
+        <!-- Stats Strip -->
         <section id="stats-bar" class="mt-24 md:mt-32 reveal">
-            <div class="border-t border-b border-[#1a1a1a]">
-                <div class="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4">
-                    <div class="px-6 py-8 md:border-r border-[#1a1a1a]">
-                        <div class="font-mono text-[2.5rem] md:text-[3rem] font-bold text-[#fafafa] leading-none mb-2" id="stat-data"></div>
+            <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                <div class="flex flex-wrap justify-center gap-12 md:gap-20 py-12">
+                    <div class="text-center">
+                        <div class="font-mono text-[2.5rem] font-bold text-gray-900 leading-none mb-2" id="stat-data"></div>
                         <div class="mono-label">Share data with third parties</div>
                     </div>
-                    <div class="px-6 py-8 md:border-r border-[#1a1a1a]">
-                        <div class="font-mono text-[2.5rem] md:text-[3rem] font-bold text-[#fafafa] leading-none mb-2" id="stat-arb"></div>
+                    <div class="text-center">
+                        <div class="font-mono text-[2.5rem] font-bold text-gray-900 leading-none mb-2" id="stat-arb"></div>
                         <div class="mono-label">Force binding arbitration</div>
                     </div>
-                    <div class="px-6 py-8 md:border-r border-[#1a1a1a] border-t md:border-t-0 border-[#1a1a1a]">
-                        <div class="font-mono text-[2.5rem] md:text-[3rem] font-bold text-[#fafafa] leading-none mb-2" id="stat-ai"></div>
+                    <div class="text-center">
+                        <div class="font-mono text-[2.5rem] font-bold text-gray-900 leading-none mb-2" id="stat-ai"></div>
                         <div class="mono-label">Use your content for AI training</div>
                     </div>
-                    <div class="px-6 py-8 border-t md:border-t-0 border-[#1a1a1a]">
-                        <div class="font-mono text-[2.5rem] md:text-[3rem] font-bold text-[#fafafa] leading-none mb-2" id="stat-retain"></div>
+                    <div class="text-center">
+                        <div class="font-mono text-[2.5rem] font-bold text-gray-900 leading-none mb-2" id="stat-retain"></div>
                         <div class="mono-label">Retain data after you delete</div>
                     </div>
                 </div>
@@ -217,63 +245,67 @@
         </section>
 
         <!-- Agentic Reality -->
-        <section class="section-gap reveal" style="background:#0f0f0f;">
-            <div class="max-w-[1200px] mx-auto px-6 py-24 md:py-40 relative overflow-hidden">
-                <canvas id="network-canvas"></canvas>
-                <div class="grid md:grid-cols-12 gap-12 md:gap-16 relative z-10">
-                    <div class="md:col-span-5">
-                        <div class="mono-label mb-6">The new threat model · 2026</div>
-                        <p class="font-display text-[1.8rem] md:text-[2.4rem] leading-[1.15] text-[#fafafa] italic">
-                            You used to give your data away 5 times a week. Your AI agent will do it 50 times a day.
+        <section class="section-gap reveal bg-[#f9fafb]">
+            <div class="max-w-[1200px] mx-auto px-6 md:px-8 py-24 md:py-32">
+                <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-teal-50 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">The new threat model · 2026</div>
+                        <h2 class="text-[1.75rem] md:text-[2.5rem] font-bold leading-[1.15] text-gray-900 mb-6">
+                            Your AI agent will agree to 50 terms a day.
+                        </h2>
+                        <p class="text-base leading-[1.65] text-gray-500 mb-6">
+                            AI agents are signing up for services, accepting terms, and handing over your real name, email, phone, and payment info at machine speed. Every tool an agent uses on your behalf is another set of terms you never read.
                         </p>
-                    </div>
-                    <div class="md:col-span-7 text-[15px] leading-[1.7] font-light space-y-5">
-                        <p>AI agents are signing up for services, accepting terms, and handing over your real name, email, phone, and payment info at machine speed. Every tool an agent uses on your behalf is another set of terms you never read — agreed to in milliseconds.</p>
-                        <p>The old problem was humans clicking "I agree" without reading. The new problem is <span class="text-[#fafafa] font-normal">agents agreeing to things you never even see</span>.</p>
-                        <p>In the next 12 months, the average person's data footprint will explode — not because they got careless, but because their AI did. Without a policy layer between your agent and the world, your identity gets scattered across hundreds of services with zero oversight.</p>
-                        <p class="text-[#fafafa] font-medium">Gatekeeper is that layer. Your data. Your rules. Enforced at machine speed.</p>
-                        <div class="flex gap-4 pt-2">
-                            <a href="map.html" class="text-[12px] font-mono text-[#a3a3a3] hover:text-[#fafafa] transition-colors">See the data broker map →</a>
-                            <a href="#waitlist" class="text-[12px] font-mono text-[#a3a3a3] hover:text-[#fafafa] transition-colors">Join the waitlist →</a>
+                        <p class="text-base leading-[1.65] text-gray-500 mb-8">
+                            The old problem was humans clicking "I agree" without reading. The new problem is <span class="text-gray-900 font-semibold">agents agreeing to things you never even see</span>.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="map.html" class="text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors">See the data broker map →</a>
+                            <a href="#waitlist" class="text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors">Join the waitlist →</a>
                         </div>
+                    </div>
+                    <div class="text-base leading-[1.65] text-gray-500 space-y-5">
+                        <p>In the next 12 months, the average person's data footprint will explode — not because they got careless, but because their AI did. Without a policy layer between your agent and the world, your identity gets scattered across hundreds of services with zero oversight.</p>
+                        <p class="text-gray-900 font-semibold">Gatekeeper is that layer. Your data. Your rules. Enforced at machine speed.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Tabs + Index/Compare/Exposure -->
-        <section class="max-w-[1200px] mx-auto px-6 section-gap" id="index">
-            <div class="flex gap-8 border-b border-[#1a1a1a] mb-10">
-                <button class="tab-active pb-3 text-sm font-sans font-normal transition-all" data-tab="index" onclick="switchTab('index')">Index</button>
-                <button class="tab-inactive pb-3 text-sm font-sans font-normal transition-all" data-tab="compare" onclick="switchTab('compare')">Compare</button>
-                <button class="tab-inactive pb-3 text-sm font-sans font-normal transition-all" data-tab="exposure" onclick="switchTab('exposure')">Your Exposure</button>
+        <section class="max-w-[1200px] mx-auto px-6 md:px-8 section-gap" id="index">
+            <h2 class="text-[2.5rem] md:text-[3rem] font-bold text-gray-900 text-center mb-12">The Index</h2>
+            <div class="flex gap-6 border-b border-gray-200 mb-10">
+                <button class="tab-btn active pb-3 text-sm" data-tab="index" onclick="switchTab('index')">Index</button>
+                <button class="tab-btn pb-3 text-sm" data-tab="compare" onclick="switchTab('compare')">Compare</button>
+                <button class="tab-btn pb-3 text-sm" data-tab="exposure" onclick="switchTab('exposure')">Your Exposure</button>
             </div>
 
             <!-- INDEX TAB -->
             <section id="tab-index" class="tab-panel">
-                <!-- Search + Filters -->
                 <div class="flex flex-wrap items-center gap-4 mb-6">
-                    <input type="text" id="search" placeholder="Search services…" class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] placeholder-[#333] py-2 focus:outline-none focus:border-[#525252] flex-1 min-w-[200px] transition-colors">
+                    <input type="text" id="search" placeholder="Search services…"
+                        class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 min-w-[200px] transition-all shadow-sm">
                     <div class="flex gap-2">
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="" onclick="toggleGradeFilter(this)">All</button>
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="A" onclick="toggleGradeFilter(this)">A</button>
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="B" onclick="toggleGradeFilter(this)">B</button>
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="C" onclick="toggleGradeFilter(this)">C</button>
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="D" onclick="toggleGradeFilter(this)">D</button>
-                        <button class="grade-pill text-[10px] font-mono px-3 py-1 rounded-full border border-[#1a1a1a] text-[#525252] hover:text-[#a3a3a3] transition-all" data-grade-filter="F" onclick="toggleGradeFilter(this)">F</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="" onclick="toggleGradeFilter(this)">All</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="A" onclick="toggleGradeFilter(this)">A</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="B" onclick="toggleGradeFilter(this)">B</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="C" onclick="toggleGradeFilter(this)">C</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="D" onclick="toggleGradeFilter(this)">D</button>
+                        <button class="grade-pill text-[11px] font-mono px-3 py-1.5 rounded-full" data-grade-filter="F" onclick="toggleGradeFilter(this)">F</button>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mb-4">
                     <div class="mono-label"><span id="result-count">30</span> services</div>
                     <div class="flex gap-4">
-                        <button class="text-[10px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors sort-btn" data-sort="score-asc" onclick="setSort('score-asc')">Worst first</button>
-                        <button class="text-[10px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors sort-btn" data-sort="score-desc" onclick="setSort('score-desc')">Best first</button>
-                        <button class="text-[10px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors sort-btn" data-sort="name" onclick="setSort('name')">A–Z</button>
+                        <button class="sort-btn text-[11px] font-mono hover:text-gray-700 transition-colors" data-sort="score-asc" onclick="setSort('score-asc')">Worst first</button>
+                        <button class="sort-btn text-[11px] font-mono hover:text-gray-700 transition-colors" data-sort="score-desc" onclick="setSort('score-desc')">Best first</button>
+                        <button class="sort-btn text-[11px] font-mono hover:text-gray-700 transition-colors" data-sort="name" onclick="setSort('name')">A–Z</button>
                     </div>
                 </div>
 
                 <!-- Table Header -->
-                <div class="hidden md:grid grid-cols-[40px_1fr_120px_60px_200px_60px] gap-4 items-center px-4 py-3 border-b border-[#1a1a1a]">
+                <div class="hidden md:grid grid-cols-[40px_1fr_120px_60px_200px_60px] gap-4 items-center px-4 py-3 bg-[#f9fafb] rounded-t-lg border border-gray-200 border-b-0">
                     <div class="mono-label">#</div>
                     <div class="mono-label">Service</div>
                     <div class="mono-label">Category</div>
@@ -281,18 +313,18 @@
                     <div class="mono-label">Score</div>
                     <div class="mono-label text-right">Pts</div>
                 </div>
-                <div id="index-list"></div>
+                <div id="index-list" class="border border-gray-200 rounded-b-lg md:rounded-b-lg overflow-hidden"></div>
             </section>
 
             <!-- COMPARE TAB -->
             <section id="tab-compare" class="hidden tab-panel">
                 <a id="compare"></a>
-                <p class="text-[15px] font-light text-[#a3a3a3] mb-8 max-w-[50ch]">Select two services to compare their terms side by side.</p>
+                <p class="text-base text-gray-500 mb-8 max-w-[50ch]">Select two services to compare their terms side by side.</p>
                 <div class="flex flex-wrap gap-4 mb-10">
-                    <select id="compare-a" class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] py-2 focus:outline-none focus:border-[#525252] flex-1 min-w-[200px]">
+                    <select id="compare-a" class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 min-w-[200px] shadow-sm">
                         <option value="">Select first service…</option>
                     </select>
-                    <select id="compare-b" class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] py-2 focus:outline-none focus:border-[#525252] flex-1 min-w-[200px]">
+                    <select id="compare-b" class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 min-w-[200px] shadow-sm">
                         <option value="">Select second service…</option>
                     </select>
                 </div>
@@ -302,158 +334,169 @@
             <!-- EXPOSURE TAB -->
             <section id="tab-exposure" class="hidden tab-panel">
                 <a id="exposure"></a>
-                <p class="text-[15px] font-light text-[#a3a3a3] mb-2 max-w-[50ch]">Check the services you use. We'll calculate your personal exposure score.</p>
-                <p class="text-[12px] text-[#525252] mb-10">How much of your data is out there, based on what you've agreed to?</p>
+                <p class="text-base text-gray-500 mb-2 max-w-[50ch]">Check the services you use. We'll calculate your personal exposure score.</p>
+                <p class="text-sm text-gray-400 mb-10">How much of your data is out there, based on what you've agreed to?</p>
 
-                <div id="exposure-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 mb-10"></div>
+                <div id="exposure-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-3 mb-10"></div>
 
-                <div id="exposure-result" class="hidden py-12">
+                <div id="exposure-result" class="hidden py-12 text-center">
                     <div class="mono-label mb-4">Your Exposure Score</div>
                     <div id="exposure-score" class="font-mono text-[5rem] md:text-[7rem] font-bold leading-none mb-4"></div>
-                    <div id="exposure-label" class="text-[15px] font-light text-[#a3a3a3] mb-10 max-w-[50ch]"></div>
-                    <div id="exposure-breakdown" class="max-w-lg space-y-3"></div>
+                    <div id="exposure-label" class="text-base text-gray-500 mb-10 max-w-[50ch] mx-auto"></div>
+                    <div id="exposure-breakdown" class="max-w-lg mx-auto space-y-3 text-left"></div>
                     <div id="exposure-share" class="mt-8 hidden">
-                        <button onclick="shareExposure()" class="text-[12px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors mr-4" id="exposure-share-btn">Share on X →</button>
-                        <button onclick="copyExposure()" class="text-[12px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors" id="exposure-copy-btn">Copy</button>
+                        <button onclick="shareExposure()" class="text-sm font-mono text-gray-400 hover:text-gray-700 transition-colors mr-4" id="exposure-share-btn">Share on X →</button>
+                        <button onclick="copyExposure()" class="text-sm font-mono text-gray-400 hover:text-gray-700 transition-colors" id="exposure-copy-btn">Copy</button>
                     </div>
                 </div>
             </section>
         </section>
 
         <!-- SERVICE DETAIL MODAL -->
-        <div id="detail-modal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto">
+        <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background:rgba(0,0,0,0.4)">
             <div class="max-w-[720px] mx-auto px-4 py-8 md:py-16">
-                <div class="bg-[#111111] border border-[#1a1a1a] rounded-lg p-6 md:p-10 relative">
-                    <button onclick="closeDetail()" class="absolute top-4 right-4 text-[#525252] hover:text-[#fafafa] text-xl leading-none font-mono transition-colors">×</button>
+                <div class="bg-white rounded-xl p-6 md:p-10 relative" style="box-shadow: 0 25px 50px rgba(0,0,0,0.12);">
+                    <button onclick="closeDetail()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 text-xl leading-none font-mono transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">×</button>
                     <div id="detail-content"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Methodology -->
-        <section class="max-w-[1200px] mx-auto px-6 section-gap reveal" id="methodology">
-            <div class="border-t border-[#1a1a1a] pt-20">
-                <h2 class="font-display text-[2.5rem] md:text-[3rem] text-[#fafafa] leading-[1.0] tracking-[-0.02em] mb-12">Methodology</h2>
-                <div class="grid md:grid-cols-2 gap-16 text-[15px] font-light leading-[1.7] max-w-none">
-                    <div>
-                        <h3 class="text-[#fafafa] font-medium text-sm mb-4">How We Score</h3>
-                        <p class="mb-4">Each service is evaluated across 10 categories on a 0–10 scale (10 = most predatory). Categories: data selling, content ownership, forced arbitration, terms changeability, deletion difficulty, data retention, location tracking, cross-platform sharing, AI training, and liability limitations.</p>
-                        <p>The overall score is calculated as 100 minus the average category score times 10. Grades: <span class="font-mono text-sm grade-a">A</span> (85–100), <span class="font-mono text-sm grade-b">B</span> (70–84), <span class="font-mono text-sm grade-c">C</span> (50–69), <span class="font-mono text-sm grade-d">D</span> (30–49), <span class="font-mono text-sm grade-f">F</span> (below 30).</p>
-                    </div>
-                    <div>
-                        <h3 class="text-[#fafafa] font-medium text-sm mb-4">Why This Matters Now</h3>
-                        <p class="mb-4">Within 12–18 months, most people will have AI agents acting on their behalf. Those agents will agree to terms of service 50 times a day — booking, buying, signing up, negotiating.</p>
-                        <p>A human might agree to 5 ToS per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem becomes catastrophic.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Vision & Roadmap -->
-        <section id="vision" class="max-w-[1200px] mx-auto px-6 section-gap reveal">
-            <div class="mono-label mb-6">Vision</div>
-            <h2 class="font-display text-[2.5rem] md:text-[3.5rem] text-[#fafafa] leading-[1.0] tracking-[-0.02em] mb-6">DNS for human identity.</h2>
-            <p class="text-[15px] font-light leading-[1.7] text-[#a3a3a3] max-w-[60ch] mb-20">
-                Your reachability should be a function you control — not a static value others possess. Gatekeeper is the sovereignty layer between you and every service that wants your data. Today it's a scorecard. Tomorrow it's the infrastructure.
-            </p>
+        <section id="vision" class="max-w-[1200px] mx-auto px-6 md:px-8 section-gap reveal">
+            <div class="text-center mb-16">
+                <div class="mono-label text-teal-600 mb-4">Vision</div>
+                <h2 class="text-[2.5rem] md:text-[3rem] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em] mb-6 max-w-[600px] mx-auto">DNS for human identity.</h2>
+                <p class="text-base leading-[1.65] text-gray-500 max-w-[560px] mx-auto">
+                    Your reachability should be a function you control — not a static value others possess. Gatekeeper is the sovereignty layer between you and every service that wants your data.
+                </p>
+            </div>
 
             <!-- Timeline -->
             <div class="relative mb-20">
-                <!-- Horizontal line -->
-                <div class="hidden md:block absolute top-[5px] left-0 right-0 h-[1px] bg-[#1a1a1a]"></div>
+                <div class="hidden md:block absolute top-[6px] left-0 right-0 h-[2px] bg-gray-100"></div>
                 <div class="grid md:grid-cols-4 gap-10 md:gap-8">
                     <div class="relative">
                         <div class="flex items-center gap-3 mb-4 md:flex-col md:items-start">
                             <div class="timeline-dot active"></div>
-                            <div class="mono-label">Phase 1 · <span class="text-[#dc2626]">Live</span></div>
+                            <div class="mono-label">Phase 1 · <span class="text-teal-600">Live</span></div>
                         </div>
-                        <h3 class="font-display text-xl text-[#fafafa] mb-2">The Index</h3>
-                        <p class="text-[13px] font-light text-[#a3a3a3] leading-[1.6]">Real T&C analysis for 30 services. Verbatim clauses. Grades. Comparison tools. The data broker map. You're looking at it.</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">The Index</h3>
+                        <p class="text-sm text-gray-500 leading-[1.6]">Real T&C analysis for 30 services. Verbatim clauses. Grades. Comparison tools. The data broker map.</p>
                     </div>
                     <div class="relative">
                         <div class="flex items-center gap-3 mb-4 md:flex-col md:items-start">
                             <div class="timeline-dot"></div>
                             <div class="mono-label">Phase 2 · April</div>
                         </div>
-                        <h3 class="font-display text-xl text-[#fafafa] mb-2">The API</h3>
-                        <p class="text-[13px] font-light text-[#a3a3a3] leading-[1.6]">T&C intelligence as a service. REST API, MCP server, CLI. Your AI agent checks terms before agreeing — programmatically, in milliseconds.</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">The API</h3>
+                        <p class="text-sm text-gray-500 leading-[1.6]">T&C intelligence as a service. REST API, MCP server, CLI. Your AI agent checks terms before agreeing.</p>
                     </div>
                     <div class="relative">
                         <div class="flex items-center gap-3 mb-4 md:flex-col md:items-start">
                             <div class="timeline-dot"></div>
                             <div class="mono-label">Phase 3 · Summer</div>
                         </div>
-                        <h3 class="font-display text-xl text-[#fafafa] mb-2">The Extension</h3>
-                        <p class="text-[13px] font-light text-[#a3a3a3] leading-[1.6]">Chrome extension. Intercepts signups, generates aliases, scans terms in real-time, alerts you when they change.</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">The Extension</h3>
+                        <p class="text-sm text-gray-500 leading-[1.6]">Chrome extension. Intercepts signups, generates aliases, scans terms in real-time.</p>
                     </div>
                     <div class="relative">
                         <div class="flex items-center gap-3 mb-4 md:flex-col md:items-start">
                             <div class="timeline-dot"></div>
                             <div class="mono-label">Phase 4 · 2026+</div>
                         </div>
-                        <h3 class="font-display text-xl text-[#fafafa] mb-2">The Protocol</h3>
-                        <p class="text-[13px] font-light text-[#a3a3a3] leading-[1.6]">Open permission language. Identity vault. Tamper-evident ledger. A full data graph of where your identity lives.</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">The Protocol</h3>
+                        <p class="text-sm text-gray-500 leading-[1.6]">Open permission language. Identity vault. Tamper-evident ledger. Full data graph.</p>
                     </div>
                 </div>
             </div>
 
             <!-- MCP Callout -->
-            <div class="bg-[#111111] rounded-lg p-8 max-w-[720px]">
-                <div class="mono-label text-[#d97706] mb-4">Coming in Phase 2</div>
-                <h3 class="font-display text-xl text-[#fafafa] mb-4">The MCP server is the killer move.</h3>
-                <p class="text-[14px] font-light text-[#a3a3a3] leading-[1.7] mb-6">Any AI agent using the Model Context Protocol can query Gatekeeper before agreeing to anything on your behalf. Check terms. Enforce your policy. Log what happened.</p>
-                <div class="font-mono text-[12px] text-[#525252] bg-[#0a0a0a] rounded p-5 space-y-1 leading-relaxed">
-                    <div><span class="text-[#d97706]">gatekeeper.check</span>(<span class="text-[#d4d4d4]">"spotify.com"</span>)</div>
-                    <div>→ Grade C · Uses listening data for AI training · Recommend opt-out</div>
-                    <div class="pt-2"><span class="text-[#d97706]">gatekeeper.policy</span>(<span class="text-[#d4d4d4]">userRules, "tiktok"</span>)</div>
-                    <div>→ CONFLICT: Service requires arbitration, user policy rejects it</div>
-                    <div class="pt-2"><span class="text-[#d97706]">gatekeeper.audit</span>()</div>
-                    <div>→ Last 7 days: agent agreed to 23 terms. 3 violated your policy.</div>
+            <div class="bg-[#f9fafb] rounded-xl p-8 max-w-[720px] mx-auto">
+                <div class="mono-label text-amber-600 mb-4">Coming in Phase 2</div>
+                <h3 class="text-lg font-bold text-gray-900 mb-4">The MCP server is the killer move.</h3>
+                <p class="text-sm text-gray-500 leading-[1.7] mb-6">Any AI agent using the Model Context Protocol can query Gatekeeper before agreeing to anything on your behalf. Check terms. Enforce your policy. Log what happened.</p>
+                <div class="font-mono text-[12px] text-gray-400 bg-white rounded-lg p-5 space-y-1 leading-relaxed border border-gray-200">
+                    <div><span class="text-teal-600">gatekeeper.check</span>(<span class="text-gray-700">"spotify.com"</span>)</div>
+                    <div class="text-gray-500">→ Grade C · Uses listening data for AI training · Recommend opt-out</div>
+                    <div class="pt-2"><span class="text-teal-600">gatekeeper.policy</span>(<span class="text-gray-700">userRules, "tiktok"</span>)</div>
+                    <div class="text-gray-500">→ CONFLICT: Service requires arbitration, user policy rejects it</div>
+                    <div class="pt-2"><span class="text-teal-600">gatekeeper.audit</span>()</div>
+                    <div class="text-gray-500">→ Last 7 days: agent agreed to 23 terms. 3 violated your policy.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology -->
+        <section class="bg-[#f9fafb] section-gap reveal" id="methodology">
+            <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                <h2 class="text-[2.5rem] md:text-[3rem] font-bold text-gray-900 text-center mb-16">Methodology</h2>
+                <div class="grid md:grid-cols-2 gap-16 text-base leading-[1.65] max-w-none">
+                    <div>
+                        <h3 class="text-gray-900 font-semibold text-sm mb-4 uppercase tracking-wider">How We Score</h3>
+                        <p class="text-gray-500 mb-4">Each service is evaluated across 10 categories on a 0–10 scale (10 = most predatory). Categories: data selling, content ownership, forced arbitration, terms changeability, deletion difficulty, data retention, location tracking, cross-platform sharing, AI training, and liability limitations.</p>
+                        <p class="text-gray-500">The overall score is calculated as 100 minus the average category score times 10.</p>
+                        <div class="flex items-center gap-3 mt-6">
+                            <span class="font-mono text-sm font-bold grade-a px-3 py-1 bg-emerald-50 rounded-full">A</span>
+                            <span class="font-mono text-sm font-bold grade-b px-3 py-1 bg-cyan-50 rounded-full">B</span>
+                            <span class="font-mono text-sm font-bold grade-c px-3 py-1 bg-amber-50 rounded-full">C</span>
+                            <span class="font-mono text-sm font-bold grade-d px-3 py-1 bg-orange-50 rounded-full">D</span>
+                            <span class="font-mono text-sm font-bold grade-f px-3 py-1 bg-red-50 rounded-full">F</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-900 font-semibold text-sm mb-4 uppercase tracking-wider">Why This Matters Now</h3>
+                        <p class="text-gray-500 mb-4">Within 12–18 months, most people will have AI agents acting on their behalf. Those agents will agree to terms of service 50 times a day — booking, buying, signing up, negotiating.</p>
+                        <p class="text-gray-500">A human might agree to 5 ToS per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem becomes catastrophic.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Request a Service -->
-        <section class="max-w-[1200px] mx-auto px-6 pb-20 reveal">
-            <h2 class="font-display text-2xl text-[#fafafa] mb-2">Missing a service?</h2>
-            <p class="text-[14px] font-light text-[#a3a3a3] mb-6">Tell us what to analyze next. Most-requested services get prioritized.</p>
+        <section class="max-w-[1200px] mx-auto px-6 md:px-8 py-20 reveal">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Missing a service?</h2>
+            <p class="text-sm text-gray-500 mb-6">Tell us what to analyze next. Most-requested services get prioritized.</p>
             <form id="request-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
-                <input type="text" id="request-service" placeholder="e.g. Reddit, Pinterest, Temu…" required class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] py-2 focus:outline-none focus:border-[#525252] flex-1 placeholder-[#333]">
-                <input type="email" id="request-email" placeholder="your@email.com (optional)" class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] py-2 focus:outline-none focus:border-[#525252] flex-1 placeholder-[#333]">
-                <button type="submit" class="font-mono text-[12px] text-[#a3a3a3] hover:text-[#fafafa] transition-colors py-2 whitespace-nowrap">Submit →</button>
+                <input type="text" id="request-service" placeholder="e.g. Reddit, Pinterest, Temu…" required
+                    class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 shadow-sm">
+                <input type="email" id="request-email" placeholder="your@email.com (optional)"
+                    class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 placeholder-gray-400 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 shadow-sm">
+                <button type="submit" class="text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors py-2.5 px-4 whitespace-nowrap">Submit →</button>
             </form>
-            <div id="request-response" class="mt-3 text-sm font-sans font-light"></div>
+            <div id="request-response" class="mt-3 text-sm"></div>
         </section>
 
         <!-- Waitlist CTA -->
-        <section id="waitlist" class="max-w-[1200px] mx-auto px-6 pb-32 reveal">
-            <div class="border-t border-[#1a1a1a] pt-20">
-                <h2 class="font-display text-[2.5rem] md:text-[3.5rem] text-[#fafafa] leading-[1.0] tracking-[-0.02em] mb-6">We're building the kill switch.</h2>
-                <p class="text-[15px] font-light leading-[1.7] text-[#a3a3a3] max-w-[55ch] mb-10">
+        <section id="waitlist" class="bg-[#f9fafb] section-gap reveal">
+            <div class="max-w-[1200px] mx-auto px-6 md:px-8 text-center">
+                <h2 class="text-[2.5rem] md:text-[3rem] font-bold text-gray-900 leading-[1.1] tracking-[-0.02em] mb-6">We're building the kill switch.</h2>
+                <p class="text-base leading-[1.65] text-gray-500 max-w-[560px] mx-auto mb-10">
                     A browser extension that reads terms before you agree. Scores them. Flags conflicts. Alerts you when they change. And gives you a revoke button for every connection.
                 </p>
-                <form id="waitlist-form" class="flex flex-col md:flex-row gap-3 max-w-md">
-                    <input type="email" id="email" placeholder="your@email.com" required class="bg-transparent border-b border-[#1a1a1a] text-sm font-sans font-light text-[#d4d4d4] py-2 focus:outline-none focus:border-[#525252] flex-1 placeholder-[#333]">
-                    <button type="submit" class="px-6 py-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white text-sm font-sans font-medium rounded transition-colors whitespace-nowrap">Join Waitlist</button>
+                <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" id="email" placeholder="your@email.com" required
+                        class="bg-white border border-gray-200 rounded-lg text-sm text-gray-700 placeholder-gray-400 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent flex-1 shadow-sm">
+                    <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-8 py-3 rounded-lg transition-colors whitespace-nowrap shadow-sm">Join Waitlist</button>
                 </form>
-                <div id="waitlist-response" class="mt-4 text-sm font-sans font-light"></div>
+                <div id="waitlist-response" class="mt-4 text-sm"></div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="border-t border-[#1a1a1a] py-10">
-            <div class="max-w-[1200px] mx-auto px-6 text-center">
-                <div class="flex items-center justify-center gap-3 mb-3">
-                    <div style="width:10px;height:10px;background:#dc2626;"></div>
-                    <span class="font-mono text-[10px] tracking-widest text-[#525252]">GATEKEEPER</span>
+        <footer class="border-t border-gray-100 bg-[#f9fafb] py-10">
+            <div class="max-w-[1200px] mx-auto px-6 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-2.5 h-2.5 rounded-sm bg-teal-600"></div>
+                    <span class="font-mono text-[10px] font-semibold tracking-widest text-gray-400">GATEKEEPER</span>
                 </div>
-                <div class="flex justify-center gap-6 text-[11px] text-[#525252] font-sans mb-3">
-                    <a href="#methodology" class="hover:text-[#a3a3a3] transition-colors">Methodology</a>
-                    <a href="https://github.com/isaacachar/gatekeeper" class="hover:text-[#a3a3a3] transition-colors">Open Source</a>
-                    <a href="mailto:hello@gatekeeper.io" class="hover:text-[#a3a3a3] transition-colors">Contact</a>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <a href="#methodology" class="hover:text-gray-700 transition-colors">Methodology</a>
+                    <a href="https://github.com/isaacachar/gatekeeper" class="hover:text-gray-700 transition-colors">Open Source</a>
+                    <a href="mailto:hello@gatekeeper.io" class="hover:text-gray-700 transition-colors">Contact</a>
                 </div>
-                <div class="font-mono text-[10px] text-[#333]">
-                    Your reachability should be a function you control, not a static value others possess.
+                <div class="font-mono text-[10px] text-gray-300">
+                    Your reachability should be a function you control.
                 </div>
             </div>
         </footer>
@@ -468,7 +511,7 @@
     fetch('tc-data.json')
         .then(r => r.json())
         .then(data => { services = data; init(); })
-        .catch(() => { document.getElementById('index-list').innerHTML = '<p class="text-[#525252] py-12 text-center text-sm">Failed to load data.</p>'; });
+        .catch(() => { document.getElementById('index-list').innerHTML = '<p class="text-gray-400 py-12 text-center text-sm">Failed to load data.</p>'; });
 
     function gradeBase(grade) {
         return grade.replace(/[+-]/g, '');
@@ -518,7 +561,7 @@
         // Activate "All" grade pill
         document.querySelector('[data-grade-filter=""]').classList.add('active');
         // Activate default sort
-        document.querySelector('[data-sort="score-asc"]').style.color = '#fafafa';
+        document.querySelector('[data-sort="score-asc"]').classList.add('active-sort');
 
         // Hash routing
         if (window.location.hash) {
@@ -553,8 +596,8 @@
 
     function setSort(sort) {
         currentSort = sort;
-        document.querySelectorAll('.sort-btn').forEach(b => b.style.color = '#525252');
-        document.querySelector(`[data-sort="${sort}"]`).style.color = '#fafafa';
+        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active-sort'));
+        document.querySelector(`[data-sort="${sort}"]`).classList.add('active-sort');
         renderIndex();
     }
 
@@ -576,28 +619,27 @@
         document.getElementById('result-count').textContent = filtered.length;
 
         const html = filtered.map((s, i) => {
-            const bg = i % 2 === 0 ? '#0a0a0a' : '#0f0f0f';
             return `
-            <div class="index-row grid grid-cols-[1fr_auto] md:grid-cols-[40px_1fr_120px_60px_200px_60px] gap-4 items-center px-4 py-4 cursor-pointer" style="background:${bg}" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
-                <div class="font-mono text-[11px] text-[#525252] hidden md:block">${String(i + 1).padStart(2, '0')}</div>
+            <div class="index-row grid grid-cols-[1fr_auto] md:grid-cols-[40px_1fr_120px_60px_200px_60px] gap-4 items-center px-4 py-4 border-b border-gray-100 cursor-pointer" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
+                <div class="font-mono text-[11px] text-gray-400 hidden md:block">${String(i + 1).padStart(2, '0')}</div>
                 <div class="min-w-0">
-                    <span class="text-[14px] text-[#fafafa] font-normal">${s.name}</span>
+                    <span class="text-sm text-gray-900 font-semibold">${s.name}</span>
                 </div>
-                <div class="mono-label hidden md:block">${s.category}</div>
+                <div class="hidden md:block"><span class="category-pill">${s.category}</span></div>
                 <div class="font-mono text-lg font-bold grade-${gradeClass(s.grade)} hidden md:block">${s.grade}</div>
                 <div class="hidden md:block">
                     <div class="score-bar"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
                 </div>
-                <div class="font-mono text-[12px] text-[#a3a3a3] text-right hidden md:block">${s.overallScore}</div>
+                <div class="font-mono text-[12px] text-gray-500 text-right hidden md:block">${s.overallScore}</div>
                 <!-- Mobile: grade + score -->
                 <div class="flex items-center gap-3 md:hidden">
                     <span class="font-mono text-lg font-bold grade-${gradeClass(s.grade)}">${s.grade}</span>
-                    <span class="font-mono text-[11px] text-[#525252]">${s.overallScore}</span>
+                    <span class="font-mono text-[11px] text-gray-400">${s.overallScore}</span>
                 </div>
             </div>`;
         }).join('');
 
-        document.getElementById('index-list').innerHTML = html || '<div class="text-center text-[#525252] py-12 text-sm">No services match your filters.</div>';
+        document.getElementById('index-list').innerHTML = html || '<div class="text-center text-gray-400 py-12 text-sm">No services match your filters.</div>';
     }
 
     function openDetail(name) {
@@ -615,20 +657,20 @@
             <div class="flex items-start justify-between mb-8">
                 <div>
                     <div class="mono-label mb-2">${s.category}</div>
-                    <h2 class="font-display text-[2rem] md:text-[2.5rem] text-[#fafafa] leading-[1.0]">${s.name}</h2>
+                    <h2 class="text-[2rem] md:text-[2.5rem] font-bold text-gray-900 leading-[1.1]">${s.name}</h2>
                 </div>
                 <div class="text-right">
                     <div class="font-mono text-[3rem] font-bold grade-${gradeClass(s.grade)} leading-none">${s.grade}</div>
-                    <div class="font-mono text-[12px] text-[#525252] mt-1">${s.overallScore}/100</div>
+                    <div class="font-mono text-[12px] text-gray-400 mt-1">${s.overallScore}/100</div>
                 </div>
             </div>
 
             <div class="flex gap-3 mb-8">
-                <a href="${tweetUrl}" target="_blank" class="text-[11px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors">Share on X →</a>
-                <button onclick="copyShareLink('${s.name}', '${s.grade}', \`${s.highlight.replace(/`/g,'')}\`)" class="text-[11px] font-mono text-[#525252] hover:text-[#a3a3a3] transition-colors" id="copy-share-btn">Copy link</button>
+                <a href="${tweetUrl}" target="_blank" class="text-[11px] font-mono text-gray-400 hover:text-gray-700 transition-colors">Share on X →</a>
+                <button onclick="copyShareLink('${s.name}', '${s.grade}', \`${s.highlight.replace(/`/g,'')}\`)" class="text-[11px] font-mono text-gray-400 hover:text-gray-700 transition-colors" id="copy-share-btn">Copy link</button>
             </div>
 
-            <div class="text-[15px] text-[#a3a3a3] italic font-display text-lg mb-8 border-l-2 border-[#dc2626] pl-4 leading-[1.5]">"${s.highlight}"</div>
+            <div class="text-base text-gray-500 italic mb-8 border-l-2 border-red-500 pl-4 leading-[1.6] bg-red-50 py-3 pr-4 rounded-r-lg">"${s.highlight}"</div>
 
             <div class="radar-chart-container mb-8"></div>
 
@@ -637,9 +679,9 @@
                 <div class="space-y-3">
                     ${scoreEntries.map(([key, val]) => `
                         <div class="flex items-center gap-3">
-                            <div class="text-[12px] text-[#525252] font-sans w-36 flex-shrink-0">${categoryLabel(key)}</div>
+                            <div class="text-[12px] text-gray-500 w-36 flex-shrink-0">${categoryLabel(key)}</div>
                             <div class="flex-1 score-bar"><div class="score-fill" style="width:${val * 10}%;background:${val >= 7 ? '#dc2626' : val >= 5 ? '#d97706' : '#059669'}"></div></div>
-                            <div class="font-mono text-[11px] w-6 text-right ${val >= 7 ? 'text-[#dc2626]' : val >= 5 ? 'text-[#d97706]' : 'text-[#059669]'}">${val}</div>
+                            <div class="font-mono text-[11px] w-6 text-right ${val >= 7 ? 'text-red-600' : val >= 5 ? 'text-amber-600' : 'text-emerald-600'}">${val}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -647,43 +689,45 @@
 
             <div class="mb-8">
                 <div class="mono-label mb-4">Worst Clauses</div>
-                <div class="space-y-5">
+                <div class="space-y-4">
                     ${s.worstClauses.map(c => `
-                        <div class="clause-card pl-4 py-2">
-                            <div class="mono-label text-[#dc2626] mb-1">${c.category.replace(/_/g, ' ')}</div>
-                            <blockquote class="text-[13px] text-[#a3a3a3] italic font-display leading-relaxed mb-2">"${c.verbatim}"</blockquote>
-                            <div class="text-[14px] text-[#d4d4d4] font-light">${c.translation}</div>
+                        <div class="clause-card">
+                            <div class="mono-label text-red-500 mb-1">${c.category.replace(/_/g, ' ')}</div>
+                            <blockquote class="text-sm text-gray-600 italic leading-relaxed mb-2">"${c.verbatim}"</blockquote>
+                            <div class="text-sm text-gray-700">${c.translation}</div>
                         </div>
                     `).join('')}
                 </div>
             </div>
 
             ${(s.actions && s.actions.length > 0) || (s.alternatives && s.alternatives.length > 0) ? `
-            <div class="mb-8 border-t border-[#1a1a1a] pt-6">
-                <div class="mono-label text-[#059669] mb-4">What You Can Do</div>
+            <div class="mb-8">
+                <div class="mono-label text-emerald-600 mb-4">What You Can Do</div>
                 ${s.actions && s.actions.length > 0 ? `
-                <div class="space-y-2 mb-4">
-                    ${s.actions.map(a => `<div class="flex gap-2 text-[14px] font-light"><span class="text-[#059669] flex-shrink-0">›</span><span>${a}</span></div>`).join('')}
+                <div class="action-card mb-4">
+                    <div class="space-y-2">
+                        ${s.actions.map(a => `<div class="flex gap-2 text-sm"><span class="text-emerald-600 flex-shrink-0">›</span><span class="text-gray-700">${a}</span></div>`).join('')}
+                    </div>
                 </div>` : ''}
                 <div class="flex flex-wrap gap-3 mb-4">
-                    ${s.optOutUrl ? `<a href="${s.optOutUrl}" target="_blank" class="text-[11px] font-mono text-[#d97706] hover:text-[#fafafa] transition-colors">Opt out / Privacy settings →</a>` : ''}
-                    ${s.deleteUrl ? `<a href="${s.deleteUrl}" target="_blank" class="text-[11px] font-mono text-[#dc2626] hover:text-[#fafafa] transition-colors">Delete account →</a>` : ''}
+                    ${s.optOutUrl ? `<a href="${s.optOutUrl}" target="_blank" class="text-[11px] font-mono text-amber-600 hover:text-amber-700 transition-colors">Opt out / Privacy settings →</a>` : ''}
+                    ${s.deleteUrl ? `<a href="${s.deleteUrl}" target="_blank" class="text-[11px] font-mono text-red-600 hover:text-red-700 transition-colors">Delete account →</a>` : ''}
                 </div>
                 ${s.alternatives && s.alternatives.length > 0 ? `
-                <div class="border-t border-[#1a1a1a] pt-4 mt-4">
+                <div class="border-t border-gray-100 pt-4 mt-4">
                     <div class="mono-label mb-2">Better Alternatives</div>
-                    ${s.alternatives.map(alt => `<div class="text-[14px] font-light mb-1"><span class="text-[#059669] font-normal">${alt.name}</span> <span class="text-[#525252]">— ${alt.reason}</span></div>`).join('')}
+                    ${s.alternatives.map(alt => `<div class="text-sm mb-1"><span class="text-emerald-600 font-semibold">${alt.name}</span> <span class="text-gray-400">— ${alt.reason}</span></div>`).join('')}
                 </div>` : ''}
             </div>` : ''}
 
             <div class="flex flex-wrap gap-2 mb-6">
-                ${s.tags.map(t => `<span class="text-[10px] font-mono px-2 py-0.5 rounded border border-[#1a1a1a] text-[#525252]">${t}</span>`).join('')}
+                ${s.tags.map(t => `<span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-500">${t}</span>`).join('')}
             </div>
 
-            <div class="flex flex-wrap gap-4 text-[11px] font-sans text-[#333] border-t border-[#1a1a1a] pt-4">
+            <div class="flex flex-wrap gap-4 text-[11px] text-gray-400 border-t border-gray-100 pt-4">
                 <span>Reviewed: ${s.lastReviewed}</span>
-                ${s.tosUrl ? `<a href="${s.tosUrl}" target="_blank" class="text-[#525252] hover:text-[#a3a3a3] underline transition-colors">Terms of Service</a>` : ''}
-                ${s.privacyUrl ? `<a href="${s.privacyUrl}" target="_blank" class="text-[#525252] hover:text-[#a3a3a3] underline transition-colors">Privacy Policy</a>` : ''}
+                ${s.tosUrl ? `<a href="${s.tosUrl}" target="_blank" class="text-gray-500 hover:text-gray-700 underline transition-colors">Terms of Service</a>` : ''}
+                ${s.privacyUrl ? `<a href="${s.privacyUrl}" target="_blank" class="text-gray-500 hover:text-gray-700 underline transition-colors">Privacy Policy</a>` : ''}
             </div>
         `;
 
@@ -749,12 +793,12 @@
         function renderCol(s, isRight) {
             const other = s === a ? b : a;
             return `
-                <div class="py-6 ${isRight ? 'md:pl-8 md:border-l border-[#1a1a1a]' : 'md:pr-8'}">
+                <div class="py-6 ${isRight ? 'md:pl-8 md:border-l border-gray-200' : 'md:pr-8'}">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-display text-xl text-[#fafafa]">${s.name}</h3>
+                        <h3 class="text-xl font-bold text-gray-900">${s.name}</h3>
                         <div class="font-mono text-2xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
                     </div>
-                    <div class="font-mono text-[12px] text-[#525252] mb-6">${s.overallScore}/100</div>
+                    <div class="font-mono text-[12px] text-gray-400 mb-6">${s.overallScore}/100</div>
                     <div class="space-y-3 mb-6">
                         ${categories.map(key => {
                             const val = s.scores[key];
@@ -763,15 +807,15 @@
                             const worse = val > otherVal;
                             return `
                                 <div class="flex items-center gap-2">
-                                    <div class="text-[10px] text-[#525252] w-24 flex-shrink-0">${categoryLabel(key)}</div>
+                                    <div class="text-[10px] text-gray-500 w-24 flex-shrink-0">${categoryLabel(key)}</div>
                                     <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#dc2626':val>=5?'#d97706':'#059669'}"></div></div>
-                                    <div class="font-mono text-[10px] w-4 text-right ${val>=7?'text-[#dc2626]':val>=5?'text-[#d97706]':'text-[#059669]'}">${val}</div>
-                                    ${better ? '<span class="text-[#059669] text-[10px]">▲</span>' : worse ? '<span class="text-[#dc2626] text-[10px]">▼</span>' : '<span class="text-[#262626] text-[10px]">=</span>'}
+                                    <div class="font-mono text-[10px] w-4 text-right ${val>=7?'text-red-600':val>=5?'text-amber-600':'text-emerald-600'}">${val}</div>
+                                    ${better ? '<span class="text-emerald-600 text-[10px]">▲</span>' : worse ? '<span class="text-red-600 text-[10px]">▼</span>' : '<span class="text-gray-300 text-[10px]">=</span>'}
                                 </div>
                             `;
                         }).join('')}
                     </div>
-                    <div class="text-[13px] text-[#a3a3a3] italic font-display border-t border-[#1a1a1a] pt-4">"${s.highlight}"</div>
+                    <div class="text-sm text-gray-500 italic border-t border-gray-100 pt-4">"${s.highlight}"</div>
                 </div>
             `;
         }
@@ -784,9 +828,11 @@
         const sorted = [...services].sort((a, b) => a.name.localeCompare(b.name));
         document.getElementById('exposure-grid').innerHTML = sorted.map(s => `
             <div class="py-1">
-                <input type="checkbox" class="exposure-check hidden" id="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" value="${s.name}" onchange="calcExposure()">
-                <label for="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" class="flex items-center gap-2 cursor-pointer text-[13px] text-[#525252] hover:text-[#a3a3a3] transition-colors">
-                    <span class="exp-dot inline-block w-2 h-2 rounded-full flex-shrink-0 transition-colors"></span>
+                <input type="checkbox" class="exposure-check" id="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" value="${s.name}" onchange="calcExposure()">
+                <label for="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                    <span class="exp-box">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5L4 7.5L8.5 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
                     <span>${s.name}</span>
                 </label>
             </div>
@@ -798,6 +844,7 @@
         const result = document.getElementById('exposure-result');
 
         if (checked.length === 0) { result.classList.add('hidden'); return; }
+
         result.classList.remove('hidden');
 
         const selected = services.filter(s => checked.includes(s.name));
@@ -833,13 +880,13 @@
             <div class="mono-label mb-3">Your Biggest Risks</div>
             ${topRisks.map(([key, val]) => `
                 <div class="flex items-center gap-3">
-                    <div class="text-[12px] text-[#525252] w-36">${categoryLabel(key)}</div>
+                    <div class="text-[12px] text-gray-500 w-36">${categoryLabel(key)}</div>
                     <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#dc2626':val>=5?'#d97706':'#059669'}"></div></div>
-                    <div class="font-mono text-[11px] ${val>=7?'text-[#dc2626]':val>=5?'text-[#d97706]':'text-[#059669]'}">${val}/10</div>
+                    <div class="font-mono text-[11px] ${val>=7?'text-red-600':val>=5?'text-amber-600':'text-emerald-600'}">${val}/10</div>
                 </div>
             `).join('')}
-            <div class="border-t border-[#1a1a1a] pt-4 mt-4">
-                <div class="text-[12px] text-[#525252]">Worst offender: <span class="text-[#d4d4d4]">${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].name} (${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].grade})</span></div>
+            <div class="border-t border-gray-100 pt-4 mt-4">
+                <div class="text-sm text-gray-500">Worst offender: <span class="text-gray-900 font-semibold">${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].name} (${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].grade})</span></div>
             </div>
         `;
     }
@@ -849,7 +896,11 @@
         ['index', 'compare', 'exposure'].forEach(t => {
             document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
             const btn = document.querySelector(`[data-tab="${t}"]`);
-            btn.className = (t === tab ? 'tab-active' : 'tab-inactive') + ' pb-3 text-sm font-sans font-normal transition-all';
+            if (t === tab) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
         });
     }
 
@@ -860,7 +911,7 @@
 
         document.getElementById('waitlist-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            document.getElementById('waitlist-response').innerHTML = '<div class="text-[#059669]">You\'re on the list. We\'ll email you when it ships.</div>';
+            document.getElementById('waitlist-response').innerHTML = '<div class="text-emerald-600">You\'re on the list. We\'ll email you when it ships.</div>';
             document.getElementById('waitlist-form').reset();
             setTimeout(() => document.getElementById('waitlist-response').innerHTML = '', 5000);
         });
@@ -868,7 +919,7 @@
         document.getElementById('request-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const service = document.getElementById('request-service').value;
-            document.getElementById('request-response').innerHTML = `<div class="text-[#059669]">Got it — ${service} is on the list. We'll prioritize by demand.</div>`;
+            document.getElementById('request-response').innerHTML = `<div class="text-emerald-600">Got it — ${service} is on the list. We'll prioritize by demand.</div>`;
             document.getElementById('request-form').reset();
             setTimeout(() => document.getElementById('request-response').innerHTML = '', 5000);
         });
@@ -967,86 +1018,6 @@
         }
     });
 
-    // --- Network Canvas ---
-    (function initNetworkViz() {
-        const canvas = document.getElementById('network-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const nodes = [];
-        const NODE_COUNT = 18;
-        const MAX_DIST = 100;
-        let w, h, animId;
-        let isVisible = false;
-
-        function resize() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            w = canvas.width = rect.width;
-            h = canvas.height = rect.height;
-        }
-
-        function initNodes() {
-            nodes.length = 0;
-            for (let i = 0; i < NODE_COUNT; i++) {
-                nodes.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2,
-                    r: 1 + Math.random() * 1
-                });
-            }
-        }
-
-        function draw() {
-            if (!isVisible) { animId = requestAnimationFrame(draw); return; }
-            ctx.clearRect(0, 0, w, h);
-
-            nodes.forEach(n => {
-                n.x += n.vx;
-                n.y += n.vy;
-                if (n.x < 0 || n.x > w) n.vx *= -1;
-                if (n.y < 0 || n.y > h) n.vy *= -1;
-            });
-
-            ctx.strokeStyle = 'rgba(153, 27, 27, 0.15)';
-            ctx.lineWidth = 0.5;
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < MAX_DIST) {
-                        ctx.globalAlpha = 1 - dist / MAX_DIST;
-                        ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            ctx.globalAlpha = 1;
-            nodes.forEach(n => {
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(220, 38, 38, 0.3)';
-                ctx.fill();
-            });
-
-            animId = requestAnimationFrame(draw);
-        }
-
-        const vizObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { isVisible = entry.isIntersecting; });
-        }, { threshold: 0 });
-
-        resize();
-        initNodes();
-        draw();
-        vizObserver.observe(canvas.parentElement);
-        window.addEventListener('resize', () => { resize(); initNodes(); });
-    })();
-
     // --- Radar Chart ---
     function drawRadar(canvas, scores) {
         const ctx = canvas.getContext('2d');
@@ -1057,6 +1028,7 @@
         const n = keys.length;
         const angleStep = (Math.PI * 2) / n;
 
+        // Grid rings
         [0.25, 0.5, 0.75, 1].forEach(frac => {
             ctx.beginPath();
             for (let i = 0; i <= n; i++) {
@@ -1066,21 +1038,23 @@
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
             }
             ctx.closePath();
-            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+            ctx.strokeStyle = '#e5e7eb';
             ctx.lineWidth = 0.5;
             ctx.stroke();
         });
 
+        // Axis lines
         keys.forEach((_, i) => {
             const angle = i * angleStep - Math.PI / 2;
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.lineTo(cx + Math.cos(angle) * R, cy + Math.sin(angle) * R);
-            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.strokeStyle = '#f3f4f6';
             ctx.lineWidth = 0.5;
             ctx.stroke();
         });
 
+        // Data polygon
         ctx.beginPath();
         keys.forEach((key, i) => {
             const val = scores[key] / 10;
@@ -1090,13 +1064,14 @@
             i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         });
         ctx.closePath();
-        ctx.fillStyle = 'rgba(220, 38, 38, 0.1)';
+        ctx.fillStyle = 'rgba(13, 148, 136, 0.1)';
         ctx.fill();
-        ctx.strokeStyle = 'rgba(220, 38, 38, 0.5)';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(13, 148, 136, 0.6)';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        ctx.font = "8px 'IBM Plex Sans', sans-serif";
+        // Data points + labels
+        ctx.font = "8px 'Plus Jakarta Sans', sans-serif";
         keys.forEach((key, i) => {
             const val = scores[key] / 10;
             const angle = i * angleStep - Math.PI / 2;
@@ -1104,13 +1079,13 @@
             const y = cy + Math.sin(angle) * R * val;
 
             ctx.beginPath();
-            ctx.arc(x, y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(220, 38, 38, 0.7)';
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(13, 148, 136, 0.8)';
             ctx.fill();
 
             const lx = cx + Math.cos(angle) * (R + 14);
             const ly = cy + Math.sin(angle) * (R + 14);
-            ctx.fillStyle = 'rgba(82,82,82,0.8)';
+            ctx.fillStyle = '#9ca3af';
             ctx.textAlign = Math.cos(angle) < -0.1 ? 'right' : Math.cos(angle) > 0.1 ? 'left' : 'center';
             const short = categoryLabel(key).replace('Cross-Platform Sharing','Cross-Plat.').replace('Forced Arbitration','Arbitration').replace('Content Ownership','Content Own.').replace('Terms Changes','Terms Chg.').replace('Deletion Difficulty','Deletion').replace('Data Retention','Retention').replace('Location Tracking','Location').replace('Liability Limits','Liability').replace('Data Selling','Data Sell.').replace('AI Training','AI Train.');
             ctx.fillText(short, lx, ly + 3);
