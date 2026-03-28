@@ -9,7 +9,11 @@
     <meta property="og:description" content="We read the terms & conditions for 30 of the world's most popular services. Here's what they're hiding.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://isaacachar.github.io/gatekeeper/">
+    <meta property="og:image" content="https://isaacachar.github.io/gatekeeper/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://isaacachar.github.io/gatekeeper/og-image.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -39,7 +43,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 1;
             opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
             background-repeat: repeat;
@@ -64,8 +68,8 @@
         .grade-f { color: #dc2626; }
 
         /* === SCORE BARS === */
-        .score-bar { height: 2px; background: #1a1a1a; overflow: hidden; }
-        .score-fill { height: 100%; transition: width 0.8s ease-out; }
+        .score-bar { height: 5px; background: #1a1a1a; border-radius: 3px; overflow: hidden; }
+        .score-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease-out; }
 
         /* === CLAUSE HIGHLIGHT === */
         .clause-card { border-left: 2px solid #dc2626; }
@@ -155,6 +159,11 @@
         /* === TIMELINE === */
         .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #262626; flex-shrink: 0; }
         .timeline-dot.active { background: #dc2626; }
+
+        /* === MOBILE NAV HAMBURGER === */
+        .nav-open .nav-line-1 { transform: rotate(45deg) translate(2px, 2px); }
+        .nav-open .nav-line-2 { opacity: 0; }
+        .nav-open .nav-line-3 { transform: rotate(-45deg) translate(2px, -2px); }
     </style>
 </head>
 <body class="antialiased">
@@ -169,11 +178,27 @@
                 <div style="width:12px;height:12px;background:#dc2626;"></div>
                 <span class="font-mono text-xs tracking-widest text-neutral-400">GATEKEEPER</span>
             </div>
-            <div class="flex items-center gap-8 text-xs font-sans font-normal">
+            <!-- Desktop nav -->
+            <div class="hidden md:flex items-center gap-8 text-xs font-sans font-normal">
                 <a href="#index" class="text-neutral-500 hover:text-neutral-200 transition-colors">Index</a>
                 <a href="#compare" class="text-neutral-500 hover:text-neutral-200 transition-colors">Compare</a>
                 <a href="#exposure" class="text-neutral-500 hover:text-neutral-200 transition-colors">Exposure</a>
-                <a href="map.html" class="text-neutral-500 hover:text-neutral-200 transition-colors hidden md:inline">Broker Map</a>
+                <a href="map.html" class="text-neutral-500 hover:text-neutral-200 transition-colors">Broker Map</a>
+            </div>
+            <!-- Mobile hamburger -->
+            <button id="nav-toggle" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Toggle menu" onclick="document.getElementById('mobile-menu').classList.toggle('hidden'); this.classList.toggle('nav-open')">
+                <span class="block w-[18px] h-[1.5px] bg-neutral-400 transition-all duration-200 origin-center nav-line-1"></span>
+                <span class="block w-[18px] h-[1.5px] bg-neutral-400 transition-all duration-200 nav-line-2"></span>
+                <span class="block w-[18px] h-[1.5px] bg-neutral-400 transition-all duration-200 origin-center nav-line-3"></span>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-[#1a1a1a] bg-[#0a0a0a]/95 backdrop-blur-md">
+            <div class="max-w-[1200px] mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-sans">
+                <a href="#index" class="text-neutral-400 hover:text-neutral-200 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('nav-toggle').classList.remove('nav-open')">Index</a>
+                <a href="#compare" class="text-neutral-400 hover:text-neutral-200 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('nav-toggle').classList.remove('nav-open')">Compare</a>
+                <a href="#exposure" class="text-neutral-400 hover:text-neutral-200 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('nav-toggle').classList.remove('nav-open')">Exposure</a>
+                <a href="map.html" class="text-neutral-400 hover:text-neutral-200 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('nav-toggle').classList.remove('nav-open')">Broker Map</a>
             </div>
         </div>
     </nav>
@@ -302,8 +327,11 @@
             <!-- EXPOSURE TAB -->
             <section id="tab-exposure" class="hidden tab-panel">
                 <a id="exposure"></a>
-                <p class="text-[15px] font-light text-[#a3a3a3] mb-2 max-w-[50ch]">Check the services you use. We'll calculate your personal exposure score.</p>
-                <p class="text-[12px] text-[#525252] mb-10">How much of your data is out there, based on what you've agreed to?</p>
+                <div class="mb-10">
+                    <h3 class="font-display text-[1.5rem] md:text-[2rem] text-[#fafafa] leading-[1.1] mb-3">How exposed are you?</h3>
+                    <p class="text-[15px] font-light text-[#a3a3a3] mb-2 max-w-[50ch]">Check the services you use. We'll calculate your personal exposure score.</p>
+                    <p class="text-[12px] text-[#525252]">Select at least 3 services to see your breakdown.</p>
+                </div>
 
                 <div id="exposure-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 mb-10"></div>
 
@@ -511,6 +539,14 @@
         computeStats();
         renderIndex();
         populateCompare();
+        // Pre-populate compare with worst vs best
+        const worst = [...services].sort((a, b) => a.overallScore - b.overallScore)[0];
+        const best = [...services].sort((a, b) => b.overallScore - a.overallScore)[0];
+        if (worst && best) {
+            document.getElementById('compare-a').value = worst.name;
+            document.getElementById('compare-b').value = best.name;
+            renderComparison();
+        }
         renderExposureGrid();
         setupListeners();
         document.getElementById('service-count').textContent = services.length;
@@ -536,12 +572,48 @@
         const n = services.length;
         const pct = (key, threshold) => {
             const count = services.filter(s => s.scores[key] >= threshold).length;
-            return Math.round(count / n * 100) + '%';
+            return Math.round(count / n * 100);
         };
-        document.getElementById('stat-data').textContent = pct('data_selling', 5);
-        document.getElementById('stat-arb').textContent = pct('forced_arbitration', 6);
-        document.getElementById('stat-ai').textContent = pct('ai_training', 5);
-        document.getElementById('stat-retain').textContent = pct('data_retention', 5);
+        const targets = {
+            'stat-data': pct('data_selling', 5),
+            'stat-arb': pct('forced_arbitration', 6),
+            'stat-ai': pct('ai_training', 5),
+            'stat-retain': pct('data_retention', 5)
+        };
+        // Set initial 0%
+        Object.keys(targets).forEach(id => {
+            document.getElementById(id).textContent = '0%';
+        });
+        // Animate on scroll into view
+        const statsBar = document.getElementById('stats-bar');
+        let statsAnimated = false;
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !statsAnimated) {
+                    statsAnimated = true;
+                    statsObserver.unobserve(statsBar);
+                    Object.entries(targets).forEach(([id, target]) => {
+                        animateCounter(document.getElementById(id), target);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+        statsObserver.observe(statsBar);
+    }
+
+    function animateCounter(el, target) {
+        const duration = 1200;
+        const start = performance.now();
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = current + '%';
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
     }
 
     function toggleGradeFilter(btn) {
@@ -860,6 +932,12 @@
 
         document.getElementById('waitlist-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                const subs = JSON.parse(localStorage.getItem('gk-waitlist') || '[]');
+                subs.push({ email, ts: new Date().toISOString() });
+                localStorage.setItem('gk-waitlist', JSON.stringify(subs));
+            }
             document.getElementById('waitlist-response').innerHTML = '<div class="text-[#059669]">You\'re on the list. We\'ll email you when it ships.</div>';
             document.getElementById('waitlist-form').reset();
             setTimeout(() => document.getElementById('waitlist-response').innerHTML = '', 5000);
@@ -868,6 +946,12 @@
         document.getElementById('request-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const service = document.getElementById('request-service').value;
+            const email = document.getElementById('request-email') ? document.getElementById('request-email').value : '';
+            if (service) {
+                const reqs = JSON.parse(localStorage.getItem('gk-requests') || '[]');
+                reqs.push({ service, email, ts: new Date().toISOString() });
+                localStorage.setItem('gk-requests', JSON.stringify(reqs));
+            }
             document.getElementById('request-response').innerHTML = `<div class="text-[#059669]">Got it — ${service} is on the list. We'll prioritize by demand.</div>`;
             document.getElementById('request-form').reset();
             setTimeout(() => document.getElementById('request-response').innerHTML = '', 5000);
