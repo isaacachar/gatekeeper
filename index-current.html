@@ -259,12 +259,6 @@
             opacity: 0;
         }
 
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
         /* Radar chart container */
         .radar-chart-container {
             display: flex;
@@ -316,15 +310,6 @@
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
             </div>
         </header>
-
-        <!-- Top 5 Worst Offenders -->
-        <section id="worst-offenders" class="mb-20 reveal">
-            <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The worst offenders</div>
-            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8">These five scored the lowest.</h2>
-            <div id="top5-grid" class="grid gap-4 md:grid-cols-5">
-                <!-- Populated by JS -->
-            </div>
-        </section>
 
         <!-- The Agentic Reality -->
         <section class="border border-red-900/20 rounded-xl p-8 md:p-10 mb-20 bg-gradient-to-b from-red-950/10 to-transparent relative overflow-hidden reveal">
@@ -667,22 +652,8 @@
         return labels[key] || key;
     }
 
-    function renderTop5() {
-        const worst5 = [...services].sort((a, b) => a.overallScore - b.overallScore).slice(0, 5);
-        document.getElementById('top5-grid').innerHTML = worst5.map(s => `
-            <div class="border border-neutral-900 hover:border-red-900/40 rounded-lg p-5 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/5 to-transparent" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
-                <div class="grade-letter text-4xl font-bold grade-${gradeClass(s.grade)} mb-2">${s.grade}</div>
-                <h3 class="font-sans font-semibold text-sm mb-1">${s.name}</h3>
-                <div class="font-mono text-[10px] text-neutral-600 mb-3">${s.overallScore}/100</div>
-                <div class="score-bar mb-3"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
-                <p class="text-xs text-neutral-500 italic font-serif leading-relaxed line-clamp-3">"${s.worstClauses[0]?.translation || s.highlight}"</p>
-            </div>
-        `).join('');
-    }
-
     function init() {
         computeStats();
-        renderTop5();
         renderIndex();
         populateCompare();
         renderExposureGrid();
@@ -766,15 +737,7 @@
             </div>
         `).join('');
 
-        const isFiltering = search || cat || grade;
-        if (!isFiltering && filtered.length > 10) {
-            const first10 = html.split('</div>\n').slice(0, 10).join('</div>\n');
-            const rest = html.split('</div>\n').slice(10).join('</div>\n');
-            const showAllBtn = `<button id="show-all-btn" onclick="document.getElementById('index-hidden').classList.remove('hidden');this.remove();" class="w-full py-4 border border-neutral-800 hover:border-neutral-600 rounded-lg text-sm font-mono text-neutral-400 hover:text-white transition-all mt-3">Show all ${filtered.length} services ↓</button>`;
-            document.getElementById('index-list').innerHTML = first10 + showAllBtn + '<div id="index-hidden" class="hidden space-y-3 mt-3">' + rest + '</div>';
-        } else {
-            document.getElementById('index-list').innerHTML = html || '<div class="text-center text-neutral-600 py-12 font-sans text-sm">No services match your filters.</div>';
-        }
+        document.getElementById('index-list').innerHTML = html || '<div class="text-center text-neutral-600 py-12 font-sans text-sm">No services match your filters.</div>';
     }
 
     function slugify(name) {
