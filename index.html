@@ -290,17 +290,18 @@
                 <a href="#vision" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Vision</a>
                 <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Waitlist</a>
             </div>
-            <button id="mobile-menu-btn" class="items-center justify-center w-10 h-10 text-neutral-400 hover:text-white" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <button id="mobile-menu-btn" class="items-center justify-center w-10 h-10 text-neutral-400 hover:text-white" onclick="toggleMobileNav()" aria-label="Menu">
+                <svg id="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                <svg id="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
             </button>
         </nav>
         <div id="mobile-nav" class="flex-col gap-3 py-4 border-b border-neutral-900 text-sm">
-            <a href="#index" class="text-neutral-400 hover:text-white transition-colors py-1" onclick="document.getElementById('mobile-nav').classList.remove('open')">Index</a>
-            <a href="#compare" class="text-neutral-400 hover:text-white transition-colors py-1" onclick="document.getElementById('mobile-nav').classList.remove('open')">Compare</a>
-            <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors py-1" onclick="document.getElementById('mobile-nav').classList.remove('open')">Your Score</a>
-            <a href="map.html" class="text-red-500 hover:text-red-400 transition-colors py-1">Broker Map</a>
-            <a href="#vision" class="text-neutral-400 hover:text-white transition-colors py-1" onclick="document.getElementById('mobile-nav').classList.remove('open')">Vision</a>
-            <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors py-1" onclick="document.getElementById('mobile-nav').classList.remove('open')">Waitlist</a>
+            <a href="#index" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Index</a>
+            <a href="#compare" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Compare</a>
+            <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Your Score</a>
+            <a href="map.html" class="text-red-500 hover:text-red-400 transition-colors py-2">Broker Map</a>
+            <a href="#vision" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Vision</a>
+            <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Waitlist</a>
         </div>
 
         <!-- Hero -->
@@ -313,8 +314,8 @@
                 We scraped, read, and scored the actual terms of service for 30 of the world's most popular platforms. Here's what's hiding in the fine print.
             </p>
             <div class="flex flex-wrap gap-4 mb-8 load-stagger" style="--load-delay:900ms">
-                <a href="#worst-offenders" class="inline-flex items-center gap-2 px-6 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors font-sans">See the worst offenders &darr;</a>
-                <a href="#waitlist" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white text-sm font-semibold rounded-lg transition-all font-sans">Join the waitlist</a>
+                <a href="#worst-offenders" class="inline-flex items-center gap-2 px-5 md:px-6 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors font-sans">Worst offenders &darr;</a>
+                <a href="#waitlist" class="inline-flex items-center gap-2 px-5 md:px-6 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white text-sm font-semibold rounded-lg transition-all font-sans">Join waitlist</a>
             </div>
             <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:1100ms">
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
@@ -325,7 +326,7 @@
         <section id="worst-offenders" class="mb-20 reveal">
             <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The worst offenders</div>
             <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8">These five scored the lowest.</h2>
-            <div id="top5-grid" class="grid gap-4 md:grid-cols-5">
+            <div id="top5-grid" class="grid gap-4 grid-cols-2 md:grid-cols-5">
                 <!-- Populated by JS -->
             </div>
         </section>
@@ -523,7 +524,7 @@
                 Your reachability should be a function you control — not a static value others possess. Gatekeeper is the sovereignty layer between you and every service that wants your data. Today it's a scorecard. Tomorrow it's the infrastructure.
             </p>
 
-            <div class="grid md:grid-cols-4 gap-6 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
                 <!-- Phase 1 -->
                 <div class="border border-red-900/40 rounded-xl p-6 relative">
                     <div class="absolute top-4 right-4 font-mono text-[10px] text-red-500 px-2 py-0.5 border border-red-900/40 rounded-full">LIVE</div>
@@ -638,6 +639,16 @@
     <script>
     let services = [];
 
+    function toggleMobileNav() {
+        const nav = document.getElementById('mobile-nav');
+        const hamburger = document.getElementById('hamburger-icon');
+        const close = document.getElementById('close-icon');
+        nav.classList.toggle('open');
+        const isOpen = nav.classList.contains('open');
+        hamburger.classList.toggle('hidden', isOpen);
+        close.classList.toggle('hidden', !isOpen);
+    }
+
     // Load data
     fetch('tc-data.json')
         .then(r => r.json())
@@ -680,16 +691,16 @@
     function renderTop5() {
         const worst5 = [...services].sort((a, b) => a.overallScore - b.overallScore).slice(0, 5);
         document.getElementById('top5-grid').innerHTML = worst5.map((s, i) => `
-            <div class="border border-red-900/30 hover:border-red-700/50 rounded-xl p-6 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/10 to-transparent group" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
-                <div class="flex items-center justify-between mb-3">
+            <div class="border border-red-900/30 hover:border-red-700/50 rounded-xl p-5 md:p-6 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/10 to-transparent group ${i === 4 ? 'col-span-2 md:col-span-1' : ''}" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
+                <div class="flex items-center justify-between mb-2 md:mb-3">
                     <span class="font-mono text-[10px] text-red-700 uppercase">#${i + 1} worst</span>
-                    <div class="grade-letter text-3xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                    <div class="grade-letter text-2xl md:text-3xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
                 </div>
-                <h3 class="font-sans font-semibold text-base mb-1 group-hover:text-red-400 transition-colors">${s.name}</h3>
-                <div class="font-mono text-[10px] text-neutral-600 mb-3">${s.overallScore}/100</div>
-                <div class="score-bar mb-4"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
-                <p class="text-xs text-neutral-400 italic font-serif leading-relaxed line-clamp-3">"${s.worstClauses[0]?.translation || s.highlight}"</p>
-                <div class="mt-3 text-[10px] font-mono text-red-800 group-hover:text-red-600 transition-colors">View full report &rarr;</div>
+                <h3 class="font-sans font-semibold text-sm md:text-base mb-1 group-hover:text-red-400 transition-colors">${s.name}</h3>
+                <div class="font-mono text-[10px] text-neutral-600 mb-2 md:mb-3">${s.overallScore}/100</div>
+                <div class="score-bar mb-3 md:mb-4"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
+                <p class="text-[11px] md:text-xs text-neutral-400 italic font-serif leading-relaxed line-clamp-2 md:line-clamp-3">"${s.worstClauses[0]?.translation || s.highlight}"</p>
+                <div class="mt-2 md:mt-3 text-[10px] font-mono text-red-800 group-hover:text-red-600 transition-colors">View report &rarr;</div>
             </div>
         `).join('');
     }
