@@ -183,14 +183,18 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid #991b1b;
-            width: 0;
-            animation: typewriter 2s steps(38) 0.5s forwards, blinkCaret 0.7s step-end infinite;
+            display: inline-block;
+            max-width: 0;
+            animation: typewriter 2s steps(42) 0.8s forwards, blinkCaret 0.7s step-end infinite 0.8s, hideCaret 0.1s 3.5s forwards;
         }
         @keyframes typewriter {
-            to { width: 100%; }
+            to { max-width: 42ch; }
         }
         @keyframes blinkCaret {
             50% { border-color: transparent; }
+        }
+        @keyframes hideCaret {
+            to { border-color: transparent; }
         }
 
         /* === SCROLL-TO-TOP === */
@@ -437,7 +441,7 @@
         <!-- Hero -->
         <header class="py-16 md:py-24 hero-parallax relative">
             <canvas id="hero-particles"></canvas>
-            <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6 load-stagger" style="--load-delay:200ms">Classified · Public Interest Disclosure</div>
+            <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6 typewriter">Classified · Public Interest Disclosure</div>
             <h1 class="hero-title font-serif text-5xl md:text-7xl font-black leading-[1.05] mb-8 max-w-4xl load-stagger" style="--load-delay:500ms">
                 You agreed to<br>all of this.
             </h1>
