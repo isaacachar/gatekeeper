@@ -29,7 +29,7 @@
         }
     </script>
     <style>
-        body { background: #050505; color: #e5e5e5; }
+        body { background: #050505; color: #e5e5e5; overflow-x: hidden; }
         .grade-letter { font-family: 'JetBrains Mono', monospace; }
         .grade-a { color: #10b981; }
         .grade-b { color: #22d3ee; }
@@ -312,7 +312,11 @@
             <p class="text-xl md:text-2xl text-neutral-400 max-w-2xl leading-relaxed font-serif mb-10 load-stagger" style="--load-delay:700ms">
                 We scraped, read, and scored the actual terms of service for 30 of the world's most popular platforms. Here's what's hiding in the fine print.
             </p>
-            <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:900ms">
+            <div class="flex flex-wrap gap-4 mb-8 load-stagger" style="--load-delay:900ms">
+                <a href="#worst-offenders" class="inline-flex items-center gap-2 px-6 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors font-sans">See the worst offenders &darr;</a>
+                <a href="#waitlist" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white text-sm font-semibold rounded-lg transition-all font-sans">Join the waitlist</a>
+            </div>
+            <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:1100ms">
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
             </div>
         </header>
@@ -323,6 +327,26 @@
             <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8">These five scored the lowest.</h2>
             <div id="top5-grid" class="grid gap-4 md:grid-cols-5">
                 <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 reveal">
+            <div class="border border-neutral-900 rounded-lg p-6 text-center">
+                <div class="text-4xl md:text-5xl font-mono font-bold text-red-500 mb-2" id="stat-data"></div>
+                <div class="text-xs text-neutral-500 font-sans leading-tight">share data with<br>third parties</div>
+            </div>
+            <div class="border border-neutral-900 rounded-lg p-6 text-center">
+                <div class="text-4xl md:text-5xl font-mono font-bold text-red-500 mb-2" id="stat-arb"></div>
+                <div class="text-xs text-neutral-500 font-sans leading-tight">force binding<br>arbitration</div>
+            </div>
+            <div class="border border-neutral-900 rounded-lg p-6 text-center">
+                <div class="text-4xl md:text-5xl font-mono font-bold text-amber-500 mb-2" id="stat-ai"></div>
+                <div class="text-xs text-neutral-500 font-sans leading-tight">use your content<br>for AI training</div>
+            </div>
+            <div class="border border-neutral-900 rounded-lg p-6 text-center">
+                <div class="text-4xl md:text-5xl font-mono font-bold text-amber-500 mb-2" id="stat-retain"></div>
+                <div class="text-xs text-neutral-500 font-sans leading-tight">retain data after<br>you delete</div>
             </div>
         </section>
 
@@ -351,24 +375,10 @@
             </div>
         </section>
 
-        <!-- Stats Bar -->
-        <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 reveal">
-            <div class="border border-neutral-900 rounded-lg p-5">
-                <div class="text-3xl md:text-4xl font-mono font-bold text-red-500 mb-1" id="stat-data"></div>
-                <div class="text-xs text-neutral-500 font-sans">Share data with third parties</div>
-            </div>
-            <div class="border border-neutral-900 rounded-lg p-5">
-                <div class="text-3xl md:text-4xl font-mono font-bold text-red-500 mb-1" id="stat-arb"></div>
-                <div class="text-xs text-neutral-500 font-sans">Force binding arbitration</div>
-            </div>
-            <div class="border border-neutral-900 rounded-lg p-5">
-                <div class="text-3xl md:text-4xl font-mono font-bold text-amber-500 mb-1" id="stat-ai"></div>
-                <div class="text-xs text-neutral-500 font-sans">Use your content for AI training</div>
-            </div>
-            <div class="border border-neutral-900 rounded-lg p-5">
-                <div class="text-3xl md:text-4xl font-mono font-bold text-amber-500 mb-1" id="stat-retain"></div>
-                <div class="text-xs text-neutral-500 font-sans">Retain data after you delete</div>
-            </div>
+        <!-- The Index Section -->
+        <section class="mb-4 reveal" id="index">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-neutral-600 mb-2">The full index</div>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold mb-6">All <span id="index-total">30</span> services, ranked.</h2>
         </section>
 
         <!-- Tabs -->
@@ -669,13 +679,17 @@
 
     function renderTop5() {
         const worst5 = [...services].sort((a, b) => a.overallScore - b.overallScore).slice(0, 5);
-        document.getElementById('top5-grid').innerHTML = worst5.map(s => `
-            <div class="border border-neutral-900 hover:border-red-900/40 rounded-lg p-5 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/5 to-transparent" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
-                <div class="grade-letter text-4xl font-bold grade-${gradeClass(s.grade)} mb-2">${s.grade}</div>
-                <h3 class="font-sans font-semibold text-sm mb-1">${s.name}</h3>
+        document.getElementById('top5-grid').innerHTML = worst5.map((s, i) => `
+            <div class="border border-red-900/30 hover:border-red-700/50 rounded-xl p-6 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/10 to-transparent group" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-red-700 uppercase">#${i + 1} worst</span>
+                    <div class="grade-letter text-3xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                </div>
+                <h3 class="font-sans font-semibold text-base mb-1 group-hover:text-red-400 transition-colors">${s.name}</h3>
                 <div class="font-mono text-[10px] text-neutral-600 mb-3">${s.overallScore}/100</div>
-                <div class="score-bar mb-3"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
-                <p class="text-xs text-neutral-500 italic font-serif leading-relaxed line-clamp-3">"${s.worstClauses[0]?.translation || s.highlight}"</p>
+                <div class="score-bar mb-4"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
+                <p class="text-xs text-neutral-400 italic font-serif leading-relaxed line-clamp-3">"${s.worstClauses[0]?.translation || s.highlight}"</p>
+                <div class="mt-3 text-[10px] font-mono text-red-800 group-hover:text-red-600 transition-colors">View full report &rarr;</div>
             </div>
         `).join('');
     }
@@ -737,7 +751,7 @@
 
         document.getElementById('result-count').textContent = filtered.length;
 
-        const html = filtered.map((s, i) => `
+        const cards = filtered.map((s, i) => `
             <div class="border border-neutral-900 hover:border-neutral-700 rounded-lg p-5 cursor-pointer transition-all duration-200" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'> 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4 flex-1 min-w-0">
@@ -764,16 +778,16 @@
                     <div class="score-bar"><div class="score-fill" style="width:${s.overallScore}%;background:${scoreColor(s.overallScore)}"></div></div>
                 </div>
             </div>
-        `).join('');
+        `);
 
         const isFiltering = search || cat || grade;
-        if (!isFiltering && filtered.length > 10) {
-            const first10 = html.split('</div>\n').slice(0, 10).join('</div>\n');
-            const rest = html.split('</div>\n').slice(10).join('</div>\n');
-            const showAllBtn = `<button id="show-all-btn" onclick="document.getElementById('index-hidden').classList.remove('hidden');this.remove();" class="w-full py-4 border border-neutral-800 hover:border-neutral-600 rounded-lg text-sm font-mono text-neutral-400 hover:text-white transition-all mt-3">Show all ${filtered.length} services ↓</button>`;
+        if (!isFiltering && cards.length > 10) {
+            const first10 = cards.slice(0, 10).join('');
+            const rest = cards.slice(10).join('');
+            const showAllBtn = `<button id="show-all-btn" onclick="document.getElementById('index-hidden').classList.remove('hidden');this.remove();" class="w-full py-4 border border-neutral-800 hover:border-neutral-600 rounded-lg text-sm font-mono text-neutral-400 hover:text-white transition-all mt-3">Show all ${cards.length} services ↓</button>`;
             document.getElementById('index-list').innerHTML = first10 + showAllBtn + '<div id="index-hidden" class="hidden space-y-3 mt-3">' + rest + '</div>';
         } else {
-            document.getElementById('index-list').innerHTML = html || '<div class="text-center text-neutral-600 py-12 font-sans text-sm">No services match your filters.</div>';
+            document.getElementById('index-list').innerHTML = cards.join('') || '<div class="text-center text-neutral-600 py-12 font-sans text-sm">No services match your filters.</div>';
         }
     }
 
