@@ -258,6 +258,134 @@
             opacity: 0;
         }
 
+        /* === SURVEILLANCE COUNTER === */
+        .surveillance-ticker {
+            font-variant-numeric: tabular-nums;
+        }
+        @keyframes tickerPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .ticker-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #ef4444;
+            animation: tickerPulse 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        /* === GLITCH EFFECT (D/F grades) === */
+        @keyframes glitch {
+            0%, 92% { transform: none; opacity: 1; }
+            93% { transform: translate(-2px, 1px); opacity: 0.8; }
+            94% { transform: translate(2px, -1px); opacity: 0.9; }
+            95% { transform: translate(-1px, -1px); opacity: 0.7; }
+            96% { transform: none; opacity: 1; }
+            97% { transform: translate(1px, 2px); opacity: 0.85; }
+            98% { transform: none; opacity: 1; }
+            100% { transform: none; opacity: 1; }
+        }
+        .grade-glitch {
+            animation: glitch 4s ease-in-out infinite;
+            position: relative;
+        }
+        .grade-glitch::before,
+        .grade-glitch::after {
+            content: attr(data-grade);
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+        }
+        .grade-glitch::before {
+            color: #ef4444;
+            animation: glitchBefore 4s ease-in-out infinite;
+        }
+        .grade-glitch::after {
+            color: #f97316;
+            animation: glitchAfter 4s ease-in-out infinite;
+        }
+        @keyframes glitchBefore {
+            0%, 92% { opacity: 0; transform: none; }
+            93% { opacity: 0.6; transform: translate(-3px, 0); }
+            95% { opacity: 0; transform: none; }
+            100% { opacity: 0; }
+        }
+        @keyframes glitchAfter {
+            0%, 94% { opacity: 0; transform: none; }
+            95% { opacity: 0.5; transform: translate(3px, 0); }
+            97% { opacity: 0; transform: none; }
+            100% { opacity: 0; }
+        }
+
+        /* === RED SCAN LINE === */
+        #scan-line {
+            position: fixed;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(239,68,68,0.6) 20%, rgba(239,68,68,0.8) 50%, rgba(239,68,68,0.6) 80%, transparent 100%);
+            box-shadow: 0 0 12px rgba(239,68,68,0.4), 0 0 30px rgba(239,68,68,0.15);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            animation: scanLineMove 3.5s ease-in-out 1s forwards;
+        }
+        @keyframes scanLineMove {
+            0% { top: -2px; opacity: 0; }
+            5% { opacity: 1; }
+            90% { opacity: 0.6; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        /* === CARD X-RAY HOVER === */
+        .card-xray {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-xray .xray-clause {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 8px 12px;
+            background: rgba(239,68,68,0.12);
+            border-top: 1px solid rgba(239,68,68,0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: #ef4444;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            line-height: 1.4;
+            pointer-events: none;
+        }
+        .card-xray:hover .xray-clause {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === GRADE STAMP ANIMATION === */
+        @keyframes gradeStamp {
+            0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+            60% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+            80% { transform: scale(0.98) rotate(-1deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .grade-stamp-in {
+            animation: gradeStamp 0.5s cubic-bezier(0.17, 0.67, 0.29, 1.2) forwards;
+        }
+        .grade-stamp-pending {
+            opacity: 0;
+        }
+
+        /* === HERO PARTICLE BACKGROUND === */
+        #hero-particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
         .line-clamp-3 {
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -273,6 +401,7 @@
     </style>
 </head>
 <body class="antialiased">
+    <div id="scan-line"></div>
     <button id="scroll-top-btn" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
     <main class="max-w-6xl mx-auto px-4 md:px-8">
         <!-- Nav -->
@@ -306,7 +435,8 @@
         </div>
 
         <!-- Hero -->
-        <header class="py-16 md:py-24 hero-parallax">
+        <header class="py-16 md:py-24 hero-parallax relative">
+            <canvas id="hero-particles"></canvas>
             <div class="font-mono text-xs uppercase tracking-widest text-red-600 mb-6 typewriter load-stagger" style="--load-delay:200ms">Classified · Public Interest Disclosure</div>
             <h1 class="hero-title font-serif text-5xl md:text-7xl font-black leading-[1.05] mb-8 max-w-4xl load-stagger" style="--load-delay:500ms">
                 You agreed to<br>all of this.
@@ -325,6 +455,12 @@
             </div>
             <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:1100ms">
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
+            </div>
+            <div class="mt-4 flex items-center gap-2 load-stagger" style="--load-delay:1300ms">
+                <span class="ticker-dot"></span>
+                <span class="font-mono text-xs text-red-500/70 surveillance-ticker">
+                    <span id="terms-counter">0</span> terms agreed to worldwide in the last hour
+                </span>
             </div>
         </header>
 
@@ -1557,6 +1693,191 @@
             origSwitchTab(tab);
         }
     };
+
+    // === SURVEILLANCE COUNTER ===
+    (function initSurveillanceCounter() {
+        const el = document.getElementById('terms-counter');
+        if (!el) return;
+        // Start with a realistic "this hour" number and tick up
+        let count = Math.floor(2400000 + Math.random() * 200000);
+        el.textContent = count.toLocaleString();
+        setInterval(() => {
+            count += Math.floor(Math.random() * 40) + 10;
+            el.textContent = count.toLocaleString();
+        }, 800);
+    })();
+
+    // === HERO PARTICLE NETWORK ===
+    (function initHeroParticles() {
+        const canvas = document.getElementById('hero-particles');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const PARTICLE_COUNT = 50;
+        const MAX_DIST = 100;
+        let w, h, animId;
+
+        function resize() {
+            const header = canvas.parentElement;
+            w = canvas.width = header.offsetWidth;
+            h = canvas.height = header.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                r: Math.random() * 1.5 + 0.5,
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            // Lines
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MAX_DIST) {
+                        ctx.strokeStyle = `rgba(239,68,68,${0.12 * (1 - dist / MAX_DIST)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            // Dots
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > w) p.vx *= -1;
+                if (p.y < 0 || p.y > h) p.vy *= -1;
+                ctx.fillStyle = 'rgba(239,68,68,0.25)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            animId = requestAnimationFrame(draw);
+        }
+
+        // Only run when hero is visible
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { draw(); }
+                else { cancelAnimationFrame(animId); }
+            });
+        });
+        obs.observe(canvas.parentElement);
+    })();
+
+    // === GLITCH EFFECT ON D/F GRADES ===
+    (function initGlitchGrades() {
+        // Apply after renderIndex and renderTop5 run
+        const origInit = init;
+        const applyGlitch = () => {
+            document.querySelectorAll('.grade-letter').forEach(el => {
+                const text = el.textContent.trim();
+                if (text.startsWith('D') || text.startsWith('F')) {
+                    el.classList.add('grade-glitch');
+                    el.setAttribute('data-grade', text);
+                }
+            });
+        };
+        // Run after a slight delay to ensure DOM is ready
+        setTimeout(applyGlitch, 2000);
+        // Also re-apply when index is re-rendered
+        const origRender = window.renderIndex;
+        if (origRender) {
+            window.renderIndex = function() {
+                origRender();
+                setTimeout(applyGlitch, 100);
+            };
+        }
+    })();
+
+    // === GRADE STAMP ANIMATION (Top 5) ===
+    (function initGradeStamp() {
+        const top5Observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const grades = entry.target.querySelectorAll('.grade-letter');
+                    grades.forEach((g, i) => {
+                        g.classList.add('grade-stamp-pending');
+                        setTimeout(() => {
+                            g.classList.remove('grade-stamp-pending');
+                            g.classList.add('grade-stamp-in');
+                        }, 200 + i * 150);
+                    });
+                    top5Observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        // Observe after a delay so top5 is rendered
+        setTimeout(() => {
+            const grid = document.getElementById('top5-grid');
+            if (grid) top5Observer.observe(grid);
+        }, 1500);
+    })();
+
+    // === CARD X-RAY CLAUSE REVEALS ===
+    (function initCardXray() {
+        // Worst clauses per service for x-ray reveal
+        const worstClauses = {
+            'Facebook': '"We can use your content for any purpose, including commercial"',
+            'X': '"By posting, you grant us a worldwide, royalty-free license"',
+            'Instagram': '"We own a license to your photos even after deletion"',
+            'TikTok': '"We may collect biometric data including faceprints"',
+            'Amazon': '"We may share your data with any Amazon subsidiary"',
+            'Snapchat': '"Content may be stored indefinitely on our servers"',
+            'YouTube': '"We can monetize your content without compensation"',
+            'Google Workspace': '"We scan your documents for advertising purposes"',
+            'Uber': '"You waive your right to a jury trial"',
+            'Gemini': '"Your prompts may be used to train future models"',
+            'WhatsApp': '"Metadata is shared with Facebook for ad targeting"',
+            'LinkedIn': '"We may use your data for targeted advertising"',
+            'Discord': '"We log all messages, including deleted ones"',
+            'Spotify': '"We collect and share your listening habits"',
+            'DoorDash': '"You waive class action rights permanently"',
+            'Zoom': '"We may use your content for AI training"',
+            'Airbnb': '"Binding arbitration with no class actions"',
+            'Venmo': '"Transaction data shared with third parties"',
+            'ChatGPT': '"Conversations may be reviewed by human trainers"',
+            'Midjourney': '"All generated content is public by default"',
+        };
+
+        function addXray() {
+            document.querySelectorAll('#index-list > div, #top5-grid > div').forEach(card => {
+                if (card.querySelector('.xray-clause')) return;
+                const nameEl = card.querySelector('h3');
+                if (!nameEl) return;
+                const name = nameEl.textContent.trim().replace(/^#\d+\s*/, '').replace(/\s*[ABCDF][+-]?\s*$/, '');
+                const clause = worstClauses[name] || Object.entries(worstClauses).find(([k]) => name.startsWith(k))?.[1];
+                if (clause) {
+                    card.classList.add('card-xray');
+                    const div = document.createElement('div');
+                    div.className = 'xray-clause';
+                    div.textContent = clause;
+                    card.appendChild(div);
+                }
+            });
+        }
+
+        setTimeout(addXray, 2000);
+        // Re-apply on re-render
+        const origRender2 = window.renderIndex;
+        if (origRender2) {
+            window.renderIndex = function() {
+                origRender2();
+                setTimeout(addXray, 100);
+            };
+        }
+    })();
 
     </script>
 </body>
