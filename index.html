@@ -276,7 +276,7 @@
     <button id="scroll-top-btn" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
     <main class="max-w-6xl mx-auto px-4 md:px-8">
         <!-- Nav -->
-        <nav class="flex items-center justify-between py-6 border-b border-neutral-900 load-stagger" style="--load-delay:0ms">
+        <nav id="main-nav" class="flex items-center justify-between py-4 md:py-6 border-b border-neutral-900 load-stagger sticky top-0 bg-[#050505]/95 backdrop-blur-sm z-40 transition-shadow duration-300" style="--load-delay:0ms">
             <div class="flex items-center gap-2">
                 <span class="text-red-500 text-xl">&#9919;</span>
                 <span class="font-mono font-bold text-sm tracking-wide">GATEKEEPER</span>
@@ -285,7 +285,8 @@
                 <a href="#index" class="text-neutral-400 hover:text-white transition-colors">Index</a>
                 <a href="#compare" class="text-neutral-400 hover:text-white transition-colors">Compare</a>
                 <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors">Your Score</a>
-                <a href="map.html" class="text-red-500 hover:text-red-400 transition-colors">Broker Map</a>
+                <a href="map.html" class="text-neutral-400 hover:text-white transition-colors">Broker Map</a>
+                <a href="#methodology" class="text-neutral-400 hover:text-white transition-colors hidden lg:inline">Methodology</a>
                 <a href="#vision" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Vision</a>
                 <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Waitlist</a>
             </div>
@@ -299,6 +300,7 @@
             <a href="#compare" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Compare</a>
             <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Your Score</a>
             <a href="map.html" class="text-neutral-400 hover:text-white transition-colors py-2">Broker Map</a>
+            <a href="#methodology" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Methodology</a>
             <a href="#vision" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Vision</a>
             <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Waitlist</a>
         </div>
@@ -315,6 +317,11 @@
             <div class="flex flex-wrap gap-4 mb-8 load-stagger" style="--load-delay:900ms">
                 <a href="#worst-offenders" class="inline-flex items-center gap-2 px-5 md:px-6 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors font-sans">Worst offenders &darr;</a>
                 <a href="#waitlist" class="inline-flex items-center gap-2 px-5 md:px-6 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white text-sm font-semibold rounded-lg transition-all font-sans">Join waitlist</a>
+            </div>
+            <div class="relative max-w-md mb-6 load-stagger" style="--load-delay:1000ms">
+                <input type="text" id="hero-search" placeholder="Search a service... (e.g. Instagram, Spotify)" class="w-full px-4 py-3 pl-10 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 placeholder-neutral-600" autocomplete="off">
+                <svg class="absolute left-3 top-3.5 text-neutral-600" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <div id="hero-search-results" class="absolute top-full left-0 right-0 mt-1 bg-neutral-950 border border-neutral-800 rounded-lg overflow-hidden hidden z-50 max-h-64 overflow-y-auto"></div>
             </div>
             <div class="font-mono text-xs text-neutral-600 load-stagger" style="--load-delay:1100ms">
                 <span id="service-count">30</span> services analyzed · Last updated March 25, 2026 · Real clauses, real scores
@@ -467,6 +474,51 @@
             </div>
         </div>
 
+        <!-- Data Broker Map Section -->
+        <section id="broker-map-section" class="mb-20 reveal">
+            <div class="border border-red-900/20 rounded-xl overflow-hidden">
+                <div class="p-8 md:p-10">
+                    <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The hidden network</div>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-4">
+                        Your data passes through 84 companies<br class="hidden md:block"> you've never heard of.
+                    </h2>
+                    <p class="text-neutral-400 font-sans text-sm leading-relaxed max-w-2xl mb-6">
+                        We mapped 54 data flows between brokers, ad tech platforms, analytics companies, and government agencies.
+                        LiveRamp alone connects to 14 other entities. This is where your data actually goes after you click "I agree."
+                    </p>
+                    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-8">
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Data Brokers</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-orange-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Ad Tech</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-blue-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Analytics</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-purple-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Government</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-cyan-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Insurance</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-3 h-3 rounded-full bg-green-500 mx-auto mb-1"></div>
+                            <div class="font-mono text-[10px] text-neutral-500">Consumer</div>
+                        </div>
+                    </div>
+                    <a href="map.html" class="inline-flex items-center gap-2 px-6 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors font-sans">
+                        Explore the full map &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Methodology -->
         <section class="border-t border-neutral-900 pt-16 mb-16 reveal" id="methodology">
             <h2 class="font-serif text-3xl font-bold mb-8">Methodology</h2>
@@ -608,9 +660,10 @@
         <!-- Waitlist CTA -->
         <section id="waitlist" class="border border-red-900/40 bg-red-950/10 rounded-xl p-8 md:p-12 mb-20 reveal">
             <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">We're building the kill switch.</h2>
-            <p class="text-lg text-neutral-300 mb-8 max-w-2xl font-serif leading-relaxed">
+            <p class="text-lg text-neutral-300 mb-6 max-w-2xl font-serif leading-relaxed">
                 A browser extension that reads terms before you agree. Scores them. Flags conflicts. Alerts you when they change. And gives you a revoke button for every connection.
             </p>
+            <p class="text-sm text-neutral-500 mb-8 font-sans">Get notified when services change their terms — and when scores drop.</p>
             <form id="waitlist-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
                 <input type="email" id="email" placeholder="your@email.com" required class="px-5 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 placeholder-neutral-600">
                 <button type="submit" class="px-8 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors duration-200 font-sans whitespace-nowrap">Join Waitlist</button>
@@ -704,6 +757,34 @@
         `).join('');
     }
 
+    function setupHeroSearch() {
+        const input = document.getElementById('hero-search');
+        const results = document.getElementById('hero-search-results');
+        if (!input || !results) return;
+
+        input.addEventListener('input', () => {
+            const q = input.value.toLowerCase().trim();
+            if (q.length < 1) { results.classList.add('hidden'); return; }
+            const matches = services.filter(s => s.name.toLowerCase().includes(q)).slice(0, 6);
+            if (matches.length === 0) {
+                results.innerHTML = '<div class="px-4 py-3 text-sm text-neutral-500 font-sans">No services found</div>';
+            } else {
+                results.innerHTML = matches.map(s => `
+                    <button class="w-full text-left px-4 py-3 hover:bg-neutral-900 transition-colors flex items-center justify-between" onclick="openDetail('${s.name}'); document.getElementById('hero-search-results').classList.add('hidden'); document.getElementById('hero-search').value = '';">
+                        <span class="text-sm font-sans">${s.name}</span>
+                        <span class="grade-letter text-sm font-bold grade-${gradeClass(s.grade)}">${s.grade}</span>
+                    </button>
+                `).join('');
+            }
+            results.classList.remove('hidden');
+        });
+
+        input.addEventListener('blur', () => { setTimeout(() => results.classList.add('hidden'), 200); });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { results.classList.add('hidden'); input.blur(); }
+        });
+    }
+
     function init() {
         computeStats();
         renderTop5();
@@ -711,6 +792,7 @@
         populateCompare();
         renderExposureGrid();
         setupListeners();
+        setupHeroSearch();
         document.getElementById('service-count').textContent = services.length;
 
         // Default compare selections: Facebook vs Signal
@@ -889,6 +971,24 @@
                 ${s.tags.map(t => `<span class="text-[10px] px-2.5 py-1 rounded-full border border-red-900/30 text-red-400 font-mono">${t}</span>`).join('')}
             </div>
 
+            <!-- Broker map link -->
+            <div class="border-t border-neutral-900 pt-4 mb-4">
+                <a href="map.html" class="inline-flex items-center gap-2 text-xs font-mono text-red-400 hover:text-red-300 transition-colors">
+                    See how your data flows through 84 companies &rarr;
+                </a>
+            </div>
+
+            <!-- Share buttons -->
+            <div class="border-t border-neutral-900 pt-4 mb-4">
+                <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-3">Share this score</div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="shareToX('${s.name}', '${s.grade}', \`${(s.highlight || '').replace(/`/g, "'").replace(/\\/g, '\\\\')}\`)" class="px-3 py-1.5 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all">Share on X</button>
+                    <button onclick="shareToReddit('${s.name}', '${s.grade}')" class="px-3 py-1.5 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all">Reddit</button>
+                    <button onclick="shareToLinkedIn('${s.name}', '${s.grade}')" class="px-3 py-1.5 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all">LinkedIn</button>
+                    <button id="copy-share-btn" onclick="copyShareLink('${s.name}', '${s.grade}', \`${(s.highlight || '').replace(/`/g, "'").replace(/\\/g, '\\\\')}\`)" class="px-3 py-1.5 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all">Copy Link</button>
+                </div>
+            </div>
+
             <div class="flex flex-wrap gap-4 text-xs font-sans text-neutral-600 border-t border-neutral-900 pt-4">
                 <span>Reviewed: ${s.lastReviewed}</span>
                 ${s.tosUrl ? `<a href="${s.tosUrl}" target="_blank" class="text-neutral-500 hover:text-white underline">Terms of Service</a>` : ''}
@@ -899,6 +999,23 @@
         document.getElementById('detail-content').innerHTML = html;
         document.getElementById('detail-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+    }
+
+    function shareToX(name, grade, highlight) {
+        const url = `https://isaacachar.github.io/gatekeeper/#${slugify(name)}`;
+        const text = `${name} scored ${grade} on the Predatory T&C Index.\n\n"${highlight}"\n\nCheck yours:`;
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+
+    function shareToReddit(name, grade) {
+        const url = `https://isaacachar.github.io/gatekeeper/#${slugify(name)}`;
+        const title = `${name} scored ${grade} on the Predatory T&C Index — here's what's hiding in their terms`;
+        window.open(`https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`, '_blank');
+    }
+
+    function shareToLinkedIn(name, grade) {
+        const url = `https://isaacachar.github.io/gatekeeper/#${slugify(name)}`;
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
     }
 
     function copyShareLink(name, grade, highlight) {
@@ -1225,6 +1342,10 @@
                 // Scroll-to-top button
                 const btn = document.getElementById('scroll-top-btn');
                 if (btn) btn.classList.toggle('visible', scrollY > 500);
+
+                // Nav shadow on scroll
+                const nav = document.getElementById('main-nav');
+                if (nav) nav.classList.toggle('shadow-[0_1px_12px_rgba(0,0,0,0.5)]', scrollY > 20);
 
                 ticking = false;
             });
