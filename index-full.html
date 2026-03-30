@@ -44,10 +44,15 @@
         .score-bar { height: 6px; background: #1a1a1a; border-radius: 2px; overflow: hidden; }
         .score-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
         .clause-card { border-left: 2px solid #ef4444; }
+        .tab-active { border-bottom: 2px solid #ef4444; color: #fafafa; }
+        .tab-inactive { border-bottom: 2px solid transparent; color: #737373; }
+        .comparison-col { min-width: 280px; }
         details summary::-webkit-details-marker { display: none; }
         details summary::marker { display: none; }
         .fade-in { animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .exposure-check:checked + label { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.4); }
+        .exposure-check:not(:checked) + label { background: #0a0a0a; border-color: #262626; }
         @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem !important; }
         }
@@ -75,7 +80,9 @@
         .reveal-stagger { transition-delay: var(--stagger, 0ms); }
 
         /* === MICRO-INTERACTIONS === */
-        #index-list > div {
+        #index-list > div,
+        #exposure-grid > div label,
+        .comparison-col {
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
             will-change: transform;
         }
@@ -124,6 +131,30 @@
         }
         nav a:hover::after {
             transform: translateX(0);
+        }
+
+        /* Tab indicator */
+        .tab-active {
+            position: relative;
+        }
+        [data-tab] {
+            position: relative;
+            border-bottom: 2px solid transparent !important;
+        }
+        [data-tab]::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ef4444;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .tab-active::after {
+            transform: scaleX(1) !important;
         }
 
         /* Score bar animation */
@@ -201,6 +232,17 @@
             will-change: transform;
         }
 
+        /* === NETWORK CANVAS === */
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
         /* === PAGE LOAD STAGGER === */
         .load-stagger {
             opacity: 0;
@@ -210,6 +252,14 @@
         }
         @keyframes loadIn {
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === TAB CROSSFADE === */
+        .tab-panel {
+            transition: opacity 0.25s ease;
+        }
+        .tab-panel.fading {
+            opacity: 0;
         }
 
         /* === SURVEILLANCE COUNTER === */
@@ -366,7 +416,12 @@
             </div>
             <div id="desktop-nav" class="flex items-center gap-6 text-sm">
                 <a href="#index" class="text-neutral-400 hover:text-white transition-colors">Index</a>
+                <a href="#compare" class="text-neutral-400 hover:text-white transition-colors">Compare</a>
+                <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors">Your Score</a>
                 <a href="map.html" class="text-neutral-400 hover:text-white transition-colors">Broker Map</a>
+                <a href="#methodology" class="text-neutral-400 hover:text-white transition-colors hidden lg:inline">Methodology</a>
+                <a href="#vision" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Vision</a>
+                <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors hidden md:inline">Waitlist</a>
             </div>
             <button id="mobile-menu-btn" class="items-center justify-center w-10 h-10 text-neutral-400 hover:text-white" onclick="toggleMobileNav()" aria-label="Menu">
                 <svg id="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -375,7 +430,12 @@
         </nav>
         <div id="mobile-nav" class="hidden flex-col gap-3 py-4 border-b border-neutral-900 text-sm">
             <a href="#index" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Index</a>
+            <a href="#compare" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Compare</a>
+            <a href="#exposure" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Your Score</a>
             <a href="map.html" class="text-neutral-400 hover:text-white transition-colors py-2">Broker Map</a>
+            <a href="#methodology" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Methodology</a>
+            <a href="#vision" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Vision</a>
+            <a href="#waitlist" class="text-neutral-400 hover:text-white transition-colors py-2" onclick="toggleMobileNav()">Waitlist</a>
         </div>
 
         <!-- Hero -->
@@ -408,6 +468,15 @@
             </div>
         </header>
 
+        <!-- Top 5 Worst Offenders -->
+        <section id="worst-offenders" class="mb-20 reveal">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The worst offenders</div>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8">These five scored the lowest.</h2>
+            <div id="top5-grid" class="grid gap-4 grid-cols-2 md:grid-cols-5">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
         <!-- Stats Bar -->
         <section id="stats-bar" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 reveal">
             <div class="border border-neutral-900 rounded-lg p-6 text-center">
@@ -428,12 +497,28 @@
             </div>
         </section>
 
-        <!-- Top 5 Worst Offenders -->
-        <section id="worst-offenders" class="mb-20 reveal">
-            <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The worst offenders</div>
-            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-8">These five scored the lowest.</h2>
-            <div id="top5-grid" class="grid gap-4 grid-cols-2 md:grid-cols-5">
-                <!-- Populated by JS -->
+        <!-- The Agentic Reality -->
+        <section class="border border-red-900/20 rounded-xl p-8 md:p-10 mb-20 bg-gradient-to-b from-red-950/10 to-transparent relative overflow-hidden reveal">
+            <canvas id="network-canvas"></canvas>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-red-500/3 blur-[100px] pointer-events-none"></div>
+            <div class="font-mono text-[10px] uppercase tracking-widest text-red-700 mb-4">The new threat model · 2026</div>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold leading-tight mb-6 max-w-3xl">
+                You used to give your data away 5 times a week.<br>
+                <span class="text-red-500">Your AI agent will do it 50 times a day.</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8 text-sm text-neutral-400 font-sans leading-relaxed">
+                <div>
+                    <p class="mb-4">AI agents are signing up for services, accepting terms, and handing over your real name, email, phone, and payment info at machine speed. Every tool an agent uses on your behalf is another set of terms you never read — agreed to in milliseconds.</p>
+                    <p>The old problem was humans clicking "I agree" without reading. The new problem is <span class="text-neutral-200">agents agreeing to things you never even see</span>.</p>
+                </div>
+                <div>
+                    <p class="mb-4">In the next 12 months, the average person's data footprint will explode — not because they got careless, but because their AI did. Without a policy layer between your agent and the world, your identity gets scattered across hundreds of services with zero oversight.</p>
+                    <p class="text-neutral-200 font-semibold">Gatekeeper is that layer. Your data. Your rules. Enforced at machine speed.</p>
+                </div>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a href="map.html" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono border border-red-900/40 rounded-lg text-red-400 hover:text-red-300 hover:border-red-800/60 transition-all">See the data broker map &rarr;</a>
+                <a href="#waitlist" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all">Join the waitlist &rarr;</a>
             </div>
         </section>
 
@@ -443,8 +528,15 @@
             <h2 class="font-serif text-2xl md:text-3xl font-bold mb-6">All <span id="index-total">30</span> services, ranked.</h2>
         </section>
 
-        <!-- INDEX -->
-        <section id="tab-index" class="mb-20">
+        <!-- Tabs -->
+        <div class="flex gap-8 border-b border-neutral-900 mb-8">
+            <button class="tab-active pb-3 text-sm font-medium transition-all" data-tab="index" onclick="switchTab('index')">Index</button>
+            <button class="tab-inactive pb-3 text-sm font-medium transition-all" data-tab="compare" onclick="switchTab('compare')">Compare</button>
+            <button class="tab-inactive pb-3 text-sm font-medium transition-all" data-tab="exposure" onclick="switchTab('exposure')">Your Exposure</button>
+        </div>
+
+        <!-- INDEX TAB -->
+        <section id="tab-index" class="tab-panel">
             <!-- Filters -->
             <div class="flex flex-wrap gap-3 mb-6">
                 <input type="text" id="search" placeholder="Search services..." class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 min-w-[200px] placeholder-neutral-600">
@@ -473,7 +565,43 @@
             </div>
 
             <div class="font-mono text-xs text-neutral-600 mb-4"><span id="result-count">30</span> services</div>
-            <div id="index-list" class="space-y-3"></div>
+            <div id="index-list" class="space-y-3 mb-20"></div>
+        </section>
+
+        <!-- COMPARE TAB -->
+        <section id="tab-compare" class="hidden mb-20 tab-panel">
+            <a id="compare"></a>
+            <p class="text-neutral-400 mb-6 font-sans text-sm">Select two services to compare their terms side by side.</p>
+            <div class="flex flex-wrap gap-4 mb-8">
+                <select id="compare-a" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none flex-1 min-w-[200px]">
+                    <option value="">Select first service...</option>
+                </select>
+                <select id="compare-b" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none flex-1 min-w-[200px]">
+                    <option value="">Select second service...</option>
+                </select>
+            </div>
+            <div id="compare-result" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <!-- EXPOSURE TAB -->
+        <section id="tab-exposure" class="hidden mb-20 tab-panel">
+            <a id="exposure"></a>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">How exposed are you?</h2>
+            <p class="text-neutral-400 mb-2 font-sans text-sm">Check the services you use below. We'll calculate your personal exposure score based on how predatory their terms really are.</p>
+            <p class="text-neutral-600 mb-8 font-sans text-xs">How much of your data is out there, based on what you've agreed to?</p>
+            
+            <div id="exposure-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-8"></div>
+            
+            <div id="exposure-result" class="border border-neutral-900 rounded-lg p-8 text-center hidden">
+                <div class="font-mono text-xs text-neutral-600 uppercase tracking-wider mb-2">Your Exposure Score</div>
+                <div id="exposure-score" class="text-6xl font-mono font-bold mb-2"></div>
+                <div id="exposure-label" class="text-sm text-neutral-400 mb-6"></div>
+                <div id="exposure-breakdown" class="text-left max-w-md mx-auto space-y-3"></div>
+            <div id="exposure-share" class="mt-6 hidden">
+                <button onclick="shareExposure()" class="px-4 py-2 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all" id="exposure-share-btn">Share Your Score on X</button>
+                <button onclick="copyExposure()" class="px-4 py-2 text-xs font-sans border border-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:border-neutral-600 transition-all ml-2" id="exposure-copy-btn">Copy</button>
+            </div>
+            </div>
         </section>
 
         <!-- SERVICE DETAIL MODAL -->
@@ -531,9 +659,151 @@
             </div>
         </section>
 
+        <!-- Methodology -->
+        <section class="border-t border-neutral-900 pt-16 mb-16 reveal" id="methodology">
+            <h2 class="font-serif text-3xl font-bold mb-8">Methodology</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-neutral-400 font-sans leading-relaxed">
+                <div>
+                    <h3 class="text-white font-semibold mb-3">How We Score</h3>
+                    <p class="mb-4">Each service is evaluated across 10 categories on a 0-10 scale (10 = most predatory). Categories: data selling, content ownership, forced arbitration, terms changeability, deletion difficulty, data retention, location tracking, cross-platform sharing, AI training, and liability limitations.</p>
+                    <p>The overall score is calculated as 100 minus the average category score times 10. Grades: A (85-100), B (70-84), C (50-69), D (30-49), F (below 30).</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-3">Why This Matters Now</h3>
+                    <p class="mb-4">Within 12-18 months, most people will have AI agents acting on their behalf. Those agents will agree to terms of service 50 times a day — booking, buying, signing up, negotiating.</p>
+                    <p>A human might agree to 5 ToS per week. Your agent will do 50 per day. Without a sovereignty layer between your agent and the world, the privacy problem becomes catastrophic.</p>
+                </div>
+            </div>
+
+            <!-- Grade Scale -->
+            <div class="mt-10 grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-a mb-1">A</div>
+                    <div class="text-xs text-neutral-500">85-100 · Exemplary</div>
+                    <div class="text-xs text-neutral-600 mt-1">Clear terms, minimal collection, strong user rights</div>
+                </div>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-b mb-1">B</div>
+                    <div class="text-xs text-neutral-500">70-84 · Fair</div>
+                    <div class="text-xs text-neutral-600 mt-1">Mostly fair with some questionable clauses</div>
+                </div>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-c mb-1">C</div>
+                    <div class="text-xs text-neutral-500">50-69 · Mediocre</div>
+                    <div class="text-xs text-neutral-600 mt-1">Industry standard — which isn't great</div>
+                </div>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-d mb-1">D</div>
+                    <div class="text-xs text-neutral-500">30-49 · Poor</div>
+                    <div class="text-xs text-neutral-600 mt-1">Aggressively anti-consumer</div>
+                </div>
+                <div class="border border-neutral-900 rounded-lg p-4">
+                    <div class="grade-letter text-2xl font-bold grade-f mb-1">F</div>
+                    <div class="text-xs text-neutral-500">0-29 · Predatory</div>
+                    <div class="text-xs text-neutral-600 mt-1">Treats your data like theirs</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Roadmap -->
+        <section id="vision" class="mb-20 reveal">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-neutral-600 mb-4">Vision</div>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight mb-6">
+                DNS for human identity.
+            </h2>
+            <p class="text-lg text-neutral-400 font-serif leading-relaxed max-w-3xl mb-12">
+                Your reachability should be a function you control — not a static value others possess. Gatekeeper is the sovereignty layer between you and every service that wants your data. Today it's a scorecard. Tomorrow it's the infrastructure.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                <!-- Phase 1 -->
+                <div class="border border-red-900/40 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-red-500 px-2 py-0.5 border border-red-900/40 rounded-full">LIVE</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 1</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Index</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Real T&C analysis for 30 services. Verbatim clauses. Grades. Comparison tools. The data broker map. You're looking at it.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">scoring engine</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">broker map</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-red-950/30 text-red-400 rounded">exposure calc</span>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-amber-600 px-2 py-0.5 border border-amber-900/30 rounded-full">APRIL</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 2</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The API</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">T&C intelligence as a service. REST API, MCP server, CLI. Your AI agent checks terms before agreeing — programmatically, in milliseconds.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">REST API</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">MCP server</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">CLI</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-neutral-600 px-2 py-0.5 border border-neutral-800 rounded-full">SUMMER</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 3</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Extension</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Chrome extension. Intercepts signups, generates aliases, scans terms in real-time, alerts you when services change their policies against you.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">form intercept</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">aliases</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">change alerts</span>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="border border-neutral-900 rounded-xl p-6 relative">
+                    <div class="absolute top-4 right-4 font-mono text-[10px] text-neutral-600 px-2 py-0.5 border border-neutral-800 rounded-full">2026+</div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-wider mb-2">Phase 4</div>
+                    <h3 class="font-serif text-lg font-bold mb-2">The Protocol</h3>
+                    <p class="text-sm text-neutral-500 font-sans leading-relaxed mb-4">Open permission language. Identity vault. Tamper-evident ledger. A full data graph of where your identity lives. Gatekeeper becomes a standard.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">protocol spec</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">identity vault</span>
+                        <span class="font-mono text-[9px] px-2 py-0.5 bg-neutral-900 text-neutral-500 rounded">data graph</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCP Callout -->
+            <div class="border border-neutral-900 rounded-xl p-8 bg-neutral-950/50 max-w-3xl">
+                <div class="font-mono text-[10px] text-amber-600 uppercase tracking-wider mb-3">Coming in Phase 2</div>
+                <h3 class="font-serif text-xl font-bold mb-3">The MCP server is the killer move.</h3>
+                <p class="text-sm text-neutral-400 font-sans leading-relaxed mb-4">Any AI agent using the Model Context Protocol can query Gatekeeper before agreeing to anything on your behalf. Check terms. Enforce your policy. Log what happened. All programmatic.</p>
+                <div class="font-mono text-xs text-neutral-500 bg-neutral-900/50 rounded-lg p-4 space-y-1">
+                    <div><span class="text-amber-500">gatekeeper.check</span>(<span class="text-neutral-300">"spotify.com"</span>)</div>
+                    <div class="text-neutral-600">→ Grade C · Uses listening data for AI training · Recommend opt-out</div>
+                    <div class="mt-2"><span class="text-amber-500">gatekeeper.policy</span>(<span class="text-neutral-300">userRules, "tiktok"</span>)</div>
+                    <div class="text-neutral-600">→ CONFLICT: Service requires arbitration, user policy rejects it</div>
+                    <div class="mt-2"><span class="text-amber-500">gatekeeper.audit</span>()</div>
+                    <div class="text-neutral-600">→ Last 7 days: agent agreed to 23 terms. 3 violated your policy.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request a Service -->
+        <section class="border border-neutral-900 rounded-xl p-8 mb-12 reveal">
+            <h2 class="font-serif text-2xl font-bold mb-2">Missing a service?</h2>
+            <p class="text-sm text-neutral-400 mb-6 font-sans">Tell us what to analyze next. Most-requested services get prioritized.</p>
+            <form id="request-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
+                <input type="text" id="request-service" placeholder="e.g. Reddit, Pinterest, Temu..." required class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-neutral-600 flex-1 placeholder-neutral-600">
+                <input type="email" id="request-email" placeholder="your@email.com (optional)" class="px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-neutral-600 flex-1 placeholder-neutral-600">
+                <button type="submit" class="px-6 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-semibold rounded-lg transition-colors font-sans whitespace-nowrap">Request</button>
+            </form>
+            <div id="request-response" class="mt-3 text-sm font-sans"></div>
+        </section>
+
         <!-- Waitlist CTA -->
         <section id="waitlist" class="border border-red-900/40 bg-red-950/10 rounded-xl p-8 md:p-12 mb-20 reveal">
-            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6">Get notified when scores change.</h2>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">We're building the kill switch.</h2>
+            <p class="text-lg text-neutral-300 mb-6 max-w-2xl font-serif leading-relaxed">
+                A browser extension that reads terms before you agree. Scores them. Flags conflicts. Alerts you when they change. And gives you a revoke button for every connection.
+            </p>
+            <p class="text-sm text-neutral-500 mb-8 font-sans">Get notified when services change their terms — and when scores drop.</p>
             <form id="waitlist-form" class="flex flex-col md:flex-row gap-3 max-w-lg">
                 <input type="email" id="email" placeholder="your@email.com" required class="px-5 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-sm font-sans focus:outline-none focus:border-red-900/50 flex-1 placeholder-neutral-600">
                 <button type="submit" class="px-8 py-3 bg-red-700 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors duration-200 font-sans whitespace-nowrap">Join Waitlist</button>
@@ -548,6 +818,7 @@
                 <span class="font-mono font-bold text-xs tracking-wide text-neutral-400">GATEKEEPER</span>
             </div>
             <div class="flex justify-center gap-6 text-xs text-neutral-600 font-sans mb-4">
+                <a href="#methodology" class="hover:text-neutral-300 transition-colors">Methodology</a>
                 <a href="https://github.com/isaacachar/gatekeeper" class="hover:text-neutral-300 transition-colors">Open Source</a>
                 <a href="mailto:hello@gatekeeper.io" class="hover:text-neutral-300 transition-colors">Contact</a>
             </div>
@@ -614,7 +885,6 @@
         document.getElementById('top5-grid').innerHTML = worst5.map((s, i) => `
             <div class="border border-red-900/30 hover:border-red-700/50 rounded-xl p-5 md:p-6 cursor-pointer transition-all duration-200 bg-gradient-to-b from-red-950/10 to-transparent group ${i === 4 ? 'col-span-2 md:col-span-1' : ''}" onclick='openDetail(${JSON.stringify(s.name).replace(/'/g, "\\'")})'>
                 <div class="flex items-center justify-between mb-2 md:mb-3">
-
                     <span class="font-mono text-[10px] text-red-700 uppercase">#${i + 1} worst</span>
                     <div class="grade-letter text-2xl md:text-3xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
                 </div>
@@ -659,9 +929,20 @@
         computeStats();
         renderTop5();
         renderIndex();
+        populateCompare();
+        renderExposureGrid();
         setupListeners();
         setupHeroSearch();
         document.getElementById('service-count').textContent = services.length;
+
+        // Default compare selections: Facebook vs Signal
+        const compA = document.getElementById('compare-a');
+        const compB = document.getElementById('compare-b');
+        const fbOpt = Array.from(compA.options).find(o => o.value === 'Facebook');
+        const sigOpt = Array.from(compB.options).find(o => o.value === 'Signal');
+        if (fbOpt) compA.value = 'Facebook';
+        if (sigOpt) compB.value = 'Signal';
+        renderComparison();
 
         // Hash routing — open service from URL
         if (window.location.hash) {
@@ -900,21 +1181,167 @@
 
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
 
+    // Compare
+    function populateCompare() {
+        const sorted = [...services].sort((a, b) => a.name.localeCompare(b.name));
+        ['compare-a', 'compare-b'].forEach(id => {
+            const sel = document.getElementById(id);
+            sorted.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.name;
+                opt.textContent = `${s.name} (${s.grade})`;
+                sel.appendChild(opt);
+            });
+        });
+    }
+
+    function renderComparison() {
+        const a = services.find(s => s.name === document.getElementById('compare-a').value);
+        const b = services.find(s => s.name === document.getElementById('compare-b').value);
+        if (!a || !b) { document.getElementById('compare-result').innerHTML = ''; return; }
+
+        const categories = Object.keys(a.scores);
+
+        function renderCol(s) {
+            return `
+                <div class="border border-neutral-900 rounded-lg p-6 comparison-col fade-in">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-serif text-xl font-bold">${s.name}</h3>
+                        <div class="grade-letter text-2xl font-bold grade-${gradeClass(s.grade)}">${s.grade}</div>
+                    </div>
+                    <div class="font-mono text-sm mb-4">${s.overallScore}/100</div>
+                    <div class="space-y-2 mb-6">
+                        ${categories.map(key => {
+                            const val = s.scores[key];
+                            const otherVal = (s === a ? b : a).scores[key];
+                            const better = val < otherVal;
+                            const worse = val > otherVal;
+                            return `
+                                <div class="flex items-center gap-2">
+                                    <div class="text-[10px] text-neutral-500 w-24 flex-shrink-0">${categoryLabel(key)}</div>
+                                    <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#ef4444':val>=5?'#f59e0b':'#10b981'}"></div></div>
+                                    <div class="font-mono text-[10px] w-4 text-right ${val>=7?'text-red-500':val>=5?'text-amber-500':'text-green-500'}">${val}</div>
+                                    ${better ? '<span class="text-green-500 text-[10px]">&#9650;</span>' : worse ? '<span class="text-red-500 text-[10px]">&#9660;</span>' : '<span class="text-neutral-700 text-[10px]">=</span>'}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="text-xs text-neutral-400 italic font-serif border-t border-neutral-900 pt-4">"${s.highlight}"</div>
+                </div>
+            `;
+        }
+
+        document.getElementById('compare-result').innerHTML = renderCol(a) + renderCol(b);
+    }
+
+    // Exposure
+    function renderExposureGrid() {
+        const sorted = [...services].sort((a, b) => a.name.localeCompare(b.name));
+        document.getElementById('exposure-grid').innerHTML = sorted.map(s => `
+            <div>
+                <input type="checkbox" class="exposure-check hidden" id="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" value="${s.name}" onchange="calcExposure()">
+                <label for="exp-${s.name.replace(/[^a-z0-9]/gi,'')}" class="block border rounded-lg p-3 cursor-pointer transition-all duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-sans">${s.name}</span>
+                        <span class="grade-letter text-sm grade-${gradeClass(s.grade)}">${s.grade}</span>
+                    </div>
+                </label>
+            </div>
+        `).join('');
+    }
+
+    function calcExposure() {
+        const checked = Array.from(document.querySelectorAll('.exposure-check:checked')).map(el => el.value);
+        const result = document.getElementById('exposure-result');
+
+        if (checked.length === 0) { result.classList.add('hidden'); return; }
+        result.classList.remove('hidden');
+
+        const selected = services.filter(s => checked.includes(s.name));
+        const avgScore = Math.round(selected.reduce((sum, s) => sum + s.overallScore, 0) / selected.length);
+        const worstCategory = {};
+        
+        selected.forEach(s => {
+            Object.entries(s.scores).forEach(([key, val]) => {
+                if (!worstCategory[key]) worstCategory[key] = 0;
+                worstCategory[key] = Math.max(worstCategory[key], val);
+            });
+        });
+
+        const topRisks = Object.entries(worstCategory).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        
+        // Exposure score: inverse — lower avg = higher exposure
+        const exposure = 100 - avgScore;
+
+        const scoreEl = document.getElementById('exposure-score');
+        scoreEl.textContent = exposure + '/100';
+        scoreEl.className = `text-6xl font-mono font-bold mb-2 ${exposure >= 70 ? 'text-red-500' : exposure >= 50 ? 'text-amber-500' : exposure >= 30 ? 'text-cyan-400' : 'text-green-500'}`;
+
+        const labels = {
+            0: 'Low exposure. Your data is relatively safe.',
+            30: 'Moderate exposure. Some services are problematic.',
+            50: 'High exposure. You\'ve agreed to a lot.',
+            70: 'Critical exposure. Your data is everywhere.'
+        };
+        const labelKey = exposure >= 70 ? 70 : exposure >= 50 ? 50 : exposure >= 30 ? 30 : 0;
+        document.getElementById('exposure-label').textContent = `${checked.length} services selected · ${labels[labelKey]}`;
+        lastExposureData = { count: checked.length, score: exposure };
+        document.getElementById('exposure-share').classList.remove('hidden');
+
+        document.getElementById('exposure-breakdown').innerHTML = `
+            <div class="font-sans text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Your Biggest Risks</div>
+            ${topRisks.map(([key, val]) => `
+                <div class="flex items-center gap-3">
+                    <div class="text-xs text-neutral-500 w-36">${categoryLabel(key)}</div>
+                    <div class="flex-1 score-bar"><div class="score-fill" style="width:${val*10}%;background:${val>=7?'#ef4444':val>=5?'#f59e0b':'#10b981'}"></div></div>
+                    <div class="font-mono text-xs ${val>=7?'text-red-500':val>=5?'text-amber-500':'text-green-500'}">${val}/10</div>
+                </div>
+            `).join('')}
+            <div class="border-t border-neutral-900 pt-4 mt-4">
+                <div class="text-xs text-neutral-600">Worst offender: <span class="text-neutral-300">${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].name} (${selected.sort((a,b)=>a.overallScore-b.overallScore)[0].grade})</span></div>
+            </div>
+        `;
+    }
+
+    // Tabs
+    function switchTab(tab) {
+        ['index', 'compare', 'exposure'].forEach(t => {
+            document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+            document.querySelector(`[data-tab="${t}"]`).className = t === tab ? 'tab-active pb-3 text-sm font-medium transition-all' : 'tab-inactive pb-3 text-sm font-medium transition-all';
+        });
+    }
+
     function setupListeners() {
         document.getElementById('search').addEventListener('input', renderIndex);
         document.getElementById('category-filter').addEventListener('change', renderIndex);
         document.getElementById('grade-filter').addEventListener('change', renderIndex);
         document.getElementById('sort-filter').addEventListener('change', renderIndex);
+        document.getElementById('compare-a').addEventListener('change', renderComparison);
+        document.getElementById('compare-b').addEventListener('change', renderComparison);
 
         document.getElementById('waitlist-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
+            // Save to localStorage
             const waitlistEntries = JSON.parse(localStorage.getItem('gk-waitlist') || '[]');
             waitlistEntries.push({ email, timestamp: new Date().toISOString() });
             localStorage.setItem('gk-waitlist', JSON.stringify(waitlistEntries));
-            document.getElementById('waitlist-response').innerHTML = '<div class="text-green-500">You\'re on the list. We\'ll email you when scores change.</div>';
+            document.getElementById('waitlist-response').innerHTML = '<div class="text-green-500">You\'re on the list. We\'ll email you when it ships.</div>';
             document.getElementById('waitlist-form').reset();
             setTimeout(() => document.getElementById('waitlist-response').innerHTML = '', 5000);
+        });
+
+        document.getElementById('request-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const service = document.getElementById('request-service').value;
+            const email = document.getElementById('request-email').value;
+            // Save to localStorage
+            const requestEntries = JSON.parse(localStorage.getItem('gk-requests') || '[]');
+            requestEntries.push({ service, email, timestamp: new Date().toISOString() });
+            localStorage.setItem('gk-requests', JSON.stringify(requestEntries));
+            document.getElementById('request-response').innerHTML = `<div class="text-emerald-400">Got it — ${service} is on the list. We'll prioritize by demand.</div>`;
+            document.getElementById('request-form').reset();
+            setTimeout(() => document.getElementById('request-response').innerHTML = '', 5000);
         });
 
         // Listen for hash changes
@@ -924,6 +1351,23 @@
                 const match = services.find(s => slugify(s.name) === hash);
                 if (match) openDetail(match.name);
             }
+        });
+    }
+
+    // Exposure sharing
+    let lastExposureData = {};
+    function shareExposure() {
+        const text = `I use ${lastExposureData.count} services. My data exposure score: ${lastExposureData.score}/100. How exposed are you?`;
+        const url = 'https://isaacachar.github.io/gatekeeper/#exposure';
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+    function copyExposure() {
+        const text = `I use ${lastExposureData.count} services. My data exposure score: ${lastExposureData.score}/100. How exposed are you? https://isaacachar.github.io/gatekeeper/`;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('exposure-copy-btn');
+            btn.textContent = 'Copied!';
+            btn.classList.add('text-emerald-400');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('text-emerald-400'); }, 2000);
         });
     }
 
@@ -942,6 +1386,26 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Staggered reveals for grid children (roadmap phases, grade scale, etc.)
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const children = entry.target.querySelectorAll(':scope > div, :scope > a');
+                children.forEach((child, i) => {
+                    child.style.setProperty('--stagger', `${i * 80}ms`);
+                    child.classList.add('reveal', 'reveal-stagger');
+                    requestAnimationFrame(() => {
+                        setTimeout(() => child.classList.add('visible'), 10);
+                    });
+                });
+                staggerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Observe grids for stagger
+    document.querySelectorAll('#vision .grid, #methodology .grid').forEach(el => staggerObserver.observe(el));
 
     // --- 2. Animated Stat Counters ---
     let statsAnimated = false;
@@ -965,7 +1429,7 @@
             const duration = 1200;
             function tick(now) {
                 const p = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - p, 3);
+                const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
                 el.textContent = Math.round(target * eased) + '%';
                 if (p < 1) requestAnimationFrame(tick);
             }
@@ -1029,13 +1493,98 @@
         }
     });
 
-    // --- 5. Radar Chart in Detail Modal ---
+    // --- 5. Network Canvas Visualization ---
+    (function initNetworkViz() {
+        const canvas = document.getElementById('network-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const nodes = [];
+        const NODE_COUNT = 30;
+        const MAX_DIST = 120;
+        let w, h, animId;
+        let isVisible = false;
+
+        function resize() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            w = canvas.width = rect.width;
+            h = canvas.height = rect.height;
+        }
+
+        function initNodes() {
+            nodes.length = 0;
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    r: 1.5 + Math.random() * 1.5
+                });
+            }
+        }
+
+        function draw() {
+            if (!isVisible) { animId = requestAnimationFrame(draw); return; }
+            ctx.clearRect(0, 0, w, h);
+
+            // Move nodes
+            nodes.forEach(n => {
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < 0 || n.x > w) n.vx *= -1;
+                if (n.y < 0 || n.y > h) n.vy *= -1;
+            });
+
+            // Draw connections
+            ctx.strokeStyle = 'rgba(153, 27, 27, 0.2)';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MAX_DIST) {
+                        ctx.globalAlpha = 1 - dist / MAX_DIST;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw nodes
+            ctx.globalAlpha = 1;
+            nodes.forEach(n => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(220, 38, 38, 0.5)';
+                ctx.fill();
+            });
+
+            animId = requestAnimationFrame(draw);
+        }
+
+        const vizObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { isVisible = entry.isIntersecting; });
+        }, { threshold: 0 });
+
+        resize();
+        initNodes();
+        draw();
+        vizObserver.observe(canvas.parentElement);
+
+        window.addEventListener('resize', () => { resize(); initNodes(); });
+    })();
+
+    // --- 6. Radar Chart in Detail Modal ---
     const origOpenDetail = openDetail;
     openDetail = function(name) {
         origOpenDetail(name);
         const s = services.find(x => x.name === name);
         if (!s) return;
 
+        // Insert radar chart after category scores heading
         const detailContent = document.getElementById('detail-content');
         const categorySection = detailContent.querySelector('.space-y-2');
         if (!categorySection) return;
@@ -1112,11 +1661,13 @@
             const x = cx + Math.cos(angle) * R * val;
             const y = cy + Math.sin(angle) * R * val;
 
+            // Dot
             ctx.beginPath();
             ctx.arc(x, y, 2.5, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(239, 68, 68, 0.8)';
             ctx.fill();
 
+            // Label
             const lx = cx + Math.cos(angle) * (R + 14);
             const ly = cy + Math.sin(angle) * (R + 14);
             ctx.fillStyle = 'rgba(163,163,163,0.6)';
@@ -1126,10 +1677,32 @@
         });
     }
 
+    // --- 7. Tab Crossfade ---
+    const origSwitchTab = switchTab;
+    switchTab = function(tab) {
+        const current = ['index','compare','exposure'].find(t => !document.getElementById('tab-'+t).classList.contains('hidden'));
+        if (current && current !== tab) {
+            const currentEl = document.getElementById('tab-'+current);
+            currentEl.classList.add('fading');
+            setTimeout(() => {
+                origSwitchTab(tab);
+                currentEl.classList.remove('fading');
+                const newEl = document.getElementById('tab-'+tab);
+                newEl.classList.add('fading');
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => newEl.classList.remove('fading'));
+                });
+            }, 200);
+        } else {
+            origSwitchTab(tab);
+        }
+    };
+
     // === SURVEILLANCE COUNTER ===
     (function initSurveillanceCounter() {
         const el = document.getElementById('terms-counter');
         if (!el) return;
+        // Start with a realistic "this hour" number and tick up
         let count = Math.floor(2400000 + Math.random() * 200000);
         el.textContent = count.toLocaleString();
         setInterval(() => {
@@ -1168,6 +1741,7 @@
 
         function draw() {
             ctx.clearRect(0, 0, w, h);
+            // Lines
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -1183,6 +1757,7 @@
                     }
                 }
             }
+            // Dots
             particles.forEach(p => {
                 p.x += p.vx; p.y += p.vy;
                 if (p.x < 0 || p.x > w) p.vx *= -1;
@@ -1195,6 +1770,7 @@
             animId = requestAnimationFrame(draw);
         }
 
+        // Only run when hero is visible
         const obs = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) { draw(); }
@@ -1206,6 +1782,8 @@
 
     // === GLITCH EFFECT ON D/F GRADES ===
     (function initGlitchGrades() {
+        // Apply after renderIndex and renderTop5 run
+        const origInit = init;
         const applyGlitch = () => {
             document.querySelectorAll('.grade-letter').forEach(el => {
                 const text = el.textContent.trim();
@@ -1215,7 +1793,9 @@
                 }
             });
         };
+        // Run after a slight delay to ensure DOM is ready
         setTimeout(applyGlitch, 2000);
+        // Also re-apply when index is re-rendered
         const origRender = window.renderIndex;
         if (origRender) {
             window.renderIndex = function() {
@@ -1242,6 +1822,7 @@
                 }
             });
         }, { threshold: 0.3 });
+        // Observe after a delay so top5 is rendered
         setTimeout(() => {
             const grid = document.getElementById('top5-grid');
             if (grid) top5Observer.observe(grid);
@@ -1250,6 +1831,7 @@
 
     // === CARD X-RAY CLAUSE REVEALS ===
     (function initCardXray() {
+        // Worst clauses per service for x-ray reveal
         const worstClauses = {
             'Facebook': '"We can use your content for any purpose, including commercial"',
             'X': '"By posting, you grant us a worldwide, royalty-free license"',
@@ -1291,6 +1873,7 @@
         }
 
         setTimeout(addXray, 2000);
+        // Re-apply on re-render
         const origRender2 = window.renderIndex;
         if (origRender2) {
             window.renderIndex = function() {
